@@ -1,0 +1,30 @@
+name: tests
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - tests/**
+      - .github/workflows/tests.yml
+      - entrypoint.sh
+      - Dockerfile
+      - .dockerignore
+  push:
+    branches:
+      - master
+    paths:
+      - tests/**
+      - .github/workflows/tests.yml
+      - entrypoint.sh
+      - Dockerfile
+      - .dockerignore
+
+jobs:
+  tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: ./run_tests.sh
+        working-directory: ./tests/

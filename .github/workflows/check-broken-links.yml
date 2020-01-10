@@ -1,0 +1,80 @@
+name: check-broken-links
+
+on:
+  schedule:
+    - cron: '8 8 * * 0'
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - .github/workflows/check-broken-links.yml
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/check-broken-links.yml
+
+jobs:
+  my-broken-link-checker:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check - container
+        uses: ruzickap/action-my-broken-link-checker@v1
+        with:
+          url: https://google.com
+          cmd_params: --verbose --ignore-fragments --one-page-only
+
+      - name: Check - simple
+        env:
+          INPUT_URL: https://google.com
+          INPUT_CMD_PARAMS: --verbose --ignore-fragments --one-page-only
+        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+
+      - name: Check - simple - local pages
+        env:
+          INPUT_URL: https://my-testing-domain.com
+          INPUT_PAGES_PATH: ./tests/
+          INPUT_CMD_PARAMS: --skip-tls-verification --verbose
+        run:
+          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+
+  build-check:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Create web page
+        run: |
+          mkdir -v public
+          cat > public/index.html << EOF
+          <!DOCTYPE html>
+          <html>
+            <head>
+              My page which will be stored on my-testing-domain.com domain
+            </head>
+            <body>
+              Links:
+              <ul>
+                <li><a href="https://my-testing-domain.com">https://my-testing-domain.com</a></li>
+                <li><a href="https://my-testing-domain.com:443">https://my-testing-domain.com:443</a></li>
+              </ul>
+            </body>
+          </html>
+          EOF
+
+      - name: Check links using script
+        env:
+          INPUT_URL: https://my-testing-domain.com
+          INPUT_PAGES_PATH: ./public/
+          INPUT_CMD_PARAMS: --skip-tls-verification --verbose
+          INPUT_RUN_TIMEOUT: 10
+          INPUT_DEBUG: true
+        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+
+      - name: Check links using container
+        uses: ruzickap/action-my-broken-link-checker@v1
+        with:
+          url: https://my-testing-domain.com
+          pages_path: ./public/
+          cmd_params: --skip-tls-verification --verbose
+          run_timeout: 10
+          debug: true

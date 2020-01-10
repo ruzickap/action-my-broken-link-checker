@@ -1,0 +1,23 @@
+name: commands
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - README.md
+      - .github/workflows/check-commands.yml
+  push:
+    branches:
+      - master
+    paths:
+      - README.md
+      - .github/workflows/check-commands.yml
+
+jobs:
+  command-check:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check commands in README.md file
+        run: sed -n '/^```bash.*/,/^```$/p' README.md | sed '/^```*/d' | bash -x
