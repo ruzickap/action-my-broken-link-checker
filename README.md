@@ -265,6 +265,9 @@ jobs:
 In this case I'm using [VuePress](https://vuepress.vuejs.org/) to create my
 page.
 
+![GitHub Action my-broken-link-checker](./images/actions-my-broken-link-checker.png
+"GitHub Action my-broken-link-checker")
+
 ---
 
 Both examples can be used as a **generic template**, and you do not need to
