@@ -31,6 +31,10 @@ jobs:
           cmd_params: "--one-page-only"  # Check just one page
 ```
 
+Check out the real demo:
+
+[![My Broken Link Checker demo](https://img.youtube.com/vi/H6H523TMPXk/0.jpg)](https://youtu.be/H6H523TMPXk)
+
 This deploy action can be combined with [Static Site Generators](https://www.staticgen.com/)
 (Hugo, MkDocs, Gatsby, GitBook, mdBook, etc.). The following examples expects
 to have the web page stored in `./build` directory. There is a [caddy](https://caddyserver.com/)
