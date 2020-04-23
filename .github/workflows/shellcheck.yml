@@ -15,9 +15,9 @@ on:
 
 jobs:
   shellcheck-check:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Lint check
-        uses: azohra/shell-linter@v0.2.0
+        uses: azohra/shell-linter@v0.3.0
