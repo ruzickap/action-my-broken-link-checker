@@ -22,7 +22,7 @@ name: Check markdown links
 jobs:
   my-broken-link-checker:
     name: Check broken links
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check
         uses: ruzickap/action-my-broken-link-checker@v1
@@ -88,7 +88,7 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Create web page
         run: |
@@ -157,7 +157,7 @@ on:
 
 jobs:
   hugo-build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -230,7 +230,7 @@ on:
 
 jobs:
   vuepress-build-check-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
