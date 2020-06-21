@@ -19,6 +19,12 @@ export RUN_TIMEOUT="${INPUT_RUN_TIMEOUT:-300}"
 # Debug variable - enable by setting non-empty value
 export DEBUG=${INPUT_DEBUG:-}
 
+if [ $EUID != 0 ]; then
+  sudo_cmd="sudo"
+else
+  sudo_cmd=""
+fi
+
 function print_error() {
   echo -e "\e[31m*** ERROR: ${1}\e[m"
 }
@@ -32,9 +38,9 @@ function cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
     # Manipulation with /etc/hosts using 'sed -i' doesn't work inside containers
     if ! grep -q docker /proc/1/cgroup ; then
-      sudo sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
+      $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
     fi
-    [ -s "${CADDY_PIDFILE}" ] && sudo kill "$(cat "${CADDY_PIDFILE}")"
+    $sudo_cmd caddy stop > /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
   fi
 }
@@ -55,12 +61,13 @@ trap error_trap ERR
 # Install muffet if needed
 if ! hash muffet &> /dev/null ; then
   MUFFET_URL=$(wget --quiet https://api.github.com/repos/raviqqe/muffet/releases/latest -O - | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4)
-  wget --quiet "${MUFFET_URL}" -O - | sudo tar xzf - -C /usr/local/bin/ muffet
+  wget --quiet "${MUFFET_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ muffet
 fi
 
 # Install caddy if needed
 if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ] ; then
-  wget -qO- https://getcaddy.com | sudo bash -s personal > /dev/null
+  LATEST_CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_amd64.tar.gz" | cut -d \" -f 4)
+  wget --quiet "${LATEST_CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy
 fi
 
 # Use muffet in case of external URL check is required
@@ -82,16 +89,21 @@ else
 
   # Add domain into /etc/hosts
   if ! grep -q "${PAGES_DOMAIN}" /etc/hosts ; then
-    sudo bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts"
+    $sudo_cmd bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts"
   fi
 
   # Create caddy configuration to run web server using the domain set in PAGES_DOMAIN + /etc/hosts
   CADDYFILE=$( mktemp /tmp/Caddyfile.XXXXXX )
-  CADDY_PIDFILE=$( mktemp -u /tmp/Caddy_pidfile.XXXXXX )
-  echo -e "${PAGES_URI}\n root ${PAGES_PATH}\n tls self_signed" > "${CADDYFILE}"
+  {
+    echo "${PAGES_URI} {"
+    echo "  root * ${PAGES_PATH}"
+    echo "  file_server"
+    if [[ "${PAGES_URI}" =~ ^https: ]]; then echo "  tls internal"; fi
+    echo "}"
+  } > "${CADDYFILE}"
 
   # Run caddy web server on the background
-  sudo caddy -conf "${CADDYFILE}" -pidfile "${CADDY_PIDFILE}" -quiet &
+  $sudo_cmd caddy start -config "${CADDYFILE}" > /dev/null
   sleep 1
 
   # Run check
