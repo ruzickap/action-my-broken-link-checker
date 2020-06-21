@@ -1,6 +1,13 @@
 # Changelog
 
-## [v1.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.0...v1.0.1) (2020-05-08)
+## [v1.0.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.1...v1.0.2) (2020-06-21)
+
+- Add Super-Linter [`#8`](https://github.com/ruzickap/action-my-broken-link-checker/pull/8)
+- Use caddy2 instead of caddy [`#7`](https://github.com/ruzickap/action-my-broken-link-checker/pull/7)
+- Use shell-linter in latest version [`#6`](https://github.com/ruzickap/action-my-broken-link-checker/pull/6)
+- CHANGELOG file update [`#5`](https://github.com/ruzickap/action-my-broken-link-checker/pull/5)
+
+## [v1.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.0...v1.0.1) (2020-05-13)
 
 - Use "ubuntu-latest" instead of "ubuntu-18.04" in README [`#4`](https://github.com/ruzickap/action-my-broken-link-checker/pull/4)
 - Replace GH Action Stale by Stale GitHub App (probot) [`#3`](https://github.com/ruzickap/action-my-broken-link-checker/pull/3)
