@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 # Command line parameters for muffet
-export CMD_PARAMS="${INPUT_CMD_PARAMS:---buffer-size=8192 --concurrency=10}"
+export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --concurrency=10}"
 # Set path variable containing web pages
 export PAGES_PATH=${INPUT_PAGES_PATH:-}
 # URL to scan / check
@@ -25,16 +25,16 @@ else
   sudo_cmd=""
 fi
 
-function print_error() {
+print_error() {
   echo -e "\e[31m*** ERROR: ${1}\e[m"
 }
 
-function print_info() {
+print_info() {
   echo -e "\e[36m*** INFO: ${1}\e[m"
 }
 
 # Remove all added files or changed /etc/hosts entry
-function cleanup() {
+cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
     # Manipulation with /etc/hosts using 'sed -i' doesn't work inside containers
     if ! grep -q docker /proc/1/cgroup ; then
@@ -45,7 +45,7 @@ function cleanup() {
   fi
 }
 
-function error_trap() {
+error_trap() {
   cleanup
   print_error "[$(date +'%F %T')] Something went wrong - see the errors above..."
 }

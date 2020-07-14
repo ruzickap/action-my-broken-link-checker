@@ -169,7 +169,7 @@ jobs:
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2.3.2
+        uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.62.0'
 
@@ -188,7 +188,7 @@ jobs:
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v2.8.0
+        uses: peaceiris/actions-gh-pages@v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -256,7 +256,7 @@ jobs:
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v2.8.0
+        uses: peaceiris/actions-gh-pages@v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
