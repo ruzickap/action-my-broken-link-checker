@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.2...v1.0.3) (2020-07-15)
+
+- Fix check-broken-links test [`#14`](https://github.com/ruzickap/action-my-broken-link-checker/pull/14)
+- Use master branch when running checks in check-broken-links.yml [`#13`](https://github.com/ruzickap/action-my-broken-link-checker/pull/13)
+- Add DOCTYPE to test html pages [`#12`](https://github.com/ruzickap/action-my-broken-link-checker/pull/12)
+- Cleanup [`#11`](https://github.com/ruzickap/action-my-broken-link-checker/pull/11)
+- Update Muffet and Caddy [`#10`](https://github.com/ruzickap/action-my-broken-link-checker/pull/10)
+- CHANGELOG file update [`#9`](https://github.com/ruzickap/action-my-broken-link-checker/pull/9)
+
 ## [v1.0.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.1...v1.0.2) (2020-06-21)
 
 - Add Super-Linter [`#8`](https://github.com/ruzickap/action-my-broken-link-checker/pull/8)
