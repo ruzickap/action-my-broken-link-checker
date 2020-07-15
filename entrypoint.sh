@@ -37,7 +37,7 @@ print_info() {
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
     # Manipulation with /etc/hosts using 'sed -i' doesn't work inside containers
-    if ! grep -q docker /proc/1/cgroup ; then
+    if ! grep -q -E '(docker|containerd)' /proc/self/cgroup ; then
       $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
     fi
     $sudo_cmd caddy stop > /dev/null

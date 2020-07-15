@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check - container
-        uses: ruzickap/action-my-broken-link-checker
+        uses: ./
         with:
           url: https://google.com
           cmd_params: --verbose --ignore-fragments --one-page-only
@@ -29,7 +29,7 @@ jobs:
         env:
           INPUT_URL: https://google.com
           INPUT_CMD_PARAMS: --verbose --ignore-fragments --one-page-only
-        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/master/entrypoint.sh | bash
+        run: ./entrypoint.sh
 
       - name: Check - simple - local pages
         env:
@@ -37,11 +37,13 @@ jobs:
           INPUT_PAGES_PATH: ./tests/
           INPUT_CMD_PARAMS: --skip-tls-verification --verbose
         run:
-          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/master/entrypoint.sh | bash
+          ./entrypoint.sh
 
   build-check:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
       - name: Create web page
         run: |
           mkdir -v public
@@ -68,10 +70,10 @@ jobs:
           INPUT_CMD_PARAMS: --skip-tls-verification --verbose
           INPUT_RUN_TIMEOUT: 10
           INPUT_DEBUG: true
-        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/master/entrypoint.sh | bash
+        run: ./entrypoint.sh
 
       - name: Check links using container
-        uses: ruzickap/action-my-broken-link-checker
+        uses: ./
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
