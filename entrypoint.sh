@@ -70,12 +70,13 @@ if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ] ; then
   wget --quiet "${LATEST_CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy
 fi
 
+IFS=' ' read -r -a CMD_PARAMS <<< "$CMD_PARAMS"
+
 # Use muffet in case of external URL check is required
 if [ -z "${PAGES_PATH}" ] ; then
   # Run check
   print_info "[$(date +'%F %T')] Start checking: \"${URL}\""
-  # shellcheck disable=SC2086
-  timeout "${RUN_TIMEOUT}" muffet ${CMD_PARAMS} "${URL}"
+  timeout "${RUN_TIMEOUT}" muffet "${CMD_PARAMS[@]}" "${URL}"
 
 else
 
@@ -108,8 +109,7 @@ else
 
   # Run check
   print_info "[$(date +'%F %T')] Start checking: \"${URL}\""
-  # shellcheck disable=SC2086
-  timeout "${RUN_TIMEOUT}" muffet ${CMD_PARAMS} "${URL}"
+  timeout "${RUN_TIMEOUT}" muffet "${CMD_PARAMS[@]}" "${URL}"
   cleanup
 
 fi
