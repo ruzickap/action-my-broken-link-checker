@@ -51,4 +51,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Link Checker
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: ruzickap/action-my-markdown-link-checker@v1
+        with:
+          exclude: |
+            CHANGELOG.md
