@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.0.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.3...v1.0.4) (2020-09-17)
+
+- Change super-linter source [`#21`](https://github.com/ruzickap/action-my-broken-link-checker/pull/21)
+- Add more examples to README [`#20`](https://github.com/ruzickap/action-my-broken-link-checker/pull/20)
+- Replace markdown link checker by action-my-markdown-link-checker [`#18`](https://github.com/ruzickap/action-my-broken-link-checker/pull/18)
+- Replace markdown linter [`#17`](https://github.com/ruzickap/action-my-broken-link-checker/pull/17)
+- Fix CMD_PARAMS to become array [`#16`](https://github.com/ruzickap/action-my-broken-link-checker/pull/16)
+- CHANGELOG file update [`#15`](https://github.com/ruzickap/action-my-broken-link-checker/pull/15)
+
 ## [v1.0.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.2...v1.0.3) (2020-07-15)
 
 - Fix check-broken-links test [`#14`](https://github.com/ruzickap/action-my-broken-link-checker/pull/14)
