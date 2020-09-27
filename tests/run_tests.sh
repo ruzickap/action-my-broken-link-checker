@@ -5,7 +5,7 @@ export INPUT_DEBUG="true"
 
 
 echo -e "\n\n\e[32m!!! Check differnet URLs types\e[m"
-export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --concurrency=10 --verbose"
+export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose"
 
 export INPUT_URL="https://google.com"
 ../entrypoint.sh
@@ -33,7 +33,7 @@ echo -e "\n\n\e[32m!!! Test docker image\e[m"
 docker build .. -t my-broken-link-checker-test
 
 export INPUT_URL="https://google.com"
-export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --concurrency=10 --verbose"
+export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose"
 docker run --rm -t -e INPUT_DEBUG -e INPUT_URL -e INPUT_CMD_PARAMS my-broken-link-checker-test
 
 export INPUT_URL="https://my-testing-domain.com"

@@ -47,7 +47,7 @@ pe 'export INPUT_URL="https://google.com"'
 p ''
 
 p 'Add some extra muffet parameters to INPUT_CMD_PARAMS variable:'
-pe 'export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --concurrency=10 --verbose"'
+pe 'export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --verbose"'
 
 p ''
 

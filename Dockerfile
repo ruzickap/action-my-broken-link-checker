@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-broken-link-checker"
@@ -9,10 +9,10 @@ LABEL "com.github.actions.description"="Check broken links on web pages stored l
 LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
-ENV MUFFET_VERSION="1.3.3"
+ENV MUFFET_VERSION="2.0.4"
 #ENV MUFFET_VERSION="latest"
 
-ENV CADDY_VERSION="2.1.1"
+ENV CADDY_VERSION="2.2.0"
 #ENV CADDY_VERSION="latest"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
@@ -28,7 +28,7 @@ RUN set -eux && \
     if [ "${MUFFET_VERSION}" = "latest" ]; then \
       MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4) ; \
     else \
-      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/${MUFFET_VERSION}/muffet_${MUFFET_VERSION}_Linux_x86_64.tar.gz" ; \
+      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_${MUFFET_VERSION}_Linux_x86_64.tar.gz" ; \
     fi && \
     wget -qO- "${MUFFET_URL}" | tar xzf - -C /usr/local/bin/ muffet && \
     if [ "${CADDY_VERSION}" = "latest" ]; then \

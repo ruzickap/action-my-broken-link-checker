@@ -4,7 +4,7 @@ export INPUT_DEBUG="true"
 
 echo -e "\n\n\e[32m!!! Test when RUN_TIMEOUT is too tight\e[m"
 
-export INPUT_CMD_PARAMS="--one-page-only --concurrency=1 --verbose"
+export INPUT_CMD_PARAMS="--one-page-only --max-connections=1 --verbose"
 export INPUT_RUN_TIMEOUT="1"
 export INPUT_URL="https://google.com"
 ../entrypoint.sh

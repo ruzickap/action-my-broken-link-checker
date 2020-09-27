@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
+
+export MUFFET_VERSION="2.0.4"
+export CADDY_VERSION="2.2.0"
 
 # Command line parameters for muffet
-export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --concurrency=10}"
+export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --max-connections=10}"
 # Set path variable containing web pages
 export PAGES_PATH=${INPUT_PAGES_PATH:-}
 # URL to scan / check
@@ -18,6 +21,10 @@ export PAGES_URI
 export RUN_TIMEOUT="${INPUT_RUN_TIMEOUT:-300}"
 # Debug variable - enable by setting non-empty value
 export DEBUG=${INPUT_DEBUG:-}
+# Create caddy log file where will be all the log messages form the caddy server
+CADDY_LOG=$( mktemp /tmp/Caddy-log.XXXXXX )
+# Create caddy configuration to run web server using the domain set in PAGES_DOMAIN + /etc/hosts
+CADDYFILE=$( mktemp /tmp/Caddyfile.XXXXXX )
 
 if [ $EUID != 0 ]; then
   sudo_cmd="sudo"
@@ -40,12 +47,14 @@ cleanup() {
     if ! grep -q -E '(docker|containerd)' /proc/self/cgroup ; then
       $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
     fi
-    $sudo_cmd caddy stop > /dev/null
+    $sudo_cmd caddy stop &> /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
+    [ -f "${CADDY_LOG}" ] && rm "${CADDY_LOG}"
   fi
 }
 
 error_trap() {
+  cat "${CADDY_LOG}"
   cleanup
   print_error "[$(date +'%F %T')] Something went wrong - see the errors above..."
 }
@@ -60,14 +69,26 @@ trap error_trap ERR
 
 # Install muffet if needed
 if ! hash muffet &> /dev/null ; then
-  MUFFET_URL=$(wget --quiet https://api.github.com/repos/raviqqe/muffet/releases/latest -O - | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4)
-  wget --quiet "${MUFFET_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ muffet
+
+  if [ "${MUFFET_VERSION}" = "latest" ]; then
+    MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4)
+  else
+    MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_${MUFFET_VERSION}_Linux_x86_64.tar.gz"
+  fi
+
+  wget -qO- "${MUFFET_URL}" | $sudo_cmd tar xzf - -C /usr/local/bin/ muffet
 fi
 
 # Install caddy if needed
 if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ] ; then
-  LATEST_CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_amd64.tar.gz" | cut -d \" -f 4)
-  wget --quiet "${LATEST_CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy
+
+  if [ "${CADDY_VERSION}" = "latest" ]; then
+    CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_amd64.tar.gz" | cut -d \" -f 4)
+  else
+    CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz"
+  fi
+
+  wget --quiet "${CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy
 fi
 
 IFS=' ' read -r -a CMD_PARAMS <<< "$CMD_PARAMS"
@@ -93,8 +114,6 @@ else
     $sudo_cmd bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts"
   fi
 
-  # Create caddy configuration to run web server using the domain set in PAGES_DOMAIN + /etc/hosts
-  CADDYFILE=$( mktemp /tmp/Caddyfile.XXXXXX )
   {
     echo "${PAGES_URI} {"
     echo "  root * ${PAGES_PATH}"
@@ -104,7 +123,7 @@ else
   } > "${CADDYFILE}"
 
   # Run caddy web server on the background
-  $sudo_cmd caddy start -config "${CADDYFILE}" > /dev/null
+  $sudo_cmd caddy start -config "${CADDYFILE}" &> "${CADDY_LOG}"
   sleep 1
 
   # Run check
