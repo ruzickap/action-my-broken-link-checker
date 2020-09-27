@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.4...v1.1.0) (2020-09-27)
+
+- Update Caddy and Muffet [`#23`](https://github.com/ruzickap/action-my-broken-link-checker/pull/23)
+- CHANGELOG file update [`#22`](https://github.com/ruzickap/action-my-broken-link-checker/pull/22)
+
 ## [v1.0.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.3...v1.0.4) (2020-09-17)
 
 - Change super-linter source [`#21`](https://github.com/ruzickap/action-my-broken-link-checker/pull/21)
