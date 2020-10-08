@@ -23,19 +23,19 @@ jobs:
         uses: ./
         with:
           url: https://google.com
-          cmd_params: --verbose --ignore-fragments --one-page-only
+          cmd_params: --verbose --color=always --ignore-fragments --one-page-only
 
       - name: Check - simple
         env:
           INPUT_URL: https://google.com
-          INPUT_CMD_PARAMS: --verbose --ignore-fragments --one-page-only
+          INPUT_CMD_PARAMS: --verbose --color=always --ignore-fragments --one-page-only
         run: ./entrypoint.sh
 
       - name: Check - simple - local pages
         env:
           INPUT_URL: https://my-testing-domain.com
           INPUT_PAGES_PATH: ./tests/
-          INPUT_CMD_PARAMS: --skip-tls-verification --verbose
+          INPUT_CMD_PARAMS: --skip-tls-verification --verbose --color=always
         run:
           ./entrypoint.sh
 
@@ -67,7 +67,7 @@ jobs:
         env:
           INPUT_URL: https://my-testing-domain.com
           INPUT_PAGES_PATH: ./public/
-          INPUT_CMD_PARAMS: --skip-tls-verification --verbose
+          INPUT_CMD_PARAMS: --skip-tls-verification --verbose --color=always
           INPUT_RUN_TIMEOUT: 10
           INPUT_DEBUG: true
         run: ./entrypoint.sh
@@ -77,6 +77,6 @@ jobs:
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
-          cmd_params: --skip-tls-verification --verbose
+          cmd_params: --skip-tls-verification --verbose --color=always
           run_timeout: 10
           debug: true
