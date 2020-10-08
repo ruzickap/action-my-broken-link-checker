@@ -28,7 +28,7 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v1
         with:
           url: https://www.google.com
-          cmd_params: "--one-page-only"  # Check just one page
+          cmd_params: "--one-page-only --color=always"  # Check just one page
 ```
 
 Check out the real demo:
@@ -47,7 +47,7 @@ parameter and serving the web pages (see the details in [entrypoint.sh](./entryp
   with:
     url: https://www.example.com/test123
     pages_path: ./build/
-    cmd_params: --buffer-size=8192 --max-connections=10 --skip-tls-verification --limit-redirections=5 --timeout=20  # muffet parameters
+    cmd_params: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --limit-redirections=5 --timeout=20  # muffet parameters
     run_timeout: 600  # maximum amount of time to run muffet (default is set to 300 seconds)
 ```
 
@@ -58,7 +58,7 @@ Do you want to skip the docker build step? OK, the script mode is also available
   env:
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
-    INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --skip-tls-verification  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
+    INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
   run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 ```
 
@@ -66,13 +66,13 @@ Do you want to skip the docker build step? OK, the script mode is also available
 
 Environment variables used by `./entrypoint.sh` script.
 
-| Variable            | Default                                   | Description                                                                                                                                                              |
-| ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `INPUT_CMD_PARAMS`  | `--buffer-size=8192 --max-connections=10` | Command line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) - details [here](https://github.com/raviqqe/muffet/blob/master/arguments.go#L16-L34) |
-| `INPUT_DEBUG`       | false                                     | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                                                                                                            |
-| `INPUT_PAGES_PATH`  |                                           | Relative path to the directory with local web pages                                                                                                                      |
-| `INPUT_RUN_TIMEOUT` | 300                                       | Maximum number of seconds that URL checker can be running                                                                                                                |
-| `INPUT_URL`         | (**Mandatory / Required**)                | URL which will be checked                                                                                                                                                |
+| Variable            | Default                                                  | Description                                                                                                                                                              |
+| ------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `INPUT_CMD_PARAMS`  | `--buffer-size=8192 --max-connections=10 --color=always` | Command line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) - details [here](https://github.com/raviqqe/muffet/blob/master/arguments.go#L16-L34) |
+| `INPUT_DEBUG`       | false                                                    | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                                                                                                            |
+| `INPUT_PAGES_PATH`  |                                                          | Relative path to the directory with local web pages                                                                                                                      |
+| `INPUT_RUN_TIMEOUT` | 300                                                      | Maximum number of seconds that URL checker can be running                                                                                                                |
+| `INPUT_URL`         | (**Mandatory / Required**)                               | URL which will be checked                                                                                                                                                |
 
 ## Full example
 
@@ -113,7 +113,7 @@ jobs:
         env:
           INPUT_URL: https://my-testing-domain.com
           INPUT_PAGES_PATH: ./public/
-          INPUT_CMD_PARAMS: "--skip-tls-verification --verbose"
+          INPUT_CMD_PARAMS: "--skip-tls-verification --verbose --color=always"
           INPUT_RUN_TIMEOUT: 100
           INPUT_DEBUG: true
         run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
@@ -123,7 +123,7 @@ jobs:
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
-          cmd_params: "--skip-tls-verification --verbose"
+          cmd_params: "--skip-tls-verification --verbose --color=always"
           run_timeout: 10
           debug: true
 ```
@@ -183,7 +183,7 @@ jobs:
         env:
           INPUT_URL: https://${{ github.event.repository.name }}
           INPUT_PAGES_PATH: public
-          INPUT_CMD_PARAMS: --verbose --buffer-size=8192 --max-connections=10 --skip-tls-verification --exclude=linkedin.com
+          INPUT_CMD_PARAMS: --verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude=linkedin.com
         run: |
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 
@@ -250,7 +250,7 @@ jobs:
         env:
           INPUT_URL: https://${{ github.event.repository.owner.name }}.github.io/${{ github.event.repository.name }}
           INPUT_PAGES_PATH: .
-          INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --skip-tls-verification
+          INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification
         run: |
           ln -s docs/.vuepress/dist ${{ github.event.repository.name }}
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
@@ -285,7 +285,7 @@ are not already installed on your system.
 
 ```bash
 export INPUT_URL="https://google.com"
-export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --verbose"
+export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
 ./entrypoint.sh
 ```
 
@@ -323,7 +323,7 @@ without touching your system:
 
 ```bash
 export INPUT_URL="https://google.com"
-export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --verbose"
+export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
 docker run --rm -t -e INPUT_URL -e INPUT_CMD_PARAMS peru/my-broken-link-checker
 ```
 
@@ -336,7 +336,7 @@ this git repository:
 ```bash
 export INPUT_URL="https://my-testing-domain.com"
 export INPUT_PAGES_PATH="${PWD}/tests/"
-export INPUT_CMD_PARAMS="--skip-tls-verification --verbose"
+export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 ./entrypoint.sh
 ```
 

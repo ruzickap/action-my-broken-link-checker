@@ -2,11 +2,11 @@
 
 set -Eeuo pipefail
 
-export MUFFET_VERSION="2.0.4"
+export MUFFET_VERSION="2.2.1"
 export CADDY_VERSION="2.2.0"
 
 # Command line parameters for muffet
-export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --max-connections=10}"
+export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --max-connections=10 --color=always}"
 # Set path variable containing web pages
 export PAGES_PATH=${INPUT_PAGES_PATH:-}
 # URL to scan / check
