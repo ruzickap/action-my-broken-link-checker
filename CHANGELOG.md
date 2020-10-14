@@ -1,5 +1,11 @@
 # Changelog
 
+## [v2.0.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.1.0...v2.0.0) (2020-10-14)
+
+- Increase Caddy version [`#26`](https://github.com/ruzickap/action-my-broken-link-checker/pull/26)
+- Add "--color=always" parameter and update muffet version [`#25`](https://github.com/ruzickap/action-my-broken-link-checker/pull/25)
+- CHANGELOG file update [`#24`](https://github.com/ruzickap/action-my-broken-link-checker/pull/24)
+
 ## [v1.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.4...v1.1.0) (2020-09-27)
 
 - Update Caddy and Muffet [`#23`](https://github.com/ruzickap/action-my-broken-link-checker/pull/23)
