@@ -66,13 +66,13 @@ Do you want to skip the docker build step? OK, the script mode is also available
 
 Environment variables used by `./entrypoint.sh` script.
 
-| Variable            | Default                                                  | Description                                                                                                                                                              |
-| ------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `INPUT_CMD_PARAMS`  | `--buffer-size=8192 --max-connections=10 --color=always` | Command line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) - details [here](https://github.com/raviqqe/muffet/blob/master/arguments.go#L16-L34) |
-| `INPUT_DEBUG`       | false                                                    | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                                                                                                            |
-| `INPUT_PAGES_PATH`  |                                                          | Relative path to the directory with local web pages                                                                                                                      |
-| `INPUT_RUN_TIMEOUT` | 300                                                      | Maximum number of seconds that URL checker can be running                                                                                                                |
-| `INPUT_URL`         | (**Mandatory / Required**)                               | URL which will be checked                                                                                                                                                |
+| Variable            | Default                                                            | Description                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `INPUT_CMD_PARAMS`  | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) - details [here](https://github.com/raviqqe/muffet/blob/master/arguments.go#L16-L34) |
+| `INPUT_DEBUG`       | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                                                                                                            |
+| `INPUT_PAGES_PATH`  |                                                                    | Relative path to the directory with local web pages                                                                                                                      |
+| `INPUT_RUN_TIMEOUT` | 300                                                                | Maximum number of seconds that URL checker can be running                                                                                                                |
+| `INPUT_URL`         | (**Mandatory / Required**)                                         | URL which will be checked                                                                                                                                                |
 
 ## Full example
 
