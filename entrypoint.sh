@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-export MUFFET_VERSION="2.2.1"
+export MUFFET_VERSION="2.3.0"
 export CADDY_VERSION="2.2.1"
 
 # Command line parameters for muffet
@@ -44,7 +44,7 @@ print_info() {
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
     # Manipulation with /etc/hosts using 'sed -i' doesn't work inside containers
-    if ! grep -q -E '(docker|containerd)' /proc/self/cgroup ; then
+    if ! grep -E '(docker|containerd)' /proc/self/cgroup &> /dev/null ; then
       $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
     fi
     $sudo_cmd caddy stop &> /dev/null
@@ -82,10 +82,11 @@ fi
 # Install caddy if needed
 if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ] ; then
 
+  PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')
   if [ "${CADDY_VERSION}" = "latest" ]; then
-    CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_amd64.tar.gz" | cut -d \" -f 4)
+    CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_${PLATFORM}_amd64.tar.gz" | cut -d \" -f 4)
   else
-    CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz"
+    CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_${PLATFORM}_amd64.tar.gz"
   fi
 
   wget --quiet "${CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy
