@@ -9,10 +9,10 @@ LABEL "com.github.actions.description"="Check broken links on web pages stored l
 LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
-ENV MUFFET_VERSION="2.3.0"
+ENV MUFFET_VERSION="2.3.2"
 #ENV MUFFET_VERSION="latest"
 
-ENV CADDY_VERSION="2.2.1"
+ENV CADDY_VERSION="2.3.0"
 #ENV CADDY_VERSION="latest"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
