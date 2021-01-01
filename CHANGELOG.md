@@ -1,5 +1,12 @@
 # Changelog
 
+## [v2.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.0.0...v2.1.0) (2021-01-01)
+
+- Upgrade Caddy to version 2.3.0 [`#30`](https://github.com/ruzickap/action-my-broken-link-checker/pull/30)
+- Add MacOS support, add verbose parameter to muffet as default [`#29`](https://github.com/ruzickap/action-my-broken-link-checker/pull/29)
+- Upgrade muffet [`#28`](https://github.com/ruzickap/action-my-broken-link-checker/pull/28)
+- CHANGELOG file update [`#27`](https://github.com/ruzickap/action-my-broken-link-checker/pull/27)
+
 ## [v2.0.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.1.0...v2.0.0) (2020-10-14)
 
 - Increase Caddy version [`#26`](https://github.com/ruzickap/action-my-broken-link-checker/pull/26)
