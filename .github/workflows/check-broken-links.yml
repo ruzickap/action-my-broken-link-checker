@@ -22,12 +22,12 @@ jobs:
       - name: Check - container
         uses: ./
         with:
-          url: https://google.com
+          url: https://docs.github.com
           cmd_params: --verbose --color=always --ignore-fragments --one-page-only
 
       - name: Check - simple
         env:
-          INPUT_URL: https://google.com
+          INPUT_URL: https://docs.github.com
           INPUT_CMD_PARAMS: --verbose --color=always --ignore-fragments --one-page-only
         run: ./entrypoint.sh
 
