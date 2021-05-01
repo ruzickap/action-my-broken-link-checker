@@ -1,5 +1,18 @@
 # Changelog
 
+## [v2.2.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.0...v2.2.1) (2021-05-01)
+
+- Update muffet [`#38`](https://github.com/ruzickap/action-my-broken-link-checker/pull/38)
+- Upgrade GH Actions versions [`#37`](https://github.com/ruzickap/action-my-broken-link-checker/pull/37)
+- CHANGELOG file update [`#36`](https://github.com/ruzickap/action-my-broken-link-checker/pull/36)
+
+## [v2.2.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.1.0...v2.2.0) (2021-03-04)
+
+- Bump to MUFFET_VERSION 2.4.1 with --rate-limit feature. [`#33`](https://github.com/ruzickap/action-my-broken-link-checker/pull/33)
+- Fix tests [`#35`](https://github.com/ruzickap/action-my-broken-link-checker/pull/35)
+- Replace google.com by docs.github.com when running the tests [`#34`](https://github.com/ruzickap/action-my-broken-link-checker/pull/34)
+- CHANGELOG file update [`#31`](https://github.com/ruzickap/action-my-broken-link-checker/pull/31)
+
 ## [v2.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.0.0...v2.1.0) (2021-01-01)
 
 - Upgrade Caddy to version 2.3.0 [`#30`](https://github.com/ruzickap/action-my-broken-link-checker/pull/30)
