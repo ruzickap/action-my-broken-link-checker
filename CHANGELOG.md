@@ -1,5 +1,10 @@
 # Changelog
 
+## [v2.2.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.2...v2.2.3) (2021-05-20)
+
+- Update Caddy [`#42`](https://github.com/ruzickap/action-my-broken-link-checker/pull/42)
+- CHANGELOG file update [`#41`](https://github.com/ruzickap/action-my-broken-link-checker/pull/41)
+
 ## [v2.2.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.1...v2.2.2) (2021-05-11)
 
 - Update Caddy [`#40`](https://github.com/ruzickap/action-my-broken-link-checker/pull/40)
