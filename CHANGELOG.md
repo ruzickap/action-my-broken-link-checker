@@ -1,45 +1,42 @@
 # Changelog
 
+## [v2.2.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.3...v2.2.4) (2021-07-23)
+
+- Update caddy [`#44`](https://github.com/ruzickap/action-my-broken-link-checker/pull/44)
+
 ## [v2.2.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.2...v2.2.3) (2021-05-20)
 
 - Update Caddy [`#42`](https://github.com/ruzickap/action-my-broken-link-checker/pull/42)
-- CHANGELOG file update [`#41`](https://github.com/ruzickap/action-my-broken-link-checker/pull/41)
 
 ## [v2.2.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.1...v2.2.2) (2021-05-11)
 
 - Update Caddy [`#40`](https://github.com/ruzickap/action-my-broken-link-checker/pull/40)
-- CHANGELOG file update [`#39`](https://github.com/ruzickap/action-my-broken-link-checker/pull/39)
 
 ## [v2.2.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.0...v2.2.1) (2021-05-01)
 
 - Update muffet [`#38`](https://github.com/ruzickap/action-my-broken-link-checker/pull/38)
 - Upgrade GH Actions versions [`#37`](https://github.com/ruzickap/action-my-broken-link-checker/pull/37)
-- CHANGELOG file update [`#36`](https://github.com/ruzickap/action-my-broken-link-checker/pull/36)
 
 ## [v2.2.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.1.0...v2.2.0) (2021-03-04)
 
 - Bump to MUFFET_VERSION 2.4.1 with --rate-limit feature. [`#33`](https://github.com/ruzickap/action-my-broken-link-checker/pull/33)
 - Fix tests [`#35`](https://github.com/ruzickap/action-my-broken-link-checker/pull/35)
 - Replace google.com by docs.github.com when running the tests [`#34`](https://github.com/ruzickap/action-my-broken-link-checker/pull/34)
-- CHANGELOG file update [`#31`](https://github.com/ruzickap/action-my-broken-link-checker/pull/31)
 
 ## [v2.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.0.0...v2.1.0) (2021-01-01)
 
 - Upgrade Caddy to version 2.3.0 [`#30`](https://github.com/ruzickap/action-my-broken-link-checker/pull/30)
 - Add MacOS support, add verbose parameter to muffet as default [`#29`](https://github.com/ruzickap/action-my-broken-link-checker/pull/29)
 - Upgrade muffet [`#28`](https://github.com/ruzickap/action-my-broken-link-checker/pull/28)
-- CHANGELOG file update [`#27`](https://github.com/ruzickap/action-my-broken-link-checker/pull/27)
 
 ## [v2.0.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.1.0...v2.0.0) (2020-10-14)
 
 - Increase Caddy version [`#26`](https://github.com/ruzickap/action-my-broken-link-checker/pull/26)
 - Add "--color=always" parameter and update muffet version [`#25`](https://github.com/ruzickap/action-my-broken-link-checker/pull/25)
-- CHANGELOG file update [`#24`](https://github.com/ruzickap/action-my-broken-link-checker/pull/24)
 
 ## [v1.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.4...v1.1.0) (2020-09-27)
 
 - Update Caddy and Muffet [`#23`](https://github.com/ruzickap/action-my-broken-link-checker/pull/23)
-- CHANGELOG file update [`#22`](https://github.com/ruzickap/action-my-broken-link-checker/pull/22)
 
 ## [v1.0.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.3...v1.0.4) (2020-09-17)
 
@@ -48,7 +45,6 @@
 - Replace markdown link checker by action-my-markdown-link-checker [`#18`](https://github.com/ruzickap/action-my-broken-link-checker/pull/18)
 - Replace markdown linter [`#17`](https://github.com/ruzickap/action-my-broken-link-checker/pull/17)
 - Fix CMD_PARAMS to become array [`#16`](https://github.com/ruzickap/action-my-broken-link-checker/pull/16)
-- CHANGELOG file update [`#15`](https://github.com/ruzickap/action-my-broken-link-checker/pull/15)
 
 ## [v1.0.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.2...v1.0.3) (2020-07-15)
 
@@ -57,14 +53,12 @@
 - Add DOCTYPE to test html pages [`#12`](https://github.com/ruzickap/action-my-broken-link-checker/pull/12)
 - Cleanup [`#11`](https://github.com/ruzickap/action-my-broken-link-checker/pull/11)
 - Update Muffet and Caddy [`#10`](https://github.com/ruzickap/action-my-broken-link-checker/pull/10)
-- CHANGELOG file update [`#9`](https://github.com/ruzickap/action-my-broken-link-checker/pull/9)
 
 ## [v1.0.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.1...v1.0.2) (2020-06-21)
 
 - Add Super-Linter [`#8`](https://github.com/ruzickap/action-my-broken-link-checker/pull/8)
 - Use caddy2 instead of caddy [`#7`](https://github.com/ruzickap/action-my-broken-link-checker/pull/7)
 - Use shell-linter in latest version [`#6`](https://github.com/ruzickap/action-my-broken-link-checker/pull/6)
-- CHANGELOG file update [`#5`](https://github.com/ruzickap/action-my-broken-link-checker/pull/5)
 
 ## [v1.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.0...v1.0.1) (2020-05-13)
 
