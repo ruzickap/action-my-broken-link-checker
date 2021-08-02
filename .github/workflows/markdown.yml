@@ -43,7 +43,7 @@ jobs:
         run: npm install -g markdown-spellcheck
 
       - name: Run mdspell
-        run: find . -type f \( -name "*.md" ! -name "CHANGELOG.md" \) | xargs --max-args=1 --verbose mdspell --ignore-numbers --ignore-acronyms --report --en-gb
+        run: find . -type f \( -name "*.md" ! -name "CHANGELOG.md" \) -print0 | xargs -0 --max-args=1 --verbose mdspell --ignore-numbers --ignore-acronyms --report --en-gb
 
   markdown-link-check:
     runs-on: ubuntu-latest
