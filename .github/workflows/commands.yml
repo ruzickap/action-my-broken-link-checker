@@ -20,4 +20,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check commands in README.md file
-        run: sed -n '/^```bash.*/,/^```$/p' README.md | sed '/^```*/d' | bash -x
+        run: sed -n "/^\`\`\`bash.*/,/^\`\`\`$/p" README.md | sed "/^\`\`\`*/d" | bash -x
