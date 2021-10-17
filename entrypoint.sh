@@ -2,8 +2,8 @@
 
 set -Eeuo pipefail
 
-export MUFFET_VERSION="2.4.3"
-export CADDY_VERSION="2.4.3"
+export MUFFET_VERSION="2.4.4"
+export CADDY_VERSION="2.4.5"
 
 # Command line parameters for muffet
 export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --max-connections=10 --color=always --verbose}"
