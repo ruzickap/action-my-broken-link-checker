@@ -10,7 +10,7 @@ on:
       - .spelling
   push:
     branches:
-      - master
+      - main
     paths:
       - '**.md'
       - .github/workflows/markdown.yml

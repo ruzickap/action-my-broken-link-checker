@@ -11,7 +11,7 @@ on:
       - .github/workflows/docker-image.yml
   push:
     branches:
-      - master
+      - main
     paths:
       - Dockerfile
       - .dockerignore

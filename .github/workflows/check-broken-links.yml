@@ -9,7 +9,7 @@ on:
       - .github/workflows/check-broken-links.yml
   push:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/check-broken-links.yml
 

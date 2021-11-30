@@ -8,7 +8,7 @@ on:
       - .github/workflows/check-commands.yml
   push:
     branches:
-      - master
+      - main
     paths:
       - README.md
       - .github/workflows/check-commands.yml
