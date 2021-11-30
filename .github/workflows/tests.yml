@@ -11,7 +11,7 @@ on:
       - .dockerignore
   push:
     branches:
-      - master
+      - main
     paths:
       - tests/**
       - .github/workflows/tests.yml
