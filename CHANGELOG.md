@@ -1,5 +1,15 @@
 # Changelog
 
+## [v2.2.5](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.4...v2.2.5) (2021-12-02)
+
+- Update muffet [`#52`](https://github.com/ruzickap/action-my-broken-link-checker/pull/52)
+- Move from master to main [`#51`](https://github.com/ruzickap/action-my-broken-link-checker/pull/51)
+- Update muffet [`#50`](https://github.com/ruzickap/action-my-broken-link-checker/pull/50)
+- Update caddy [`#49`](https://github.com/ruzickap/action-my-broken-link-checker/pull/49)
+- Update muffet and caddy [`#48`](https://github.com/ruzickap/action-my-broken-link-checker/pull/48)
+- Update muffet [`#47`](https://github.com/ruzickap/action-my-broken-link-checker/pull/47)
+- Use super-linter:slim [`#46`](https://github.com/ruzickap/action-my-broken-link-checker/pull/46)
+
 ## [v2.2.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.3...v2.2.4) (2021-07-23)
 
 - Update caddy [`#44`](https://github.com/ruzickap/action-my-broken-link-checker/pull/44)
