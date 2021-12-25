@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-export MUFFET_VERSION="2.4.7"
+export MUFFET_VERSION="2.4.8"
 export CADDY_VERSION="2.4.6"
 
 # Command line parameters for muffet
