@@ -47,7 +47,7 @@ parameter and serving the web pages (see the details in [entrypoint.sh](./entryp
   with:
     url: https://www.example.com/test123
     pages_path: ./build/
-    cmd_params: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --limit-redirections=5 --timeout=20  # muffet parameters
+    cmd_params: "--buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --limit-redirections=5 --timeout=20"  # muffet parameters
     run_timeout: 600  # maximum amount of time to run muffet (default is set to 300 seconds)
 ```
 
@@ -58,7 +58,7 @@ Do you want to skip the docker build step? OK, the script mode is also available
   env:
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
-    INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
+    INPUT_CMD_PARAMS: "--buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification"  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
   run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 ```
 
@@ -183,7 +183,7 @@ jobs:
         env:
           INPUT_URL: https://${{ github.event.repository.name }}
           INPUT_PAGES_PATH: public
-          INPUT_CMD_PARAMS: --verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude=linkedin.com
+          INPUT_CMD_PARAMS: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude="(mylabs.dev|linkedin.com)"'
         run: |
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 
@@ -250,7 +250,7 @@ jobs:
         env:
           INPUT_URL: https://${{ github.event.repository.owner.name }}.github.io/${{ github.event.repository.name }}
           INPUT_PAGES_PATH: .
-          INPUT_CMD_PARAMS: --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification
+          INPUT_CMD_PARAMS: "--buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification"
         run: |
           ln -s docs/.vuepress/dist ${{ github.event.repository.name }}
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
