@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check
-        uses: ruzickap/action-my-broken-link-checker@v1
+        uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.google.com
           cmd_params: "--one-page-only --color=always"  # Check just one page
@@ -43,7 +43,7 @@ parameter and serving the web pages (see the details in [entrypoint.sh](./entryp
 
 ```yaml
 - name: Check
-  uses: ruzickap/action-my-broken-link-checker@v1
+  uses: ruzickap/action-my-broken-link-checker@v2
   with:
     url: https://www.example.com/test123
     pages_path: ./build/
@@ -119,7 +119,7 @@ jobs:
         run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
 
       - name: Check links using container
-        uses: ruzickap/action-my-broken-link-checker@v1
+        uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
