@@ -58,7 +58,7 @@ Do you want to skip the docker build step? OK, the script mode is also available
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
     INPUT_CMD_PARAMS: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --skip-tls-verification'  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
-  run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+  run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
 ```
 
 ## Parameters
@@ -113,7 +113,7 @@ jobs:
           INPUT_PAGES_PATH: ./public/
           INPUT_CMD_PARAMS: '--skip-tls-verification --verbose --color=always'
           INPUT_DEBUG: true
-        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
 
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v2
@@ -181,7 +181,7 @@ jobs:
           INPUT_PAGES_PATH: public
           INPUT_CMD_PARAMS: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude="(mylabs.dev|linkedin.com)"'
         run: |
-          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v1/entrypoint.sh | bash
+          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
 
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v2
