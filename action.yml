@@ -14,9 +14,6 @@ inputs:
     description: 'Command line parameters for URL checker'
   pages_path:
     description: 'Relative path to the directory with local web pages'
-  run_timeout:
-    description: 'Maximum number of seconds that URL checker can be running'
-    default: '300'
   url:
     description: 'URL which will be checked'
     required: true
