@@ -1,5 +1,12 @@
 # Changelog
 
+## [v2.2.6](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.5...v2.2.6)
+
+- Remove RUN_TIMEOUT / INPUT_RUN_TIMEOUT parameter [`#58`](https://github.com/ruzickap/action-my-broken-link-checker/pull/58)
+- Update README file [`#57`](https://github.com/ruzickap/action-my-broken-link-checker/pull/57)
+- Use `@v2` in tests and docs [`#56`](https://github.com/ruzickap/action-my-broken-link-checker/pull/56)
+- Update muffet [`#55`](https://github.com/ruzickap/action-my-broken-link-checker/pull/55)
+
 ## [v2.2.5](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.4...v2.2.5) (2021-12-02)
 
 - Update muffet [`#52`](https://github.com/ruzickap/action-my-broken-link-checker/pull/52)
@@ -70,8 +77,24 @@
 - Use caddy2 instead of caddy [`#7`](https://github.com/ruzickap/action-my-broken-link-checker/pull/7)
 - Use shell-linter in latest version [`#6`](https://github.com/ruzickap/action-my-broken-link-checker/pull/6)
 
-## [v1.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.0...v1.0.1) (2020-05-13)
+## [v1.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1...v1.0.1) (2020-05-13)
 
+## [v1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v1.0.0...v1) (2021-12-09)
+
+- Update Caddy and Muffet [`#23`](https://github.com/ruzickap/action-my-broken-link-checker/pull/23)
+- Change super-linter source [`#21`](https://github.com/ruzickap/action-my-broken-link-checker/pull/21)
+- Add more examples to README [`#20`](https://github.com/ruzickap/action-my-broken-link-checker/pull/20)
+- Replace markdown link checker by action-my-markdown-link-checker [`#18`](https://github.com/ruzickap/action-my-broken-link-checker/pull/18)
+- Replace markdown linter [`#17`](https://github.com/ruzickap/action-my-broken-link-checker/pull/17)
+- Fix CMD_PARAMS to become array [`#16`](https://github.com/ruzickap/action-my-broken-link-checker/pull/16)
+- Fix check-broken-links test [`#14`](https://github.com/ruzickap/action-my-broken-link-checker/pull/14)
+- Use master branch when running checks in check-broken-links.yml [`#13`](https://github.com/ruzickap/action-my-broken-link-checker/pull/13)
+- Add DOCTYPE to test html pages [`#12`](https://github.com/ruzickap/action-my-broken-link-checker/pull/12)
+- Cleanup [`#11`](https://github.com/ruzickap/action-my-broken-link-checker/pull/11)
+- Update Muffet and Caddy [`#10`](https://github.com/ruzickap/action-my-broken-link-checker/pull/10)
+- Add Super-Linter [`#8`](https://github.com/ruzickap/action-my-broken-link-checker/pull/8)
+- Use caddy2 instead of caddy [`#7`](https://github.com/ruzickap/action-my-broken-link-checker/pull/7)
+- Use shell-linter in latest version [`#6`](https://github.com/ruzickap/action-my-broken-link-checker/pull/6)
 - Use "ubuntu-latest" instead of "ubuntu-18.04" in README [`#4`](https://github.com/ruzickap/action-my-broken-link-checker/pull/4)
 - Replace GH Action Stale by Stale GitHub App (probot) [`#3`](https://github.com/ruzickap/action-my-broken-link-checker/pull/3)
 - Replace GH Action Stale by Stale GitHub App (probot) [`#3`](https://github.com/ruzickap/action-my-broken-link-checker/pull/3)
