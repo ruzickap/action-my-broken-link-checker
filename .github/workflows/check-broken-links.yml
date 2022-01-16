@@ -68,7 +68,6 @@ jobs:
           INPUT_URL: https://my-testing-domain.com
           INPUT_PAGES_PATH: ./public/
           INPUT_CMD_PARAMS: --skip-tls-verification --verbose --color=always
-          INPUT_RUN_TIMEOUT: 10
           INPUT_DEBUG: true
         run: ./entrypoint.sh
 
@@ -78,5 +77,4 @@ jobs:
           url: https://my-testing-domain.com
           pages_path: ./public/
           cmd_params: --skip-tls-verification --verbose --color=always
-          run_timeout: 10
           debug: true

@@ -17,8 +17,6 @@ export PAGES_DOMAIN
 # URI used by caddy to serve locally stored web pages (https://test.example.com)
 PAGES_URI=$( echo "${URL}" | cut -d / -f 1,2,3 )
 export PAGES_URI
-# Maximum number of seconds that URL checker can be running
-export RUN_TIMEOUT="${INPUT_RUN_TIMEOUT:-300}"
 # Debug variable - enable by setting non-empty value
 export DEBUG=${INPUT_DEBUG:-}
 # Create caddy log file where will be all the log messages form the caddy server
@@ -103,7 +101,7 @@ IFS=' ' read -r -a CMD_PARAMS <<< "$CMD_PARAMS"
 if [ -z "${PAGES_PATH}" ] ; then
   # Run check
   print_info "[$(date +'%F %T')] Start checking: \"${URL}\""
-  timeout "${RUN_TIMEOUT}" muffet "${CMD_PARAMS[@]}" "${URL}"
+  muffet "${CMD_PARAMS[@]}" "${URL}"
 
 else
 
@@ -134,7 +132,7 @@ else
 
   # Run check
   print_info "[$(date +'%F %T')] Start checking: \"${URL}\""
-  timeout "${RUN_TIMEOUT}" muffet "${CMD_PARAMS[@]}" "${URL}"
+  muffet "${CMD_PARAMS[@]}" "${URL}"
   cleanup
 
 fi
