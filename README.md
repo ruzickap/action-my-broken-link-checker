@@ -72,6 +72,47 @@ Environment variables used by `./entrypoint.sh` script.
 | `INPUT_PAGES_PATH`  |                                                                    | Relative path to the directory with local web pages                                                                                                                      |
 | `INPUT_URL`         | (**Mandatory / Required**)                                         | URL which will be checked                                                                                                                                                |
 
+## Example of Periodic checks
+
+Pipeline for periodic link checks:
+
+```yaml
+name: periodic-broken-link-checks
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/periodic-broken-link-checks.yml
+  schedule:
+    - cron: '3 3 * * 3'
+
+jobs:
+  broken-link-checker:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Get GH Pages URL
+        id: gh_pages_url
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            let result = await github.request('GET /repos/:owner/:repo/pages', {
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            console.log(result.data.html_url);
+            return result.data.html_url
+          result-encoding: string
+
+      - name: Check broken links
+        uses: ruzickap/action-my-broken-link-checker@v2
+        with:
+          url: ${{ steps.gh_pages_url.outputs.result }}
+          cmd_params: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --timeout=20'
+```
+
 ## Full example
 
 GitHub Action example:
@@ -387,4 +428,4 @@ The following links contains real examples of My Broken Link Checker:
 
 * [periodic-broken-link-checks](https://github.com/ruzickap/xvx.cz/actions?query=workflow%3Aperiodic-broken-link-checks)
   * Periodic link checks of [xvx.cz](http://xvx.cz) website
-    using: [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/4471ace49d665d8bb601a9aaba0659a92615b0a7/.github/workflows/periodic-broken-link-checks.yml#L17-L31)
+    using: [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/dc2501725f05b59f64f990d4f478609a982e669a/.github/workflows/periodic-broken-link-checks.yml#L11-L34)
