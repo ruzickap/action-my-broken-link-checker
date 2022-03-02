@@ -17,7 +17,7 @@ jobs:
   my-broken-link-checker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Check - container
         uses: ./
@@ -42,7 +42,7 @@ jobs:
   build-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Create web page
         run: |
