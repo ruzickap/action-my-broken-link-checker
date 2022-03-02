@@ -23,7 +23,7 @@ jobs:
   docker-build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build test
         run: docker build . --file Dockerfile
@@ -31,7 +31,7 @@ jobs:
   hadolint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: hadolint
         uses: burdzwastaken/hadolint-action@master
