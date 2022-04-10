@@ -7,15 +7,17 @@ export INPUT_DEBUG="true"
 echo -e "\n\n\e[32m!!! Check differnet URLs types\e[m"
 export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always"
 
-export INPUT_URL="https://docs.github.com"
+export INPUT_URL="https://xvx.cz"
 ../entrypoint.sh
 
-export INPUT_URL="https://docs.github.com:443"
+export INPUT_URL="https://xvx.cz:443"
 ../entrypoint.sh
 
-export INPUT_URL="https://docs.github.com:443/en"
+export INPUT_URL="https://debian.cz:443/info/"
 ../entrypoint.sh
 
+export INPUT_URL="http://debian.cz/info"
+../entrypoint.sh
 
 echo -e "\n\n\e[32m!!! Test locally stored web pages (PAGES_PATH)\e[m"
 export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
