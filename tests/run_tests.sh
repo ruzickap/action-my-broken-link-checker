@@ -34,7 +34,7 @@ export INPUT_PAGES_PATH="${PWD}"
 echo -e "\n\n\e[32m!!! Test docker image\e[m"
 docker build .. -t my-broken-link-checker-test
 
-export INPUT_URL="https://docs.github.com"
+export INPUT_URL="https://debian.cz/develop/"
 export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always"
 docker run --rm -t -e INPUT_DEBUG -e INPUT_URL -e INPUT_CMD_PARAMS my-broken-link-checker-test
 
