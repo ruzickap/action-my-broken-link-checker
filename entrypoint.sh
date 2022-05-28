@@ -2,9 +2,9 @@
 
 set -Eeuo pipefail
 
-# renovate: datasource=github-tags depName=muffet packageName=raviqqe/muffet
+# renovate: datasource=github-tags depName=raviqqe/muffet
 export MUFFET_VERSION="2.5.0"
-# renovate: datasource=github-tags depName=caddy packageName=caddyserver/caddy
+# renovate: datasource=github-tags depName=caddyserver/caddy
 export CADDY_VERSION="2.5.1"
 
 # Command line parameters for muffet
