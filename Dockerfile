@@ -9,11 +9,10 @@ LABEL "com.github.actions.description"="Check broken links on web pages stored l
 LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
+# renovate: datasource=github-tags depName=muffet packageName=raviqqe/muffet
 ENV MUFFET_VERSION="2.4.9"
-#ENV MUFFET_VERSION="latest"
-
+# renovate: datasource=github-tags depName=caddy packageName=caddyserver/caddy
 ENV CADDY_VERSION="2.5.0"
-#ENV CADDY_VERSION="latest"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
