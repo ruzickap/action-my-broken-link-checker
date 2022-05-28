@@ -12,7 +12,7 @@ LABEL "com.github.actions.color"="blue"
 # renovate: datasource=github-tags depName=muffet packageName=raviqqe/muffet
 ENV MUFFET_VERSION="2.4.9"
 # renovate: datasource=github-tags depName=caddy packageName=caddyserver/caddy
-ENV CADDY_VERSION="2.5.0"
+ENV CADDY_VERSION="2.5.1"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
