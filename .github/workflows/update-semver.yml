@@ -3,8 +3,6 @@ name: update-semver
 on:
   release:
     types: [published]
-    tags:
-      - 'v*.*.*'
 
 jobs:
   update-semver:
