@@ -43,10 +43,7 @@ print_info() {
 # Remove all added files or changed /etc/hosts entry
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
-    # Manipulation with /etc/hosts using 'sed -i' doesn't work inside containers
-    if ! grep -E '(docker|containerd)' /proc/self/cgroup &> /dev/null ; then
-      $sudo_cmd sed -i --follow-symlinks "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts
-    fi
+    $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts || true
     $sudo_cmd caddy stop &> /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
     [ -f "${CADDY_LOG}" ] && rm "${CADDY_LOG}"
@@ -129,7 +126,7 @@ else
   } > "${CADDYFILE}"
 
   # Run caddy web server on the background
-  $sudo_cmd caddy start -config "${CADDYFILE}" &> "${CADDY_LOG}"
+  $sudo_cmd caddy start --config "${CADDYFILE}" &> "${CADDY_LOG}"
   sleep 1
 
   # Run check
