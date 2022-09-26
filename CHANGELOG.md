@@ -1,6 +1,19 @@
 # Changelog
 
-## [v2.2.8](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.7...v2.2.8)
+## [v2.3.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.8...v2.3.0)
+
+- Fix sed issue [`1ced9a2`](https://github.com/ruzickap/action-my-broken-link-checker/commit/1ced9a2270320c65a33ff0970a07fae8c01cb45a)
+- Add --follow-symlinks parameter to sed [`5b06004`](https://github.com/ruzickap/action-my-broken-link-checker/commit/5b060040a159cc0d35daa878d014320e63c04bca)
+- Update dependency caddyserver/caddy to v2.6.1 [`24b74fc`](https://github.com/ruzickap/action-my-broken-link-checker/commit/24b74fc26f8c62d21c6bed33e5e82daf72364737)
+- Update renovatebot/github-action action to v32.202.4 [`60c2668`](https://github.com/ruzickap/action-my-broken-link-checker/commit/60c26683f32bb6e4e63fe9ca105d378486e44f88)
+- Update renovatebot/github-action action to v32.197.1 [`28b5aec`](https://github.com/ruzickap/action-my-broken-link-checker/commit/28b5aecf3b55256b67dcace9fb318b01b5e06a2c)
+- Update renovatebot/github-action action to v32.194.4 [`bda948a`](https://github.com/ruzickap/action-my-broken-link-checker/commit/bda948a367f5e61c0537dfb79a925e7b9710c35e)
+- Update renovatebot/github-action action to v32.190.0 [`35785ed`](https://github.com/ruzickap/action-my-broken-link-checker/commit/35785ed0b21c2c7076d940a3dd49e0ecd4383d2d)
+- Update dependency raviqqe/muffet to v2.6.1 [`675141f`](https://github.com/ruzickap/action-my-broken-link-checker/commit/675141fa4a5d0242de405d740ef3f09d399028a9)
+- Update renovatebot/github-action action to v32.179.1 [`0d27c10`](https://github.com/ruzickap/action-my-broken-link-checker/commit/0d27c107eb0619d718fd8e64e61b3d9f50fc909a)
+- Update renovatebot/github-action action to v32.168.0 [`1cc6307`](https://github.com/ruzickap/action-my-broken-link-checker/commit/1cc6307c3d0a31bf57397c3e0aac53c87ec5ad0c)
+
+## [v2.2.8](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.7...v2.2.8) (2022-08-14)
 
 - Fix linter "tags" issue [`e0e897e`](https://github.com/ruzickap/action-my-broken-link-checker/commit/e0e897ee2e0a4774fbc66150a102c796743a55d6)
 - Update dependency raviqqe/muffet to v2.6.0 [`4548047`](https://github.com/ruzickap/action-my-broken-link-checker/commit/45480476ae13b9d10cef3242c65a5405d274b85f)
