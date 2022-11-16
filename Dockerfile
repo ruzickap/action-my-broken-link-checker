@@ -21,7 +21,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
 # - docker run --rm debian:stretch grep '^hosts:' /etc/nsswitch.conf
 RUN set -eux && \
-    [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf && \
+    test -e /etc/nsswitch.conf || echo 'hosts: files dns' > /etc/nsswitch.conf && \
     apk add --no-cache bash ca-certificates wget && \
     if [ "${MUFFET_VERSION}" = "latest" ]; then \
       MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4) ; \
