@@ -1,6 +1,18 @@
 # Changelog
 
-## [v2.3.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.8...v2.3.0)
+## [v2.3.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.0...v2.3.1)
+
+- Fix issue with test command vs [ ] [`4bc75fa`](https://github.com/ruzickap/action-my-broken-link-checker/commit/4bc75fa1df771cc7ceb513a13482e6a58ac483cf)
+- Update renovatebot/github-action action to v34.23.1 [`c94c8da`](https://github.com/ruzickap/action-my-broken-link-checker/commit/c94c8da0c56b5c9c816dcae7a4dd6b1fc164e89b)
+- Update renovatebot/github-action action to v34.19.0 [`ec7c9de`](https://github.com/ruzickap/action-my-broken-link-checker/commit/ec7c9de555a6bb042d610c506048daaf279e2558)
+- Update renovatebot/github-action action to v34 [`a8a17c8`](https://github.com/ruzickap/action-my-broken-link-checker/commit/a8a17c830450f2524cdc9820f81ba7d7554943b0)
+- Update renovatebot/github-action action to v32.241.10 [`a4726c6`](https://github.com/ruzickap/action-my-broken-link-checker/commit/a4726c6129ab8b7038a71fa39f48dc8bf1429ac0)
+- Update renovatebot/github-action action to v32.238.3 [`dfb443c`](https://github.com/ruzickap/action-my-broken-link-checker/commit/dfb443c7e3d333e045d9b87e6166fca926668d45)
+- Update dependency caddyserver/caddy to v2.6.2 [`f18f658`](https://github.com/ruzickap/action-my-broken-link-checker/commit/f18f65814333aa3b2ff62077de7f589b89f65da8)
+- Update renovatebot/github-action action to v32.225.1 [`d5a330d`](https://github.com/ruzickap/action-my-broken-link-checker/commit/d5a330df1007a7ed595277522678103fc4c690fe)
+- Update renovatebot/github-action action to v32.211.1 [`c2fbb9d`](https://github.com/ruzickap/action-my-broken-link-checker/commit/c2fbb9d5e4eff6e54d7dd8997890140ce3990595)
+
+## [v2.3.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.2.8...v2.3.0) (2022-09-26)
 
 - Fix sed issue [`1ced9a2`](https://github.com/ruzickap/action-my-broken-link-checker/commit/1ced9a2270320c65a33ff0970a07fae8c01cb45a)
 - Add --follow-symlinks parameter to sed [`5b06004`](https://github.com/ruzickap/action-my-broken-link-checker/commit/5b060040a159cc0d35daa878d014320e63c04bca)
