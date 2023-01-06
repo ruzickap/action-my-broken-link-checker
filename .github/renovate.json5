@@ -20,7 +20,7 @@
       "automergeType": "branch",
       "automerge": true,
       "ignoreTests": true,
-      "schedule": ["0 0,2,4 1-7 * 0"],
+      "schedule": ["* 0,2,4 1-7 * 0"],
     },
     {
       "description": "Update all github-actions by default",
