@@ -1,7 +1,14 @@
 # Changelog
 
-## [v2.3.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.1...v2.3.2)
+## [v2.3.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.2...v2.3.3)
 
+- fix(version): fix version/release url for muffet [`c620d94`](https://github.com/ruzickap/action-my-broken-link-checker/commit/c620d943e43e606fe3bc0c0bcd375672863e3357)
+- chore(deps): update dependency raviqqe/muffet to v2.9.2 [`3ab0e28`](https://github.com/ruzickap/action-my-broken-link-checker/commit/3ab0e28a2aaf29841dc5ea7935461da88b459a51)
+- chore(deps): update renovatebot/github-action action to v38 [`6ddfe80`](https://github.com/ruzickap/action-my-broken-link-checker/commit/6ddfe805d9095289640e8b4019ccaa71869991e0)
+
+## [v2.3.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.1...v2.3.2) (2023-05-19)
+
+- docs(changelog): CHANGELOG file update [skip ci] [`37cc970`](https://github.com/ruzickap/action-my-broken-link-checker/commit/37cc970dcd27ebd55e3072884e25608194f5fbec)
 - feat(renovate): improve renovate GitHub Action [`b6c9789`](https://github.com/ruzickap/action-my-broken-link-checker/commit/b6c9789a567f5969272e88c527eaf8c334dded21)
 - chore(deps): update dependency raviqqe/muffet to v2.8.1 [`6ab883f`](https://github.com/ruzickap/action-my-broken-link-checker/commit/6ab883f8e595d155926ee93dff7acadd12ba5d58)
 - chore(deps): update alpine docker tag to v3.18 [`321de93`](https://github.com/ruzickap/action-my-broken-link-checker/commit/321de9381c77019013609f5bada445d9d3d12766)
