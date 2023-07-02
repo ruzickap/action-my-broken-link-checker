@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 # renovate: datasource=github-tags depName=raviqqe/muffet
-export MUFFET_VERSION="2.8.1"
+export MUFFET_VERSION="2.9.2"
 # renovate: datasource=github-tags depName=caddyserver/caddy
 export CADDY_VERSION="2.6.4"
 
