@@ -68,9 +68,9 @@ trap error_trap ERR
 if ! hash muffet &> /dev/null ; then
 
   if [ "${MUFFET_VERSION}" = "latest" ]; then
-    MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_.*_$(uname)_x86_64.tar.gz" | cut -d \" -f 4)
+    MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_linux_amd64.tar.gz" | cut -d \" -f 4)
   else
-    MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_${MUFFET_VERSION}_$(uname)_x86_64.tar.gz"
+    MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_amd64.tar.gz"
   fi
 
   wget -qO- "${MUFFET_URL}" | $sudo_cmd tar xzf - -C /usr/local/bin/ muffet
