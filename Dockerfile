@@ -24,9 +24,9 @@ RUN set -eux && \
     test -e /etc/nsswitch.conf || echo 'hosts: files dns' > /etc/nsswitch.conf && \
     apk add --no-cache bash ca-certificates wget && \
     if [ "${MUFFET_VERSION}" = "latest" ]; then \
-      MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_.*_Linux_x86_64.tar.gz" | cut -d \" -f 4) ; \
+      MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*/muffet_linux_amd64.tar.gz" | cut -d \" -f 4) ; \
     else \
-      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_${MUFFET_VERSION}_Linux_x86_64.tar.gz" ; \
+      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_amd64.tar.gz" ; \
     fi && \
     wget -qO- "${MUFFET_URL}" | tar xzf - -C /usr/local/bin/ muffet && \
     if [ "${CADDY_VERSION}" = "latest" ]; then \
