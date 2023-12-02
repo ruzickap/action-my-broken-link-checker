@@ -16,10 +16,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         with:
           release-type: simple
-          command: release-pr
-          changelog-notes-type: github
-          extra-files: |
-            README.md
+          skip-github-release: true
 
   release-please-release:
     runs-on: ubuntu-latest
@@ -28,7 +25,7 @@ jobs:
         id: release
         with:
           release-type: simple
-          command: github-release
+          skip-github-pull-request: true
 
       - uses: actions/checkout@v4
 
