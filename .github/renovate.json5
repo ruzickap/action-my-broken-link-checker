@@ -1,50 +1,52 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "labels": ["renovate", "renovate/{{replace '.*/' '' depName}}", "renovate/{{updateType}}"],
-  "packageRules": [
+ $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  automerge: true,
+  automergeType: "branch",
+  ignoreTests: true,
+  labels: [
+    "renovate",
+    "renovate/{{replace '.*/' '' depName}}",
+    "renovate/{{updateType}}",
+  ],
+  packageRules: [
     {
-      "matchUpdateTypes": ["patch"],
-      "automergeType": "branch",
-      "automerge": true,
+      matchUpdateTypes: ["patch"],
     },
     {
-      "description": "Ignore frequent renovate updates",
-      "matchPackageNames": ["renovatebot/github-action"],
-      "matchUpdateTypes": ["patch"],
-      "enabled": false
+      description: "Ignore frequent renovate updates",
+      enabled: false,
+      matchPackageNames: ["renovatebot/github-action"],
+      matchUpdateTypes: ["patch"],
     },
     {
-      "matchPackageNames": ["renovatebot/github-action"],
-      "matchUpdateTypes": ["minor"],
-      "automergeType": "branch",
-      "automerge": true,
-      "ignoreTests": true,
-      "schedule": ["* 0,2,4 1-7 * 0"],
+      ignoreTests: false,
+      matchPackageNames: ["renovatebot/github-action"],
+      matchUpdateTypes: ["minor"],
+      schedule: ["* * * * 0"],
     },
     {
-      "description": "Update all github-actions by default",
-      "matchManagers": ["github-actions"],
-      "automergeType": "branch",
-      "automerge": true,
-    },
-    {
-      "matchDatasources": ["docker"],
-      "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+      description: "Update all github-actions by default",
+      ignoreTests: false,
+      matchManagers: ["github-actions"],
     },
   ],
-  "prBodyTemplate": "{{{table}}}{{{notes}}}{{{changelogs}}}",
-  "rebaseWhen": "behind-base-branch",
-  "regexManagers": [
+  prBodyTemplate: "{{{table}}}{{{notes}}}{{{changelogs}}}",
+  rebaseWhen: "behind-base-branch",
+  regexManagers: [
     {
-      "fileMatch": [
+      extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}",
+      fileMatch: [
         "^Dockerfile$",
         "^entrypoint\\.sh$",
       ],
-      "matchStrings": [
-        "# renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.+?))?( extractVersion=(?<extractVersion>.+?))?( registryUrl=(?<registryUrl>.+?))?\\s.*[=:]\\s*\"?(?<currentValue>.+?)\"?\\s",
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.+?))?( extractVersion=(?<extractVersion>.+?))?( registryUrl=(?<registryUrl>.+?))?\\s.*[=:]\\s*"?(?<currentValue>.+?)"?\\s',
       ],
-      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}",
     },
   ],
-  "separateMinorPatch": true,
+  separateMinorPatch: true,
+  vulnerabilityAlerts: {
+    commitMessagePrefix: "chore(renovate): Security update",
+    labels: ["security"],
+  },
 }
