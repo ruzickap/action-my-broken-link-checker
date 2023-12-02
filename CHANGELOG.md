@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.3...v2.4.0) (2023-12-02)
+
+
+### Features
+
+* **renovate:** improve + cleanup renovate config ([#112](https://github.com/ruzickap/action-my-broken-link-checker/issues/112)) ([de846a9](https://github.com/ruzickap/action-my-broken-link-checker/commit/de846a9655aef003b65ce73f6ebe961c97facbcf))
+
 ## [v2.3.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.2...v2.3.3)
 
 - fix(version): fix version/release url for muffet [`c620d94`](https://github.com/ruzickap/action-my-broken-link-checker/commit/c620d943e43e606fe3bc0c0bcd375672863e3357)
