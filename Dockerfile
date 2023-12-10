@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.19
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-broken-link-checker"
