@@ -5,7 +5,7 @@ export INPUT_DEBUG="true"
 echo -e "\n\n\e[32m!!! Test nonexisting directory specified as PAGES_PATH\e[m"
 
 export INPUT_PAGES_PATH="/non-existing-dir"
-export INPUT_URL="https://google.com"
+export INPUT_URL="https://www.mkdocs.org"
 ../entrypoint.sh
 
 echo -e "\n\n\e[32m!!! Test broken links by accessing wrong non existing domain\e[m"

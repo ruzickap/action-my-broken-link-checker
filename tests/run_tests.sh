@@ -1,8 +1,9 @@
-#!/bin/bash -eux
+#!/usr/bin/env bash
+
+set -euxo pipefail
 
 # Test entrypoint.sh script
 export INPUT_DEBUG="true"
-
 
 echo -e "\n\n\e[32m!!! Check differnet URLs types\e[m"
 export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always"
@@ -29,7 +30,6 @@ export INPUT_PAGES_PATH="${PWD}"
 export INPUT_URL="https://my-testing-domain.com"
 export INPUT_PAGES_PATH="${PWD}"
 ../entrypoint.sh
-
 
 echo -e "\n\n\e[32m!!! Test docker image\e[m"
 docker build .. -t my-broken-link-checker-test

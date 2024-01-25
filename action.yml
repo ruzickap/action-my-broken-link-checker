@@ -1,20 +1,20 @@
-name: 'My Broken Link Checker'
-description: 'Broken link checker for web pages located localy or remotely'
-author: 'ruzickap'
+name: "My Broken Link Checker"
+description: "Broken link checker for web pages located localy or remotely"
+author: "ruzickap"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
 branding:
-  icon: 'list'
-  color: 'blue'
+  icon: "list"
+  color: "blue"
 inputs:
   debug:
-    description: 'Debug mode'
+    description: "Debug mode"
   cmd_params:
-    description: 'Command line parameters for URL checker'
+    description: "Command line parameters for URL checker"
   pages_path:
-    description: 'Relative path to the directory with local web pages'
+    description: "Relative path to the directory with local web pages"
   url:
-    description: 'URL which will be checked'
+    description: "URL which will be checked"
     required: true
-    default: ''
+    default: ""
