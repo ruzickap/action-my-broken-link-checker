@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.5.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.4.0...v2.5.0) (2024-01-26)
+
+
+### Features
+
+* **gha:** add workflow_dispatch to release-please ([#119](https://github.com/ruzickap/action-my-broken-link-checker/issues/119)) ([bc9ccc5](https://github.com/ruzickap/action-my-broken-link-checker/commit/bc9ccc5b98a2f2ca1c34ee5e3190b2de696fe8c0))
+* **gha:** unify GHA - renovate, megalinter, markdown, ... ([#116](https://github.com/ruzickap/action-my-broken-link-checker/issues/116)) ([27ea882](https://github.com/ruzickap/action-my-broken-link-checker/commit/27ea882af4ac34d6ab49f7c7f69c688e2e005dcb))
+* **gha:** unify renovate.json5 ([#117](https://github.com/ruzickap/action-my-broken-link-checker/issues/117)) ([3039ea8](https://github.com/ruzickap/action-my-broken-link-checker/commit/3039ea8a6f773119953f6ab2715e3689b9575940))
+
+
+### Bug Fixes
+
+* **gha:** fix major version of release-please-action ([#114](https://github.com/ruzickap/action-my-broken-link-checker/issues/114)) ([1826ed3](https://github.com/ruzickap/action-my-broken-link-checker/commit/1826ed399eff0999d2c2d6ee1e06a35e9f93915f))
+
 ## [2.4.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.3.3...v2.4.0) (2023-12-02)
 
 
