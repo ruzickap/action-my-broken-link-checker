@@ -40,7 +40,7 @@ jobs:
           chmod a+x README.sh
 
       - name: 💡 MegaLinter
-        uses: oxsecurity/megalinter@7e042c726c68415475b05a65a686c612120a1232 # v7.7.0
+        uses: oxsecurity/megalinter@688bc7466d7ab4faa83d614c2e6f9acf42b674dc # v7.8.0
         env:
           GITHUB_COMMENT_REPORTER: false
           GITHUB_STATUS_REPORTER: true
