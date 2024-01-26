@@ -14,17 +14,17 @@ export PAGES_PATH=${INPUT_PAGES_PATH:-}
 # URL to scan / check
 export URL=${INPUT_URL:?}
 # Domain where the web pages will be hosted (test.example.com), it will be stored in /etc/hosts
-PAGES_DOMAIN=$( echo "${URL}" | awk -F[/:] '{print $4}' )
+PAGES_DOMAIN=$(echo "${URL}" | awk -F[/:] '{print $4}')
 export PAGES_DOMAIN
 # URI used by caddy to serve locally stored web pages (https://test.example.com)
-PAGES_URI=$( echo "${URL}" | cut -d / -f 1,2,3 )
+PAGES_URI=$(echo "${URL}" | cut -d / -f 1,2,3)
 export PAGES_URI
 # Debug variable - enable by setting non-empty value
 export DEBUG=${INPUT_DEBUG:-}
 # Create caddy log file where will be all the log messages form the caddy server
-CADDY_LOG=$( mktemp /tmp/Caddy-log.XXXXXX )
+CADDY_LOG=$(mktemp /tmp/Caddy-log.XXXXXX)
 # Create caddy configuration to run web server using the domain set in PAGES_DOMAIN + /etc/hosts
-CADDYFILE=$( mktemp /tmp/Caddyfile.XXXXXX )
+CADDYFILE=$(mktemp /tmp/Caddyfile.XXXXXX)
 
 if [ $EUID != 0 ]; then
   sudo_cmd="sudo"
@@ -43,7 +43,7 @@ print_info() {
 # Remove all added files or changed /etc/hosts entry
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
-    $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts || true
+    $sudo_cmd bash -c "sed -i \"/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d\" /etc/hosts || true"
     $sudo_cmd caddy stop &> /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
     [ -f "${CADDY_LOG}" ] && rm "${CADDY_LOG}"
@@ -65,7 +65,7 @@ trap error_trap ERR
 [ -n "${DEBUG}" ] && set -x
 
 # Install muffet if needed
-if ! hash muffet &> /dev/null ; then
+if ! hash muffet &> /dev/null; then
 
   if [ "${MUFFET_VERSION}" = "latest" ]; then
     MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_linux_amd64.tar.gz" | cut -d \" -f 4)
@@ -77,7 +77,7 @@ if ! hash muffet &> /dev/null ; then
 fi
 
 # Install caddy if needed
-if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ] ; then
+if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ]; then
 
   if [[ $(uname) = "Darwin" ]]; then
     PLATFORM="mac"
@@ -97,7 +97,7 @@ fi
 IFS=' ' read -r -a CMD_PARAMS <<< "$CMD_PARAMS"
 
 # Use muffet in case of external URL check is required
-if [ -z "${PAGES_PATH}" ] ; then
+if [ -z "${PAGES_PATH}" ]; then
   # Run check
   print_info "[$(date +'%F %T')] Start checking: \"${URL}\""
   muffet "${CMD_PARAMS[@]}" "${URL}"
@@ -113,7 +113,7 @@ else
   fi
 
   # Add domain into /etc/hosts
-  if ! grep -q "${PAGES_DOMAIN}" /etc/hosts ; then
+  if ! grep -q "${PAGES_DOMAIN}" /etc/hosts; then
     $sudo_cmd bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts"
   fi
 

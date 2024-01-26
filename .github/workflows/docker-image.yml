@@ -19,6 +19,8 @@ on:
       - entrypoint.sh
       - .github/workflows/docker-image.yml
 
+permissions: read-all
+
 jobs:
   docker-build-test:
     runs-on: ubuntu-latest
@@ -27,14 +29,3 @@ jobs:
 
       - name: Build test
         run: docker build . --file Dockerfile
-
-  hadolint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: hadolint
-        uses: burdzwastaken/hadolint-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HADOLINT_ACTION_DOCKERFILE_FOLDER: .

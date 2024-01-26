@@ -5,13 +5,12 @@
 [![release](https://img.shields.io/github/release/ruzickap/action-my-broken-link-checker.svg)](https://github.com/ruzickap/action-my-broken-link-checker/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/ruzickap/action-my-broken-link-checker.svg)](https://github.com/ruzickap/action-my-broken-link-checker/releases)
 ![GitHub Actions status](https://github.com/ruzickap/action-my-broken-link-checker/workflows/docker-image/badge.svg)
-[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/peru/my-broken-link-checker.svg)](https://hub.docker.com/r/peru/my-broken-link-checker)
 
 This is a GitHub Action to check broken link in your static files or web pages.
 The [muffet](https://github.com/raviqqe/muffet) is used for URL checking task.
 
 See the basic GitHub Action example to run periodic checks (weekly)
-against [google.com](https://google.com):
+against [mkdocs.org](https://www.mkdocs.org):
 
 ```yaml
 on:
@@ -27,7 +26,7 @@ jobs:
       - name: Check
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
-          url: https://www.google.com
+          url: https://www.mkdocs.org
           cmd_params: "--one-page-only --max-connections=3 --color=always"  # Check just one page
 ```
 
@@ -65,12 +64,12 @@ Do you want to skip the docker build step? OK, the script mode is also available
 
 Environment variables used by `./entrypoint.sh` script.
 
-| Variable            | Default                                                            | Description                                                                                                                                                              |
-| ------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `INPUT_CMD_PARAMS`  | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) - details [here](https://github.com/raviqqe/muffet/blob/master/arguments.go#L16-L34) |
-| `INPUT_DEBUG`       | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                                                                                                            |
-| `INPUT_PAGES_PATH`  |                                                                    | Relative path to the directory with local web pages                                                                                                                      |
-| `INPUT_URL`         | (**Mandatory / Required**)                                         | URL which will be checked                                                                                                                                                |
+| Variable           | Default                                                            | Description                                                                         |
+|--------------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) |
+| `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                       |
+| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                                 |
+| `INPUT_URL`        | (**Mandatory / Required**)                                         | URL which will be checked                                                           |
 
 ## Example of Periodic checks
 
@@ -318,47 +317,62 @@ and [muffet](https://github.com/raviqqe/muffet) binaries if they
 are not already installed on your system.
 
 ```bash
-export INPUT_URL="https://google.com"
-export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
+export INPUT_URL="https://www.mkdocs.org"
+export INPUT_CMD_PARAMS="--buffer-size=8192 --ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
 ./entrypoint.sh
 ```
 
 Output:
 
 ```text
-*** INFO: [2019-12-30 14:53:54] Start checking: "https://google.com"
-https://www.google.com/
-        200     http://www.google.cz/history/optout?hl=cs
-        200     http://www.google.cz/intl/cs/services/
-        200     https://accounts.google.com/ServiceLogin?hl=cs&passive=true&continue=https://www.google.com/
-        200     https://drive.google.com/?tab=wo
-        200     https://mail.google.com/mail/?tab=wm
-        200     https://maps.google.cz/maps?hl=cs&tab=wl
-        200     https://news.google.cz/nwshp?hl=cs&tab=wn
-        200     https://play.google.com/?hl=cs&tab=w8
-        200     https://www.google.com/advanced_search?hl=cs&authuser=0
-        200     https://www.google.com/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png
-        200     https://www.google.com/intl/cs/about.html
-        200     https://www.google.com/intl/cs/ads/
-        200     https://www.google.com/intl/cs/policies/privacy/
-        200     https://www.google.com/intl/cs/policies/terms/
-        200     https://www.google.com/language_tools?hl=cs&authuser=0
-        200     https://www.google.com/preferences?hl=cs
-        200     https://www.google.com/setprefdomain?prefdom=CZ&prev=https://www.google.cz/&sig=K_WmKyDZc24PJiXFyTjsUeLLrG-P4%3D
-        200     https://www.google.com/textinputassistant/tia.png
-        200     https://www.google.cz/imghp?hl=cs&tab=wi
-        200     https://www.google.cz/intl/cs/about/products?tab=wh
-        200     https://www.youtube.com/?gl=CZ&tab=w1
-*** INFO: [2019-12-30 14:53:55] Checks completed...
-```
-
-You can also use the advantage of the container to run the checks locally
-without touching your system:
-
-```bash
-export INPUT_URL="https://google.com"
-export INPUT_CMD_PARAMS="--ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
-docker run --rm -t -e INPUT_URL -e INPUT_CMD_PARAMS peru/my-broken-link-checker
+*** INFO: [2024-01-26 05:12:20] Start checking: "https://www.mkdocs.org"
+https://www.mkdocs.org/
+    200 https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js
+    200 https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/django.min.js
+    200 https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js
+    200 https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css
+    200 https://github.com/mkdocs/catalog#-theming
+    200 https://github.com/mkdocs/mkdocs/blob/master/docs/index.md
+    200 https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes
+    200 https://twitter.com/starletdreaming
+    200 https://www.googletagmanager.com/gtag/js?id=G-274394082
+    200 https://www.mkdocs.org/
+    200 https://www.mkdocs.org/#mkdocs
+    200 https://www.mkdocs.org/about/contributing/
+    200 https://www.mkdocs.org/about/license/
+    200 https://www.mkdocs.org/about/release-notes/
+    200 https://www.mkdocs.org/about/release-notes/#maintenance-team
+    200 https://www.mkdocs.org/assets/_mkdocstrings.css
+    200 https://www.mkdocs.org/css/base.css
+    200 https://www.mkdocs.org/css/bootstrap.min.css
+    200 https://www.mkdocs.org/css/extra.css
+    200 https://www.mkdocs.org/css/font-awesome.min.css
+    200 https://www.mkdocs.org/dev-guide/
+    200 https://www.mkdocs.org/dev-guide/api/
+    200 https://www.mkdocs.org/dev-guide/plugins/
+    200 https://www.mkdocs.org/dev-guide/themes/
+    200 https://www.mkdocs.org/dev-guide/translations/
+    200 https://www.mkdocs.org/getting-started/
+    200 https://www.mkdocs.org/img/favicon.ico
+    200 https://www.mkdocs.org/js/base.js
+    200 https://www.mkdocs.org/js/bootstrap.min.js
+    200 https://www.mkdocs.org/js/jquery-3.6.0.min.js
+    200 https://www.mkdocs.org/search/main.js
+    200 https://www.mkdocs.org/user-guide/
+    200 https://www.mkdocs.org/user-guide/choosing-your-theme
+    200 https://www.mkdocs.org/user-guide/choosing-your-theme/
+    200 https://www.mkdocs.org/user-guide/choosing-your-theme/#mkdocs
+    200 https://www.mkdocs.org/user-guide/choosing-your-theme/#readthedocs
+    200 https://www.mkdocs.org/user-guide/cli/
+    200 https://www.mkdocs.org/user-guide/configuration/
+    200 https://www.mkdocs.org/user-guide/configuration/#markdown_extensions
+    200 https://www.mkdocs.org/user-guide/configuration/#plugins
+    200 https://www.mkdocs.org/user-guide/customizing-your-theme/
+    200 https://www.mkdocs.org/user-guide/deploying-your-docs/
+    200 https://www.mkdocs.org/user-guide/installation/
+    200 https://www.mkdocs.org/user-guide/localizing-your-theme/
+    200 https://www.mkdocs.org/user-guide/writing-your-docs/
+*** INFO: [2024-01-26 05:12:21] Checks completed...
 ```
 
 ![my-broken-link-checker-demo](./demo/my-broken-link-checker-demo.svg "my-broken-link-checker-demo")
@@ -390,15 +404,6 @@ https://my-testing-domain.com:443/
         200     https://my-testing-domain.com:443
         200     https://my-testing-domain.com:443/run_tests.sh
 *** INFO: [2019-12-30 14:54:22] Checks completed...
-```
-
-The same example as above, but in this case I'm using the container:
-
-```bash
-export INPUT_URL="https://my-testing-domain.com"
-export INPUT_PAGES_PATH="${PWD}/tests/"
-export INPUT_CMD_PARAMS="--skip-tls-verification --verbose"
-docker run --rm -t -e INPUT_URL -e INPUT_CMD_PARAMS -e INPUT_PAGES_PATH -v "$INPUT_PAGES_PATH:$INPUT_PAGES_PATH" peru/my-broken-link-checker
 ```
 
 ## Examples

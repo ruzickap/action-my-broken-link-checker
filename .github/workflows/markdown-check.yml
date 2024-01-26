@@ -1,21 +1,23 @@
-name: markdown
+name: markdown-check
 
 on:
   pull_request:
     types: [opened, synchronize]
     paths:
-      - '**.md'
-      - .github/workflows/markdown.yml
+      - "**.md"
+      - .github/workflows/markdown-check.yml
       - .markdownlint.yml
       - .spelling
   push:
     branches:
       - main
     paths:
-      - '**.md'
-      - .github/workflows/markdown.yml
+      - "**.md"
+      - .github/workflows/markdown-check.yml
       - .markdownlint.yml
       - .spelling
+
+permissions: read-all
 
 jobs:
   markdownlint-check:
