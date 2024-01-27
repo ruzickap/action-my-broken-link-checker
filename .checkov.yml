@@ -1,9 +1,4 @@
 skip-check:
-  # Ensure that HEALTHCHECK instructions have been added to container images
-  - CKV_DOCKER_2
-  # Ensure that a user for the container has been created
-  - CKV_DOCKER_3
-  # Ensure that sudo isn't used
-  - CKV2_DOCKER_1
+  # Issue: https://github.com/bridgecrewio/checkov/issues/3839
   # The build output cannot be affected by user parameters other than the build entry point and the top-level source location. GitHub Actions workflow_dispatch inputs MUST be empty
   - CKV_GHA_7
