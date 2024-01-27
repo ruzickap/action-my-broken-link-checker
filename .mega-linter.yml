@@ -5,9 +5,6 @@ BASH_SHFMT_ARGUMENTS: --indent 2 --space-redirects
 
 DISABLE_LINTERS:
   - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead
-  - REPOSITORY_DEVSKIM
-  - REPOSITORY_KICS
-  - REPOSITORY_TRIVY
   - SPELL_CSPELL
 
 # Remove: To receive reports as email, please set variable EMAIL_REPORTER_EMAIL

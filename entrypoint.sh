@@ -43,7 +43,8 @@ print_info() {
 # Remove all added files or changed /etc/hosts entry
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
-    $sudo_cmd bash -c "sed -i \"/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d\" /etc/hosts || true"
+    # Ignore DevSkim - Accessing localhost could indicate debug code, or could hinder scaling.
+    $sudo_cmd bash -c "sed -i \"/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d\" /etc/hosts || true" # DevSkim: ignore DS162092
     $sudo_cmd caddy stop &> /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
     [ -f "${CADDY_LOG}" ] && rm "${CADDY_LOG}"
@@ -114,7 +115,7 @@ else
 
   # Add domain into /etc/hosts
   if ! grep -q "${PAGES_DOMAIN}" /etc/hosts; then
-    $sudo_cmd bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts"
+    $sudo_cmd bash -c "echo \"127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker\" >> /etc/hosts" # DevSkim: ignore DS162092
   fi
 
   {
