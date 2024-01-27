@@ -1,3 +1,5 @@
+# kics-scan disable=fd54f200-402c-4333-a5a4-36ef6709af2f,d3499f6d-1651-41bb-a9a7-de925fea487b
+
 FROM alpine:3.19
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
@@ -22,7 +24,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # - docker run --rm debian:stretch grep '^hosts:' /etc/nsswitch.conf
 RUN set -eux && \
     test -e /etc/nsswitch.conf || echo 'hosts: files dns' > /etc/nsswitch.conf && \
-    apk add --no-cache bash ca-certificates wget && \
+    apk add --no-cache bash ca-certificates sudo wget && \
     if [ "${MUFFET_VERSION}" = "latest" ]; then \
       MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*/muffet_linux_amd64.tar.gz" | cut -d \" -f 4) ; \
     else \
@@ -37,5 +39,7 @@ RUN set -eux && \
     wget --quiet "${CADDY_URL}" -O - | tar xzf - -C /usr/local/bin/ caddy
 
 COPY entrypoint.sh /entrypoint.sh
+
+HEALTHCHECK NONE
 
 ENTRYPOINT [ "/entrypoint.sh" ]

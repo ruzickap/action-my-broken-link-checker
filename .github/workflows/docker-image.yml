@@ -6,7 +6,6 @@ on:
     paths:
       - Dockerfile
       - .dockerignore
-      - .hadolint.yaml
       - entrypoint.sh
       - .github/workflows/docker-image.yml
   push:
@@ -15,7 +14,6 @@ on:
     paths:
       - Dockerfile
       - .dockerignore
-      - .hadolint.yaml
       - entrypoint.sh
       - .github/workflows/docker-image.yml
 
