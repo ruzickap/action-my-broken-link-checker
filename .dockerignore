@@ -1,5 +1,6 @@
 .git
 .github
+demo
 images
 tests
 .*.yaml
