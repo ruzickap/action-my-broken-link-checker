@@ -23,9 +23,12 @@ accept = [999]
 
 # Exclude URLs and mail addresses from checking (supports regex)
 exclude = [
-  # Ignore all URLS with ${.*} - BASH variable in URL
-  '.*\$%7B.*%7D.*',
-  'https?://my-testing-domain.com',
+  # Ignore all URLs with '$' - BASH variable in URL
+  '\$',
+  # Ignore all URLs with '{ ... }' - BASH / Ansible variable in URL
+  '%7B.*%7D',
+  # Ignore all URLs which starts with 'file://'
+  'file://'
 ]
 
 # Exclude these filesystem paths from getting checked

@@ -19,8 +19,5 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Your YAML file**
-A link to your repository and link to your YAML file
-
 **Additional context**
 Add any other context about the problem here.

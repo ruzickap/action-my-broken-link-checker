@@ -1,0 +1,5 @@
+misconfigurations:
+  # Accept root user in Dockerfile
+  - id: AVD-DS-0002
+    paths:
+      - Dockerfile
