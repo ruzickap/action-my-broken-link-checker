@@ -1,2 +1,5 @@
 # pre-commit configuration file
 .pre-commit-config.yaml
+
+# Lychee cache
+.lycheecache

@@ -43,7 +43,6 @@ print_info() {
 # Remove all added files or changed /etc/hosts entry
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
-    # Ignore DevSkim - Accessing localhost could indicate debug code, or could hinder scaling.
     $sudo_cmd bash -c "sed -i \"/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d\" /etc/hosts || true"
     $sudo_cmd caddy stop &> /dev/null
     [ -f "${CADDYFILE}" ] && rm "${CADDYFILE}"
