@@ -1,14 +1,8 @@
 name: markdown-check
 
 on:
-  pull_request:
-    types: [opened, synchronize]
-    paths:
-      - "**.md"
-      - .github/workflows/markdown-check.yml
-      - .markdownlint.yml
   push:
-    branches:
+    branches-ignore:
       - main
     paths:
       - "**.md"
