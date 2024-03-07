@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.6.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.5.0...v2.6.0) (2024-03-07)
+
+
+### Features
+
+* **gha:** Add GitHub repo files ([#125](https://github.com/ruzickap/action-my-broken-link-checker/issues/125)) ([c50585b](https://github.com/ruzickap/action-my-broken-link-checker/commit/c50585bc1bfec1cdf438ad08bddcf392dcbc961d))
+* **gh:** add default GitHub repo files ([#127](https://github.com/ruzickap/action-my-broken-link-checker/issues/127)) ([94b2e0b](https://github.com/ruzickap/action-my-broken-link-checker/commit/94b2e0ba4bd68e2ac510670c7d3572fb92627ef1))
+* **gh:** add default GitHub repo files ([#129](https://github.com/ruzickap/action-my-broken-link-checker/issues/129)) ([d51664b](https://github.com/ruzickap/action-my-broken-link-checker/commit/d51664bcdceae7262f2a1b6d9ed98823fb64990d))
+* **gh:** add default GitHub repo files ([#130](https://github.com/ruzickap/action-my-broken-link-checker/issues/130)) ([6218f8c](https://github.com/ruzickap/action-my-broken-link-checker/commit/6218f8c1103aee54b238cad6cb7523ae7faed1c9))
+* **gha:** make checkov config part of megalinter ([#124](https://github.com/ruzickap/action-my-broken-link-checker/issues/124)) ([5f38383](https://github.com/ruzickap/action-my-broken-link-checker/commit/5f383838715be4566e28a969cc14c26c58da4bdc))
+
+
+### Bug Fixes
+
+* **gha:** add buffer-size parameter ([#131](https://github.com/ruzickap/action-my-broken-link-checker/issues/131)) ([f355057](https://github.com/ruzickap/action-my-broken-link-checker/commit/f355057f84ee737f3babdf2b2a020d9dcdc7d6a3))
+* **gha:** improve megalinter by enabling more linters ([#121](https://github.com/ruzickap/action-my-broken-link-checker/issues/121)) ([52174d3](https://github.com/ruzickap/action-my-broken-link-checker/commit/52174d3a576fb6954e88a6099061f630b676455a))
+
 ## [2.5.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.4.0...v2.5.0) (2024-01-26)
 
 
