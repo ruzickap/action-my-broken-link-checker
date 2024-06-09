@@ -5,7 +5,7 @@ set -Eeuo pipefail
 # renovate: datasource=github-tags depName=raviqqe/muffet
 export MUFFET_VERSION="2.10.1"
 # renovate: datasource=github-tags depName=caddyserver/caddy
-export CADDY_VERSION="2.8.1"
+export CADDY_VERSION="2.8.4"
 
 # Command line parameters for muffet
 export CMD_PARAMS="${INPUT_CMD_PARAMS:- --buffer-size=8192 --max-connections=10 --color=always --verbose}"
