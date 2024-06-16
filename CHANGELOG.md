@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.7.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.6.0...v2.7.0) (2024-03-07)
+
+
+### Features
+
+* **gh_actions:** replace stale + add commitlint ([ba01d26](https://github.com/ruzickap/action-my-broken-link-checker/commit/ba01d260a2003e5a13e4a52589a2a1b245b3fb52))
+* **gh-actions:** add lint-pr-title ([fe68f10](https://github.com/ruzickap/action-my-broken-link-checker/commit/fe68f101dfcf248dedf8926dbfa0236a8cec485e))
+* **gha:** Add GitHub repo files ([#125](https://github.com/ruzickap/action-my-broken-link-checker/issues/125)) ([c50585b](https://github.com/ruzickap/action-my-broken-link-checker/commit/c50585bc1bfec1cdf438ad08bddcf392dcbc961d))
+* **gha:** add workflow_dispatch to release-please ([#119](https://github.com/ruzickap/action-my-broken-link-checker/issues/119)) ([bc9ccc5](https://github.com/ruzickap/action-my-broken-link-checker/commit/bc9ccc5b98a2f2ca1c34ee5e3190b2de696fe8c0))
+* **gh:** add default GitHub repo files ([#127](https://github.com/ruzickap/action-my-broken-link-checker/issues/127)) ([94b2e0b](https://github.com/ruzickap/action-my-broken-link-checker/commit/94b2e0ba4bd68e2ac510670c7d3572fb92627ef1))
+* **gh:** add default GitHub repo files ([#129](https://github.com/ruzickap/action-my-broken-link-checker/issues/129)) ([d51664b](https://github.com/ruzickap/action-my-broken-link-checker/commit/d51664bcdceae7262f2a1b6d9ed98823fb64990d))
+* **gh:** add default GitHub repo files ([#130](https://github.com/ruzickap/action-my-broken-link-checker/issues/130)) ([6218f8c](https://github.com/ruzickap/action-my-broken-link-checker/commit/6218f8c1103aee54b238cad6cb7523ae7faed1c9))
+* **gha:** make checkov config part of megalinter ([#124](https://github.com/ruzickap/action-my-broken-link-checker/issues/124)) ([5f38383](https://github.com/ruzickap/action-my-broken-link-checker/commit/5f383838715be4566e28a969cc14c26c58da4bdc))
+* **gha:** unify GHA - renovate, megalinter, markdown, ... ([#116](https://github.com/ruzickap/action-my-broken-link-checker/issues/116)) ([27ea882](https://github.com/ruzickap/action-my-broken-link-checker/commit/27ea882af4ac34d6ab49f7c7f69c688e2e005dcb))
+* **gha:** unify renovate.json5 ([#117](https://github.com/ruzickap/action-my-broken-link-checker/issues/117)) ([3039ea8](https://github.com/ruzickap/action-my-broken-link-checker/commit/3039ea8a6f773119953f6ab2715e3689b9575940))
+* **renovate:** improve + cleanup renovate config ([#112](https://github.com/ruzickap/action-my-broken-link-checker/issues/112)) ([de846a9](https://github.com/ruzickap/action-my-broken-link-checker/commit/de846a9655aef003b65ce73f6ebe961c97facbcf))
+* **renovate:** improve renovate GitHub Action ([b6c9789](https://github.com/ruzickap/action-my-broken-link-checker/commit/b6c9789a567f5969272e88c527eaf8c334dded21))
+
+
+### Bug Fixes
+
+* **gha:** add buffer-size parameter ([#131](https://github.com/ruzickap/action-my-broken-link-checker/issues/131)) ([f355057](https://github.com/ruzickap/action-my-broken-link-checker/commit/f355057f84ee737f3babdf2b2a020d9dcdc7d6a3))
+* **gha:** fix major version of release-please-action ([#114](https://github.com/ruzickap/action-my-broken-link-checker/issues/114)) ([1826ed3](https://github.com/ruzickap/action-my-broken-link-checker/commit/1826ed399eff0999d2c2d6ee1e06a35e9f93915f))
+* **gha:** improve megalinter by enabling more linters ([#121](https://github.com/ruzickap/action-my-broken-link-checker/issues/121)) ([52174d3](https://github.com/ruzickap/action-my-broken-link-checker/commit/52174d3a576fb6954e88a6099061f630b676455a))
+* **renovate:** schedule typo ([f71de66](https://github.com/ruzickap/action-my-broken-link-checker/commit/f71de669f98a737e66b0b96e067e88c60f31bbb2))
+* **version:** fix version/release url for muffet ([c620d94](https://github.com/ruzickap/action-my-broken-link-checker/commit/c620d943e43e606fe3bc0c0bcd375672863e3357))
+
 ## [2.6.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.5.0...v2.6.0) (2024-03-07)
 
 
