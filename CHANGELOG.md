@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.7.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.6.0...v2.7.0) (2024-07-21)
+
+
+### Features
+
+* add GitHub default templates ([#134](https://github.com/ruzickap/action-my-broken-link-checker/issues/134)) ([8425118](https://github.com/ruzickap/action-my-broken-link-checker/commit/8425118a8d84af4b93b9991cfe35e61f85d2abe4))
+
+
+### Bug Fixes
+
+* add adapter parameter to caddy ([#135](https://github.com/ruzickap/action-my-broken-link-checker/issues/135)) ([98f5ad2](https://github.com/ruzickap/action-my-broken-link-checker/commit/98f5ad2498a1351e04615e1889711c388f9acf2d))
+
 ## [2.6.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.5.0...v2.6.0) (2024-03-07)
 
 
