@@ -126,7 +126,7 @@ else
   } > "${CADDYFILE}"
 
   # Run caddy web server on the background
-  $sudo_cmd caddy start --config "${CADDYFILE}" &> "${CADDY_LOG}"
+  $sudo_cmd caddy start --config "${CADDYFILE}" --adapter caddyfile &> "${CADDY_LOG}"
   sleep 1
 
   # Run check
