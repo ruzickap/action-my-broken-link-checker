@@ -2,6 +2,7 @@
 name: markdown-check
 
 on:
+  workflow_dispatch:
   push:
     branches-ignore:
       - main

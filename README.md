@@ -317,7 +317,7 @@ and [muffet](https://github.com/raviqqe/muffet) binaries if they
 are not already installed on your system.
 
 ```bash
-export INPUT_URL="https://www.mkdocs.org"
+export INPUT_URL="https://debian.cz/info/"
 export INPUT_CMD_PARAMS="--buffer-size=8192 --ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
 ./entrypoint.sh
 ```
