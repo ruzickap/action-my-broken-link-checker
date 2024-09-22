@@ -14,7 +14,7 @@ LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
 # renovate: datasource=github-tags depName=raviqqe/muffet
-ENV MUFFET_VERSION="2.10.2"
+ENV MUFFET_VERSION="2.10.3"
 # renovate: datasource=github-tags depName=caddyserver/caddy
 ENV CADDY_VERSION="2.8.4"
 
