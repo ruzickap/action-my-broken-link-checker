@@ -17,7 +17,7 @@ jobs:
   markdownlint-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
 
       - name: Markdown Lint
         uses: ruzickap/action-my-markdown-linter@26b4129bf0352527e60b5bd739357af63df1b7bf # v1.2.0
@@ -29,7 +29,7 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
 
       - name: Link Checker
         uses: ruzickap/action-my-markdown-link-checker@1126c6a5c31df989b4f3b1a8072ad125887b4c47 # v1.3.0
