@@ -6,10 +6,10 @@ on:
     inputs:
       dryRun:
         type: boolean
-        description: "Dry-Run"
+        description: Dry-Run
       logLevel:
         type: choice
-        description: "Log-Level"
+        description: Log-Level
         default: debug
         options:
           - info
@@ -20,23 +20,25 @@ on:
       - main
       - "!renovate/*"
   schedule:
-    - cron: "0 0-3 * * 0"
+    - cron: 0 0-3 * * 0
 
 env:
+  # keep-sorted start
   # https://docs.renovatebot.com/troubleshooting/#log-debug-levels
-  LOG_LEVEL: "${{ inputs.logLevel || 'debug' }}"
+  LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}
+  RENOVATE_AUTOMERGE: "true"
+  # Renovate Automerge
+  RENOVATE_AUTOMERGE_TYPE: branch
+  # https://docs.renovatebot.com/self-hosted-configuration/#dryrun
+  # Run renovate in dry-run mode if executed in branches other than main - prevents versions in PRs/branches from being updated
+  RENOVATE_DRY_RUN: ${{ inputs.dryRun || ( github.head_ref || github.ref_name ) != 'main' || false }}
+  # https://docs.renovatebot.com/configuration-options/#platformcommit
+  RENOVATE_PLATFORM_COMMIT: "true"
   # https://docs.renovatebot.com/self-hosted-configuration/#repositories
   RENOVATE_REPOSITORIES: ${{ github.repository }}
   # https://docs.renovatebot.com/self-hosted-configuration/#username
   RENOVATE_USERNAME: ${{ github.repository_owner }}
-  # https://docs.renovatebot.com/configuration-options/#platformcommit
-  RENOVATE_PLATFORM_COMMIT: "true"
-  # https://docs.renovatebot.com/self-hosted-configuration/#dryrun
-  # Run renovate in dry-run mode if executed in branches other than main - prevents versions in PRs/branches from being updated
-  RENOVATE_DRY_RUN: "${{ inputs.dryRun || ( github.head_ref || github.ref_name ) != 'main' || false }}"
-  # Renovate Automerge
-  RENOVATE_AUTOMERGE_TYPE: "branch"
-  RENOVATE_AUTOMERGE: "true"
+  # keep-sorted end
 
 permissions: read-all
 
