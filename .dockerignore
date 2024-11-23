@@ -1,7 +1,9 @@
+# keep-sorted start
+*.yml
+.*.yaml
 .git
 .github
 demo
 images
 tests
-.*.yaml
-*.yml
+# keep-sorted end

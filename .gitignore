@@ -1,5 +1,7 @@
-# pre-commit configuration file
-.pre-commit-config.yaml
-
+# keep-sorted start newline_separated=yes
 # Lychee cache
 .lycheecache
+
+# pre-commit configuration file
+.pre-commit-config.yaml
+# keep-sorted end
