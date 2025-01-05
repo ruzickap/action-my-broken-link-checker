@@ -16,7 +16,7 @@ LABEL "com.github.actions.color"="blue"
 # renovate: datasource=github-tags depName=raviqqe/muffet
 ENV MUFFET_VERSION="2.10.6"
 # renovate: datasource=github-tags depName=caddyserver/caddy
-ENV CADDY_VERSION="2.8.4"
+ENV CADDY_VERSION="2.9.0"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
