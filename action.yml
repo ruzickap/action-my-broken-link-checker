@@ -1,5 +1,5 @@
 name: "My Broken Link Checker"
-description: "Broken link checker for web pages located localy or remotely"
+description: "Broken link checker for web pages located locally or remotely"
 author: "ruzickap"
 runs:
   using: "docker"
