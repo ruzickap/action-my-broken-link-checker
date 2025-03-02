@@ -2,6 +2,8 @@
 # See all available variables at https://megalinter.io/latest/configuration/ and in linters documentation
 
 # keep-sorted start newline_separated=yes
+BASH_SHELLCHECK_ARGUMENTS: --exclude=SC2317
+
 BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 
 DISABLE_LINTERS:
@@ -17,6 +19,8 @@ FAIL_IF_MISSING_LINTER_IN_FLAVOR: true
 FILTER_REGEX_EXCLUDE: CHANGELOG.md
 
 FORMATTERS_DISABLE_ERRORS: false
+
+JSON_JSONLINT_FILTER_REGEX_EXCLUDE: .devcontainer/devcontainer.json
 
 MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.yml
 

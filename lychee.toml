@@ -23,15 +23,20 @@ accept = [999]
 
 # Exclude URLs and mail addresses from checking (supports regex)
 exclude = [
-  # returns 403 when accessed from GitHub Action
-  'stackoverflow\.com',
-  'stackexchange\.com',
-  # Ignore all URLs with '$' - BASH variable in URL
-  '\$',
+  # keep-sorted start
   # Ignore all URLs with '{ ... }' - BASH / Ansible variable in URL
   '%7B.*%7D',
+  # Ignore all URLs with '$' - BASH variable in URL
+  '\$',
   # Ignore all URLs which starts with 'file://'
   'file://',
+  # returns 429 when accessed from GitHub Action
+  'instagram\.com',
+  # returns 403 when accessed from GitHub Action
+  'stackexchange\.com',
+  # returns 403 when accessed from GitHub Action
+  'stackoverflow\.com',
+  # keep-sorted end
 ]
 
 # Exclude these filesystem paths from getting checked
