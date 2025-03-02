@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.8.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.0...v2.8.1) (2025-03-02)
+
+
+### Bug Fixes
+
+* add permissions to release-please ([#144](https://github.com/ruzickap/action-my-broken-link-checker/issues/144)) ([936ea16](https://github.com/ruzickap/action-my-broken-link-checker/commit/936ea1663e1d9cf83c8a832c8204b36784580f60))
+* add proper permissions to release-please ([#143](https://github.com/ruzickap/action-my-broken-link-checker/issues/143)) ([0a2ea56](https://github.com/ruzickap/action-my-broken-link-checker/commit/0a2ea56988a2c87f51b5da2fc5a6f74265501a99))
+
 ## [2.8.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.7.0...v2.8.0) (2025-03-02)
 
 
