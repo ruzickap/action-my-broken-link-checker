@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.8.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.7.0...v2.8.0) (2025-03-02)
+
+
+### Features
+
+* **gh:** add default github repo files ([#138](https://github.com/ruzickap/action-my-broken-link-checker/issues/138)) ([cee4d1d](https://github.com/ruzickap/action-my-broken-link-checker/commit/cee4d1d466240e3e1e8a9e583979b67dd403213a))
+* update gha + templates ([#142](https://github.com/ruzickap/action-my-broken-link-checker/issues/142)) ([e4f993e](https://github.com/ruzickap/action-my-broken-link-checker/commit/e4f993e002f488506a7996549309a5a839b2f2c6))
+
+
+### Bug Fixes
+
+* add eval to muffet cmd for fix the [#83](https://github.com/ruzickap/action-my-broken-link-checker/issues/83) ([#141](https://github.com/ruzickap/action-my-broken-link-checker/issues/141)) ([38142a7](https://github.com/ruzickap/action-my-broken-link-checker/commit/38142a77e8df7a300b73b0bd8df33b70358cb070))
+
 ## [2.7.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.6.0...v2.7.0) (2024-07-21)
 
 
