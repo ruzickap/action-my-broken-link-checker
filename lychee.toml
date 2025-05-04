@@ -1,3 +1,4 @@
+# Configuration for lychee link checker
 # https://lychee.cli.rs/#/usage/config
 
 #############################  Cache  ###############################
@@ -45,7 +46,7 @@ exclude_path = [
   "package-lock.json",
 ]
 
-# Exclude all private IPs from checking.
+# Exclude all private IPs from checking
 # Equivalent to setting `exclude_private`, `exclude_link_local`, and
 # `exclude_loopback` to true
 exclude_all_private = true
