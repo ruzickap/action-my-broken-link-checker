@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.1...v2.9.0) (2025-05-04)
+
+
+### Features
+
+* **gh:** add default github repo files ([#151](https://github.com/ruzickap/action-my-broken-link-checker/issues/151)) ([364c6e0](https://github.com/ruzickap/action-my-broken-link-checker/commit/364c6e01058570714bb21c02eba302fd06d37209))
+
 ## [2.8.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.0...v2.8.1) (2025-03-02)
 
 
