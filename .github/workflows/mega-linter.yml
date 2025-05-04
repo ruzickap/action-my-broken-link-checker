@@ -34,7 +34,7 @@ jobs:
           brew install mdq
           echo '#!/usr/bin/env bash' > README.sh
           readarray -d '' MD_FILES < <(find . -type f -name "*.md" -print0)
-          mdq '```/^bash$|^shell$|^sh$/' --br -o plain "${MD_FILES[@]}" >> README.sh
+          mdq '```/^bash$|^shell$|^sh$/' --br -o plain "${MD_FILES[@]}" >> README.sh || true
           chmod a+x README.sh
 
       - name: 💡 MegaLinter
