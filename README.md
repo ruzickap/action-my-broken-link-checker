@@ -28,8 +28,7 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.mkdocs.org
-          cmd_params: "--one-page-only --max-connections=3 --color=always"
-                      # Check just one page
+          cmd_params: "--one-page-only --max-connections=3 --color=always"  # Check just one page
 ```
 
 Check out the real demo:
@@ -49,9 +48,7 @@ serving the web pages (see details in [entrypoint.sh](./entrypoint.sh)).
   with:
     url: https://www.example.com/test123
     pages_path: ./build/
-    cmd_params: '--buffer-size=8192 --max-connections=10 --color=always
-                 --skip-tls-verification --header="User-Agent:curl/7.54.0"
-                 --timeout=20'  # muffet parameters
+    cmd_params: '--buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --header="User-Agent:curl/7.54.0" --timeout=20'  # muffet parameters
 ```
 
 Do you want to skip the Docker build step? OK, script mode is also available:
@@ -61,11 +58,7 @@ Do you want to skip the Docker build step? OK, script mode is also available:
   env:
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
-    INPUT_CMD_PARAMS: '--buffer-size=8192 --max-connections=10 --color=always
-                       --header="User-Agent:curl/7.54.0"
-                       --skip-tls-verification'
-                       # --skip-tls-verification is mandatory parameter when
-                       # using https and "PAGES_PATH"
+    INPUT_CMD_PARAMS: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --skip-tls-verification'  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
   run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
 ```
 
@@ -73,13 +66,12 @@ Do you want to skip the Docker build step? OK, script mode is also available:
 
 Environment variables used by `./entrypoint.sh` script.
 
-| Variable           | Default                                                            | Description                                                                 |
-|--------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for the URL checker                                 |
-|                    |                                                                    | [muffet](https://github.com/raviqqe/muffet)                                 |
-| `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)               |
-| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                         |
-| `INPUT_URL`        | (**Mandatory / Required**)                                         | URL that will be checked                                                    |
+| Variable           | Default                                                            | Description                                                                             |
+|--------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for the URL checker [muffet](https://github.com/raviqqe/muffet) |
+| `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                           |
+| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                                     |
+| `INPUT_URL`        | (**Mandatory / Required**)                                         | URL that will be checked                                                                |
 
 ## Example of Periodic checks
 
@@ -109,8 +101,7 @@ jobs:
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: ${{ steps.pages.outputs.base_url }}
-          cmd_params: '--buffer-size=8192 --max-connections=10 --color=always
-                       --header="User-Agent:curl/7.54.0" --timeout=20'
+          cmd_params: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --timeout=20'
 ```
 
 ## Full example
@@ -136,18 +127,13 @@ jobs:
           <!DOCTYPE html>
           <html>
             <head>
-              My page, which will be stored on the my-testing-domain.com
-              domain
+              My page, which will be stored on the my-testing-domain.com domain
             </head>
             <body>
               Links:
               <ul>
-                <li><a href="https://my-testing-domain.com">
-                    https://my-testing-domain.com
-                </a></li>
-                <li><a href="https://my-testing-domain.com:443">
-                    https://my-testing-domain.com:443
-                </a></li>
+                <li><a href="https://my-testing-domain.com">https://my-testing-domain.com</a></li>
+                <li><a href="https://my-testing-domain.com:443">https://my-testing-domain.com:443</a></li>
               </ul>
             </body>
           </html>
@@ -226,9 +212,7 @@ jobs:
         env:
           INPUT_URL: https://${{ github.event.repository.name }}
           INPUT_PAGES_PATH: public
-          INPUT_CMD_PARAMS: '--verbose --buffer-size=8192 --max-connections=10
-                             --color=always --skip-tls-verification
-                             --exclude="(mylabs.dev|linkedin.com)"'
+          INPUT_CMD_PARAMS: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude="(mylabs.dev|linkedin.com)"'
         run: |
           wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
 
@@ -237,10 +221,7 @@ jobs:
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
-          cmd_params: '--verbose --buffer-size=8192 --max-connections=10
-                       --color=always --skip-tls-verification
-                       --header="User-Agent:curl/7.54.0"
-                       --exclude="(mylabs.dev|linkedin.com)"'
+          cmd_params: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --header="User-Agent:curl/7.54.0" --exclude="(mylabs.dev|linkedin.com)"'
           debug: true
 
       - name: Deploy
@@ -308,10 +289,7 @@ jobs:
         with:
           url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           pages_path: .
-          cmd_params: '--exclude=mylabs.dev --max-connections-per-host=5
-                       --rate-limit=5 --timeout=20
-                       --header="User-Agent:curl/7.54.0"
-                       --skip-tls-verification'
+          cmd_params: '--exclude=mylabs.dev --max-connections-per-host=5 --rate-limit=5 --timeout=20 --header="User-Agent:curl/7.54.0" --skip-tls-verification'
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -337,16 +315,13 @@ change them for your projects.
 
 ## Running locally
 
-It's possible to use the checking script locally. It will install
-[Caddy](https://caddyserver.com/) and
-[Muffet](https://github.com/raviqqe/muffet) binaries if they are not already
+It's possible to use the checking script locally. It will install [Caddy](https://caddyserver.com/)
+and [Muffet](https://github.com/raviqqe/muffet) binaries if they are not already
 installed on your system.
 
 ```bash
 export INPUT_URL="https://debian.cz/info/"
-export INPUT_CMD_PARAMS="--buffer-size=8192 --ignore-fragments
-                         --one-page-only --max-connections=10
-                         --color=always --verbose"
+export INPUT_CMD_PARAMS="--buffer-size=8192 --ignore-fragments --one-page-only --max-connections=10 --color=always --verbose"
 ./entrypoint.sh
 ```
 
@@ -419,8 +394,7 @@ export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 Output:
 
 ```text
-*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/"
-    as domain "my-testing-domain.com" with URI "https://my-testing-domain.com"
+*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/" as domain "my-testing-domain.com" with URI "https://my-testing-domain.com"
 *** INFO: [2019-12-30 14:54:22] Start checking: "https://my-testing-domain.com"
 https://my-testing-domain.com/
         200     https://my-testing-domain.com
@@ -444,14 +418,11 @@ found here: [https://github.com/peaceiris/actions-gh-pages/](https://github.com/
 The following links contain real examples of My Broken Link Checker:
 
 * [hugo-build](https://github.com/awsugcz/awsug.cz/actions?query=workflow%3Ahugo-build)
-  * Static page generated by [Hugo](https://gohugo.io/) with checked links:
-    [hugo-build.yml](https://github.com/awsugcz/awsug.cz/blob/7754eca1efbf8d6d1028ddd93f5d8db98137186c/.github/workflows/hugo-build.yml#L29-L37).
+  * Static page generated by [Hugo](https://gohugo.io/) with checked links: [hugo-build.yml](https://github.com/awsugcz/awsug.cz/blob/7754eca1efbf8d6d1028ddd93f5d8db98137186c/.github/workflows/hugo-build.yml#L29-L37).
 
 * [vuepress-build-check-deploy](https://github.com/ruzickap/k8s-harbor/actions/workflows/vuepress-build-check-deploy.yml)
   * Static page generated by [VuePress](https://vuepress.vuejs.org/) with
-    checked links:
-    [vuepress-build-check-deploy.yml](https://github.com/ruzickap/k8s-harbor/blob/7973e8c2df395999e38271ba863e307a5da07f49/.github/workflows/vuepress-build-check-deploy.yml#L93-L100).
+    checked links: [vuepress-build-check-deploy.yml](https://github.com/ruzickap/k8s-harbor/blob/7973e8c2df395999e38271ba863e307a5da07f49/.github/workflows/vuepress-build-check-deploy.yml#L93-L100).
 
 * [periodic-broken-link-checks](https://github.com/ruzickap/xvx.cz/actions?query=workflow%3Aperiodic-broken-link-checks)
-  * Periodic link checks of the [xvx.cz](http://xvx.cz) website using:
-    [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/dc2501725f05b59f64f990d4f478609a982e669a/.github/workflows/periodic-broken-link-checks.yml#L11-L34).
+  * Periodic link checks of the [xvx.cz](http://xvx.cz) website using: [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/dc2501725f05b59f64f990d4f478609a982e669a/.github/workflows/periodic-broken-link-checks.yml#L11-L34).
