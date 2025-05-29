@@ -6,11 +6,12 @@
 [![GitHub release date](https://img.shields.io/github/release-date/ruzickap/action-my-broken-link-checker.svg)](https://github.com/ruzickap/action-my-broken-link-checker/releases)
 ![GitHub Actions status](https://github.com/ruzickap/action-my-broken-link-checker/workflows/docker-image/badge.svg)
 
-This is a GitHub Action to check broken link in your static files or web pages.
-The [muffet](https://github.com/raviqqe/muffet) is used for URL checking task.
+This is a GitHub Action to check for broken links in your static files or web
+pages. It uses [muffet](https://github.com/raviqqe/muffet) for the URL checking
+task.
 
-See the basic GitHub Action example to run periodic checks (weekly)
-against [mkdocs.org](https://www.mkdocs.org):
+See the basic GitHub Action example to run periodic checks (weekly) against
+[mkdocs.org](https://www.mkdocs.org):
 
 ```yaml
 on:
@@ -23,7 +24,7 @@ jobs:
     name: Check broken links
     runs-on: ubuntu-latest
     steps:
-      - name: Check
+      - name: Check for broken links
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://www.mkdocs.org
@@ -34,14 +35,15 @@ Check out the real demo:
 
 [![My Broken Link Checker demo](https://img.youtube.com/vi/H6H523TMPXk/0.jpg)](https://youtu.be/H6H523TMPXk)
 
-This deploy action can be combined with [Static Site Generators](https://www.staticgen.com/)
-(Hugo, MkDocs, Gatsby, GitBook, mdBook, etc.). The following examples expects
-to have the web page stored in `./build` directory. There is a [caddy](https://caddyserver.com/)
-web server started during the tests which is using the hostname from the `URL`
-parameter and serving the web pages (see the details in [entrypoint.sh](./entrypoint.sh)).
+This deploy action can be combined with
+[Static Site Generators](https://www.staticgen.com/) (Hugo, MkDocs, Gatsby,
+GitBook, mdBook, etc.). The following examples expect to have the web pages
+stored in the `./build` directory. A [caddy](https://caddyserver.com/) web server
+is started during the tests, using the hostname from the `URL` parameter and
+serving the web pages (see details in [entrypoint.sh](./entrypoint.sh)).
 
 ```yaml
-- name: Check
+- name: Check for broken links
   uses: ruzickap/action-my-broken-link-checker@v2
   with:
     url: https://www.example.com/test123
@@ -49,10 +51,10 @@ parameter and serving the web pages (see the details in [entrypoint.sh](./entryp
     cmd_params: '--buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --header="User-Agent:curl/7.54.0" --timeout=20'  # muffet parameters
 ```
 
-Do you want to skip the docker build step? OK, the script mode is also available:
+Do you want to skip the Docker build step? OK, script mode is also available:
 
 ```yaml
-- name: Check
+- name: Check for broken links
   env:
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
@@ -64,16 +66,16 @@ Do you want to skip the docker build step? OK, the script mode is also available
 
 Environment variables used by `./entrypoint.sh` script.
 
-| Variable           | Default                                                            | Description                                                                         |
-|--------------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for URL checker [muffet](https://github.com/raviqqe/muffet) |
-| `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                       |
-| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                                 |
-| `INPUT_URL`        | (**Mandatory / Required**)                                         | URL which will be checked                                                           |
+| Variable           | Default                                                            | Description                                                                             |
+|--------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for the URL checker [muffet](https://github.com/raviqqe/muffet) |
+| `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                           |
+| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                                     |
+| `INPUT_URL`        | (**Mandatory / Required**)                                         | URL that will be checked                                                                |
 
 ## Example of Periodic checks
 
-Pipeline for periodic link checks:
+Pipeline for periodic link checking:
 
 ```yaml
 name: periodic-broken-link-checks
@@ -95,7 +97,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v3
 
-      - name: Check broken links
+      - name: Check for broken links
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: ${{ steps.pages.outputs.base_url }}
@@ -125,7 +127,7 @@ jobs:
           <!DOCTYPE html>
           <html>
             <head>
-              My page which will be stored on my-testing-domain.com domain
+              My page, which will be stored on the my-testing-domain.com domain
             </head>
             <body>
               Links:
@@ -156,22 +158,23 @@ jobs:
 
 ## Best practices
 
-Let's try to automate the creating the web pages as much as possible.
+Let's try to automate the creation of web pages as much as possible.
 
-The ideal situation require the repository naming convention, where the name of
-the GitHub repository should match the URL where it will be hosted.
+The ideal situation requires a repository naming convention where the name
+of the GitHub repository matches the URL where it will be hosted.
 
 ### GitHub Pages with custom domain
 
-The mandatory part is the repository name `awsug.cz` which is the same as the
+The mandatory part is the repository name `awsug.cz`, which is the same as the
 domain:
 
 * Repository name: [awsugcz/awsug.cz](https://github.com/awsugcz/awsug.cz)
-  \-> Web pages: [https://awsug.cz](https://awsug.cz)
+  -> Web pages: [https://awsug.cz](https://awsug.cz)
 
-The web pages will be stored as GitHub Pages on it's [own domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site).
+The web pages will be stored as GitHub Pages on their
+[own domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site).
 
-The GH Action file may looks like:
+The GitHub Action file may look like:
 
 ```yaml
 name: hugo-build
@@ -205,7 +208,7 @@ jobs:
           cp LICENSE README.md public/
           echo "${{ github.event.repository.name }}" > public/CNAME
 
-      - name: Check broken links
+      - name: Check for broken links
         env:
           INPUT_URL: https://${{ github.event.repository.name }}
           INPUT_PAGES_PATH: public
@@ -236,13 +239,13 @@ The example is using [Hugo](https://gohugo.io/).
 
 ### GitHub Pages with [github.io](https://github.io) domain
 
-The mandatory part is the repository name `k8s-harbor` which is the directory
-part at the and of `ruzickap.github.io`:
+The mandatory part is the repository name `k8s-harbor`, which is the directory
+part at the end of `ruzickap.github.io`:
 
 * Repository name: [ruzickap/k8s-harbor](https://github.com/ruzickap/k8s-harbor)
-  \-> Web pages: [https://ruzickap.github.io/k8s-harbor](https://ruzickap.github.io/k8s-harbor)
+  -> Web pages: [https://ruzickap.github.io/k8s-harbor](https://ruzickap.github.io/k8s-harbor)
 
-In the example the web pages will be using GitHub's domain [github.io](https://github.io).
+In this example, the web pages will use GitHub's domain [github.io](https://github.io).
 
 ```yaml
 name: vuepress-build-check-deploy
@@ -281,7 +284,7 @@ jobs:
           sed -e "s@(part-@(https://github.com/${GITHUB_REPOSITORY}/tree/main/docs/part-@" -e 's@.\/.vuepress\/public\/@./@' docs/README.md > docs/.vuepress/dist/README.md
           ln -s docs/.vuepress/dist ${{ github.event.repository.name }}
 
-      - name: Check broken links
+      - name: Check for broken links
         uses: ruzickap/action-my-broken-link-checker@v2
         with:
           url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
@@ -312,9 +315,9 @@ change them for your projects.
 
 ## Running locally
 
-It's possible to use the checking script locally. It will install [caddy](https://caddyserver.com/)
-and [muffet](https://github.com/raviqqe/muffet) binaries if they
-are not already installed on your system.
+It's possible to use the checking script locally. It will install [Caddy](https://caddyserver.com/)
+and [Muffet](https://github.com/raviqqe/muffet) binaries if they are not already
+installed on your system.
 
 ```bash
 export INPUT_URL="https://debian.cz/info/"
@@ -377,9 +380,9 @@ https://www.mkdocs.org/
 
 ![my-broken-link-checker-demo](./demo/my-broken-link-checker-demo.svg "my-broken-link-checker-demo")
 
-Another example when checking the the web page locally stored on your disk.
-In this case I'm using the web page created in the `./tests/` directory from
-this git repository:
+Another example is checking a web page stored locally on your disk. In this
+case, I'm using the web page created in the `./tests/` directory from this
+Git repository:
 
 ```bash
 export INPUT_URL="https://my-testing-domain.com"
@@ -408,19 +411,18 @@ https://my-testing-domain.com:443/
 
 ## Examples
 
-Some other examples of building and checking web pages using [Static Site Generators](https://www.staticgen.com/)
-and GitHub Actions can be found here: [https://github.com/peaceiris/actions-gh-pages/](https://github.com/peaceiris/actions-gh-pages/)
+Some other examples of building and checking web pages using
+[Static Site Generators](https://www.staticgen.com/) and GitHub Actions can be
+found here: [https://github.com/peaceiris/actions-gh-pages/](https://github.com/peaceiris/actions-gh-pages/).
 
-The following links contains real examples of My Broken Link Checker:
+The following links contain real examples of My Broken Link Checker:
 
 * [hugo-build](https://github.com/awsugcz/awsug.cz/actions?query=workflow%3Ahugo-build)
-  * Static page generated by [Hugo](https://gohugo.io/)
-    with checked links: [hugo-build.yml](https://github.com/awsugcz/awsug.cz/blob/7754eca1efbf8d6d1028ddd93f5d8db98137186c/.github/workflows/hugo-build.yml#L29-L37)
+  * Static page generated by [Hugo](https://gohugo.io/) with checked links: [hugo-build.yml](https://github.com/awsugcz/awsug.cz/blob/7754eca1efbf8d6d1028ddd93f5d8db98137186c/.github/workflows/hugo-build.yml#L29-L37).
 
 * [vuepress-build-check-deploy](https://github.com/ruzickap/k8s-harbor/actions/workflows/vuepress-build-check-deploy.yml)
-  * Static page generated by [VuePress](https://vuepress.vuejs.org/)
-    with checked links: [vuepress-build-check-deploy.yml](https://github.com/ruzickap/k8s-harbor/blob/7973e8c2df395999e38271ba863e307a5da07f49/.github/workflows/vuepress-build-check-deploy.yml#L93-L100)
+  * Static page generated by [VuePress](https://vuepress.vuejs.org/) with
+    checked links: [vuepress-build-check-deploy.yml](https://github.com/ruzickap/k8s-harbor/blob/7973e8c2df395999e38271ba863e307a5da07f49/.github/workflows/vuepress-build-check-deploy.yml#L93-L100).
 
 * [periodic-broken-link-checks](https://github.com/ruzickap/xvx.cz/actions?query=workflow%3Aperiodic-broken-link-checks)
-  * Periodic link checks of [xvx.cz](http://xvx.cz) website
-    using: [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/dc2501725f05b59f64f990d4f478609a982e669a/.github/workflows/periodic-broken-link-checks.yml#L11-L34)
+  * Periodic link checks of the [xvx.cz](http://xvx.cz) website using: [periodic-broken-link-checks.yml](https://github.com/ruzickap/xvx.cz/blob/dc2501725f05b59f64f990d4f478609a982e669a/.github/workflows/periodic-broken-link-checks.yml#L11-L34).
