@@ -70,7 +70,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       # https://stackoverflow.com/questions/74640750/github-actions-not-finding-cache
-      # I can not use the cache action in this job because the cache is not shared between runs
+      # I cannot use the cache action in this job because the cache is not shared between runs
       - name: Save slack timestamp as an environment variable
         id: slack-timestamp
         env:

@@ -30,7 +30,7 @@ env:
   # Renovate Automerge
   RENOVATE_AUTOMERGE_TYPE: branch
   # https://docs.renovatebot.com/self-hosted-configuration/#dryrun
-  # Run renovate in dry-run mode if executed in branches other than main - prevents versions in PRs/branches from being updated
+  # Run renovate in dry-run mode if executed in branches other than main to prevent updating versions in PRs/branches
   RENOVATE_DRY_RUN: ${{ inputs.dryRun || ( github.head_ref || github.ref_name ) != 'main' || false }}
   # https://docs.renovatebot.com/configuration-options/#platformcommit
   RENOVATE_PLATFORM_COMMIT: "true"
