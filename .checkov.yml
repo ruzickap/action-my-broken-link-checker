@@ -1,3 +1,11 @@
+# Checkov configuration file for skipping specific security and compliance checks
+# Checkov is a static code analysis tool for Infrastructure as Code (IaC) and CI/CD configurations
+# This file defines which checks should be skipped during the scanning process
+
 skip-check:
-  # The build output cannot be affected by user parameters other than the build entry point and the top-level source location. GitHub Actions workflow_dispatch inputs MUST be empty
+  # CKV_GHA_7: GitHub Actions workflow_dispatch inputs validation
+  # Skip reason: This check requires that workflow_dispatch inputs must be empty to prevent
+  # user parameters from affecting build outputs beyond the entry point and source location.
+  # We intentionally use workflow_dispatch inputs for legitimate automation purposes where
+  # user input is necessary and properly validated through other means.
   - CKV_GHA_7

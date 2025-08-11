@@ -1,6 +1,8 @@
-name: pr-slack-notification
-
+---
+# GitHub Actions workflow for PR Slack notifications
+# Sends Slack notifications for pull request events and updates with status changes
 # Based on: https://github.com/slackapi/slack-github-action/issues/269
+name: pr-slack-notification
 
 on:
   workflow_dispatch:
@@ -24,18 +26,8 @@ defaults:
     shell: bash -euxo pipefail {0}
 
 jobs:
-  github-context:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "${GITHUB_CONTEXT}"
-
   pr-slack-notification:
     runs-on: ubuntu-latest
-    name: Sends a message to Slack when a PR is opened
     if: (github.event.action == 'opened' && github.event.pull_request.draft == false) || github.event.action == 'ready_for_review'
     steps:
       - name: Post PR summary message to slack
@@ -65,13 +57,10 @@ jobs:
     name: Adds emoji reaction to slack message when a PR is closed or reviewed
     if: ${{ startsWith(github.event.pull_request.html_url, 'https') || startsWith(github.event.issue.pull_request.html_url, 'https') }}
     steps:
-      # gh commands needs to be executed in the repository
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      # https://stackoverflow.com/questions/74640750/github-actions-not-finding-cache
-      # I cannot use the cache action in this job because the cache is not shared between runs
-      - name: Save slack timestamp as an environment variable
+      - name: Retrieve Slack message timestamp from cache
         id: slack-timestamp
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

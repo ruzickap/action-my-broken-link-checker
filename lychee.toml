@@ -1,13 +1,12 @@
 # Configuration for lychee link checker
-# https://lychee.cli.rs/#/usage/config
+# https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml
 
 #############################  Cache  ###############################
 
-# Enable link caching. This can be helpful to avoid checking the same links on
-# multiple runs
+# Enable link caching to avoid checking the same links on multiple runs
 cache = true
 
-# Discard all cached requests older than this duration
+# Discard cached requests older than this duration
 max_cache_age = "1d"
 
 #############################  Runtime  #############################
@@ -17,7 +16,7 @@ max_concurrency = 128
 
 #############################  Requests  ############################
 
-# Comma-separated list of accepted status codes for valid links.
+# Accept these status codes as valid (429 = rate limited, 999 = non-standard but valid)
 accept = [429, 999]
 
 #############################  Exclusions  ##########################
@@ -25,26 +24,25 @@ accept = [429, 999]
 # Exclude URLs and mail addresses from checking (supports regex)
 exclude = [
   # keep-sorted start
-  # Ignore all URLs with '{ ... }' - BASH / Ansible variable in URL
+  # Ignore URLs with encoded braces - template variables in URLs
   '%7B.*%7D',
-  # Ignore all URLs with '$' - BASH variable in URL
+  # Ignore URLs with dollar signs - shell/environment variables
   '\$',
-  # Ignore all URLs which starts with 'file://'
+  # Ignore file:// protocol URLs - local filesystem links
   'file://',
-  # returns 403 when accessed from GitHub Action
+  # Stack Exchange sites return 403 when accessed from GitHub Actions
   'stackexchange\.com',
-  # returns 403 when accessed from GitHub Action
+  # Stack Overflow returns 403 when accessed from GitHub Actions
   'stackoverflow\.com',
   # keep-sorted end
 ]
 
-# Exclude these filesystem paths from getting checked
+# Exclude these filesystem paths from link checking
 exclude_path = [
   "CHANGELOG.md",
   "package-lock.json",
 ]
 
-# Exclude all private IPs from checking
-# Equivalent to setting `exclude_private`, `exclude_link_local`, and
-# `exclude_loopback` to true
+# Exclude all private IP addresses from checking
+# (includes private networks, link-local, and loopback addresses)
 exclude_all_private = true

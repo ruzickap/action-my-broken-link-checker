@@ -1,4 +1,7 @@
 ---
+# GitHub Actions workflow for Docker image building and testing
+# Builds Docker image when Dockerfile or related files are modified
+# https://docs.docker.com/
 name: docker-image
 
 on:

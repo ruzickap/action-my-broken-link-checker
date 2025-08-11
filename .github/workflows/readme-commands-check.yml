@@ -1,4 +1,7 @@
 ---
+# GitHub Actions workflow for README command validation
+# Executes bash commands found in README.md to ensure they work correctly
+# Triggers when README.md or workflow file is modified
 name: readme-commands-check
 
 on:
