@@ -16,25 +16,17 @@ max_concurrency = 128
 
 #############################  Requests  ############################
 
-# Accept these status codes as valid (429 = rate limited, 999 = non-standard but valid)
-accept = [429, 999]
+# Accept these status codes as valid (200 = OK, 429 = rate limited)
+accept = [200, 429]
 
 #############################  Exclusions  ##########################
 
 # Exclude URLs and mail addresses from checking (supports regex)
 exclude = [
-  # keep-sorted start
   # Ignore URLs with encoded braces - template variables in URLs
   '%7B.*%7D',
   # Ignore URLs with dollar signs - shell/environment variables
   '\$',
-  # Ignore file:// protocol URLs - local filesystem links
-  'file://',
-  # Stack Exchange sites return 403 when accessed from GitHub Actions
-  'stackexchange\.com',
-  # Stack Overflow returns 403 when accessed from GitHub Actions
-  'stackoverflow\.com',
-  # keep-sorted end
 ]
 
 # Exclude these filesystem paths from link checking
