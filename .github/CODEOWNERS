@@ -1,14 +1,20 @@
 # GitHub CODEOWNERS file
+# Auto-assigns reviewers when files are modified in PRs
 # Documentation:
 # - https://help.github.com/articles/about-code-owners/
 # - https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
-# Syntax:
-# pattern    @user-or-team
+# Syntax: pattern @user-or-team
 # The last matching pattern takes precedence.
+
+# Examples:
+# *.md                    @doc-team
+# /docs/                  @doc-team
+# /.github/workflows/     @devops-team
+# package.json            @security-team @maintainers
 
 ###############################
 # Repository Default Owners
 ###############################
-# These owners will be the default owners for everything in the repo
+# Global fallback for all files
 * @ruzickap

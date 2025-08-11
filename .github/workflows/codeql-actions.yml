@@ -1,3 +1,7 @@
+---
+# GitHub Actions workflow for CodeQL security analysis
+# Performs static analysis to identify security vulnerabilities in GitHub Actions
+# https://docs.github.com/en/code-security/code-scanning/introduction-to-code-scanning/about-code-scanning-with-codeql
 name: CodeQL GitHub Actions
 
 on:

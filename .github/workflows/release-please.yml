@@ -1,4 +1,7 @@
 ---
+# GitHub Actions workflow for automated release management
+# Creates release PRs and GitHub releases when changes are pushed to main
+# https://github.com/googleapis/release-please
 name: release-please
 
 on:
@@ -32,19 +35,33 @@ jobs:
           release-type: simple
           skip-github-pull-request: true
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
+        env:
+          MAJOR: ${{ steps.release.outputs.major }}
+          MINOR: ${{ steps.release.outputs.minor }}
         run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git remote add gh-token "https://${GITHUB_TOKEN}@github.com/googleapis/release-please-action.git"
-          git tag -d v${{ steps.release.outputs.major }} || true
-          git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
-          git push origin :v${{ steps.release.outputs.major }} || true
-          git push origin :v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} || true
-          git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
-          git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
-          git push origin v${{ steps.release.outputs.major }}
-          git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}
+          set -euxo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Remove local and remote tags if they exist
+          for TAG in "v${MAJOR}" "v${MAJOR}.${MINOR}"; do
+            if git rev-parse "${TAG}" &> /dev/null; then
+              git tag -d "${TAG}"
+            fi
+            if git ls-remote --exit-code origin "refs/tags/${TAG}" &> /dev/null; then
+              git push origin ":${TAG}"
+            fi
+          done
+
+          # Create annotated tags
+          git tag -a "v${MAJOR}" -m "Release v${MAJOR}"
+          git tag -a "v${MAJOR}.${MINOR}" -m "Release v${MAJOR}.${MINOR}"
+
+          # Push tags to remote
+          git push origin "v${MAJOR}"
+          git push origin "v${MAJOR}.${MINOR}"

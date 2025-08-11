@@ -1,4 +1,7 @@
 ---
+# GitHub Actions workflow for Markdown linting and link checking
+# Validates Markdown files and checks for broken links when content is modified
+# https://github.com/DavidAnson/markdownlint
 name: markdown-check
 
 on:

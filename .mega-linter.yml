@@ -1,55 +1,79 @@
-# Configuration file for MegaLinter
-# See all available variables at https://megalinter.io/latest/configuration/ and in linters documentation
+# ============================================================================
+# MegaLinter Configuration
+# ============================================================================
+# This file configures MegaLinter, a comprehensive code analysis tool
+# See all available variables at https://megalinter.io/latest/configuration/
+# and in individual linters documentation
 
 # keep-sorted start newline_separated=yes
+# ShellCheck configuration - exclude SC2317 (unreachable command warning)
 BASH_SHELLCHECK_ARGUMENTS: --exclude=SC2317
 
+# shfmt (shell formatter) configuration for consistent shell script formatting
+# --case-indent: indent case statements
+# --indent 2: use 2 spaces for indentation
+# --space-redirects: add space before redirection operators
 BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 
+# Disable linters
 DISABLE_LINTERS:
-  - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead
-  - SPELL_CSPELL
-  - TERRAFORM_TERRASCAN # Hard to configure - no documentation of the config file
+  - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead for link checking (more configurable)
+  - SPELL_CSPELL # Spell checking disabled - prone to false positives
+  - TERRAFORM_TERRASCAN # Hard to configure - no clear documentation of the config file format
 
-# Remove: To receive reports as email, please set variable EMAIL_REPORTER_EMAIL
+# Disable email reporting
 EMAIL_REPORTER: false
 
+# Fail the build if a required linter is missing from the Docker flavor
 FAIL_IF_MISSING_LINTER_IN_FLAVOR: true
 
+# Exclude CHANGELOG.md from all linting
 FILTER_REGEX_EXCLUDE: CHANGELOG.md
 
+# Allow formatters to report errors
 FORMATTERS_DISABLE_ERRORS: false
 
+# Allow comments in JSON files
 JSON_JSONLINT_ARGUMENTS: --comments
 
+# Exclude devcontainer.json from JSON linting (VS Code extension format)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: .devcontainer/devcontainer.json
 
+# Use custom markdownlint configuration file
 MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.yml
 
+# Exclude CHANGELOG.md from markdownlint
 MARKDOWN_MARKDOWNLINT_FILTER_REGEX_EXCLUDE: CHANGELOG.md
 
-# Remove initial MegaLinter graphic
+# Disable the MegaLinter ASCII art graphic in output
 PRINT_ALPACA: false
 
-# Disable creating report directory
+# Don't create a report output folder (using CI artifacts instead)
 REPORT_OUTPUT_FOLDER: none
 
+# Checkov (Infrastructure as Code security scanner) - quiet output
 REPOSITORY_CHECKOV_ARGUMENTS: --quiet
 
-# Do not leave debug code in production, Insecure URL
+# DevSkim (security pattern scanner) configuration
+# --ignore-rule-ids DS162092,DS137138: ignore specific rules:
+#   - DS162092: "Do not leave debug code in production"
+#   - DS137138: "Insecure URL" (for HTTP links that are intentional)
 REPOSITORY_DEVSKIM_ARGUMENTS: --ignore-globs CHANGELOG.md --ignore-rule-ids DS162092,DS137138
 
+# KICS (security scanner) - only fail on high severity issues
 REPOSITORY_KICS_ARGUMENTS: --fail-on high
 
+# Trivy (vulnerability scanner) - only check HIGH and CRITICAL severity
 REPOSITORY_TRIVY_ARGUMENTS: --severity HIGH,CRITICAL --ignore-unfixed
 
+# Allow lychee (link checker) to access GitHub token for API rate limits
 SPELL_LYCHEE_UNSECURED_ENV_VARIABLES:
   - GITHUB_TOKEN
 
+# Allow tflint (Terraform linter) to access GitHub token for plugin downloads
 TERRAFORM_TFLINT_UNSECURED_ENV_VARIABLES:
   - GITHUB_TOKEN
 
+# Prettier (TypeScript/JavaScript formatter) configuration
 TYPESCRIPT_PRETTIER_ARGUMENTS: --html-whitespace-sensitivity=ignore
-
-VALIDATE_ALL_CODEBASE: true
 # keep-sorted end

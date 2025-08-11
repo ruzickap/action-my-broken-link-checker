@@ -1,3 +1,6 @@
+# Docker ignore file - excludes files and directories from being sent to Docker build context
+# This improves build performance and reduces the size of the build context
+
 # keep-sorted start
 *.yml
 .*.yaml

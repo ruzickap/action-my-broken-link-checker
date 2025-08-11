@@ -1,4 +1,7 @@
 ---
+# GitHub Actions workflow for Semantic Pull Request validation
+# Validates that pull request titles follow conventional commits format
+# https://www.conventionalcommits.org/
 name: semantic-pull-request
 
 on:
@@ -16,12 +19,14 @@ jobs:
   semantic-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@0f859bf9e69e887678d5bbfbee594437cb440ffe # v2.1.0
+      - name: Generate GitHub App token
+        uses: actions/create-github-app-token@0f859bf9e69e887678d5bbfbee594437cb440ffe # v2.1.0
         id: app-token
         with:
           app-id: ${{ secrets.MY_RENOVATE_GITHUB_APP_ID }}
           private-key: ${{ secrets.MY_RENOVATE_GITHUB_PRIVATE_KEY }}
 
-      - uses: amannn/action-semantic-pull-request@0723387faaf9b38adef4775cd42cfd5155ed6017 # v5.5.3
+      - name: Validate semantic pull request title
+        uses: amannn/action-semantic-pull-request@0723387faaf9b38adef4775cd42cfd5155ed6017 # v5.5.3
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
