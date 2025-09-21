@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Link Checker
-        uses: ruzickap/action-my-markdown-link-checker@51aa9a3a3c6781804a3660ff105f650ac44c56e4 # v1.4.0
+        uses: ruzickap/action-my-markdown-link-checker@0bc23ed1091ca59159fb6e2bd05112a942fb7f70 # v1.5.0
         with:
           exclude: |
             tests/
