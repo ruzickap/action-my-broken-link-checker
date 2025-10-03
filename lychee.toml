@@ -6,14 +6,6 @@
 # Enable link caching to avoid checking the same links on multiple runs
 cache = true
 
-# Discard cached requests older than this duration
-max_cache_age = "1d"
-
-#############################  Runtime  #############################
-
-# Maximum number of concurrent link checks
-max_concurrency = 128
-
 #############################  Requests  ############################
 
 # Accept these status codes as valid (200 = OK, 429 = rate limited)

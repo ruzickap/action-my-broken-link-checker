@@ -2,6 +2,7 @@
 # GitHub Actions workflow for automated release management
 # Creates release PRs and GitHub releases when changes are pushed to main
 # https://github.com/googleapis/release-please
+# https://danielscholl-osdu.github.io/osdu-fork-template/workflows/release/
 name: release-please
 
 on:
@@ -10,32 +11,22 @@ on:
     branches:
       - main
 
-permissions: read-all
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
-  release-please-pr:
+  release-please:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: googleapis/release-please-action@c2a5a2bd6a758a0937f1ddb1e8950609867ed15c # v4.3.0
-        with:
-          release-type: simple
-          skip-github-release: true
-
-  release-please-release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: googleapis/release-please-action@c2a5a2bd6a758a0937f1ddb1e8950609867ed15c # v4.3.0
         id: release
         with:
           release-type: simple
-          skip-github-pull-request: true
 
       - name: Checkout repository
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Tag major and minor versions
@@ -48,20 +39,17 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Remove local and remote tags if they exist
-          for TAG in "v${MAJOR}" "v${MAJOR}.${MINOR}"; do
-            if git rev-parse "${TAG}" &> /dev/null; then
-              git tag -d "${TAG}"
-            fi
-            if git ls-remote --exit-code origin "refs/tags/${TAG}" &> /dev/null; then
-              git push origin ":${TAG}"
-            fi
-          done
+          # Get the current commit SHA
+          SHA=$(git rev-parse HEAD)
 
-          # Create annotated tags
-          git tag -a "v${MAJOR}" -m "Release v${MAJOR}"
-          git tag -a "v${MAJOR}.${MINOR}" -m "Release v${MAJOR}.${MINOR}"
+          echo "🏷️ Tag commit: ${SHA}"
+          echo "🔍 Major: ${MAJOR}"
+          echo "🔍 Minor: ${MINOR}"
+          echo "🚀 Release tag: v${MAJOR}.${MINOR}"
+
+          git tag -f "v${MAJOR}" "${SHA}"
+          git tag -f "v${MAJOR}.${MINOR}" "${SHA}"
 
           # Push tags to remote
-          git push origin "v${MAJOR}"
-          git push origin "v${MAJOR}.${MINOR}"
+          git push --force origin "v${MAJOR}"
+          git push --force origin "v${MAJOR}.${MINOR}"
