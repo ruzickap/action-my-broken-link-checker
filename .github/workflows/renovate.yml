@@ -50,7 +50,7 @@ permissions: read-all
 
 jobs:
   renovate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     permissions: write-all
