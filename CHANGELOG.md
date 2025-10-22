@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.9.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.1...v2.9.0) (2025-10-22)
+
+
+### Features
+
+* add default github repo files ([#155](https://github.com/ruzickap/action-my-broken-link-checker/issues/155)) ([42c4cdb](https://github.com/ruzickap/action-my-broken-link-checker/commit/42c4cdbec067ce939871f77741b4e93749734d5e))
+* add/update default repository files ([#157](https://github.com/ruzickap/action-my-broken-link-checker/issues/157)) ([c04b84a](https://github.com/ruzickap/action-my-broken-link-checker/commit/c04b84a33361b3cf0eab91f7843fff69f4f6ecc2))
+* add/update default repository files ([#158](https://github.com/ruzickap/action-my-broken-link-checker/issues/158)) ([5336a6f](https://github.com/ruzickap/action-my-broken-link-checker/commit/5336a6f3abcb963e4e8c942f0ca7a18d293e3242))
+* add/update default repository files ([#161](https://github.com/ruzickap/action-my-broken-link-checker/issues/161)) ([8fa041d](https://github.com/ruzickap/action-my-broken-link-checker/commit/8fa041dc2e3509ccc3f715c9f77422202018780b))
+* add/update default repository files ([#163](https://github.com/ruzickap/action-my-broken-link-checker/issues/163)) ([7240731](https://github.com/ruzickap/action-my-broken-link-checker/commit/7240731f4f4ab64e35f85900d643d8d7cfae9604))
+* **gh:** add default github repo files ([#151](https://github.com/ruzickap/action-my-broken-link-checker/issues/151)) ([364c6e0](https://github.com/ruzickap/action-my-broken-link-checker/commit/364c6e01058570714bb21c02eba302fd06d37209))
+
+
+### Bug Fixes
+
+* update .lycheeignore to escape dot in domain name ([#168](https://github.com/ruzickap/action-my-broken-link-checker/issues/168)) ([bed3e8d](https://github.com/ruzickap/action-my-broken-link-checker/commit/bed3e8d5ca24b71aed9fc8bb2f85cada356ec92b))
+
 ## [2.8.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.0...v2.8.1) (2025-03-02)
 
 
