@@ -37,10 +37,10 @@ Check out the real demo:
 
 This deploy action can be combined with
 [Static Site Generators](https://www.staticgen.com/) (Hugo, MkDocs, Gatsby,
-GitBook, mdBook, etc.). The following examples expect to have the web pages
-stored in the `./build` directory. A [caddy](https://caddyserver.com/) web server
-is started during the tests, using the hostname from the `URL` parameter and
-serving the web pages (see details in [entrypoint.sh](./entrypoint.sh)).
+GitBook, mdBook, etc.). The following examples expect the web pages
+to be stored in the `./build` directory. A [caddy](https://caddyserver.com/) web
+server is started during the tests, using the hostname from the `URL` parameter
+and serving the web pages (see details in [entrypoint.sh](./entrypoint.sh)).
 
 ```yaml
 - name: Check for broken links
@@ -70,7 +70,7 @@ Environment variables used by `./entrypoint.sh` script.
 |--------------------|--------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 | `INPUT_CMD_PARAMS` | `--buffer-size=8192 --max-connections=10 --color=always --verbose` | Command-line parameters for the URL checker [muffet](https://github.com/raviqqe/muffet) |
 | `INPUT_DEBUG`      | false                                                              | Enable debug mode for the `./entrypoint.sh` script (`set -x`)                           |
-| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory with local web pages                                     |
+| `INPUT_PAGES_PATH` |                                                                    | Relative path to the directory containing local web pages                               |
 | `INPUT_URL`        | (**Mandatory / Required**)                                         | URL that will be checked                                                                |
 
 ## Example of Periodic checks
@@ -302,7 +302,7 @@ jobs:
           forceOrphan: true
 ```
 
-In this case I'm using [VuePress](https://vuepress.vuejs.org/) to create my
+In this case, I'm using [VuePress](https://vuepress.vuejs.org/) to create my
 page.
 
 ![GitHub Action my-broken-link-checker](./images/actions-my-broken-link-checker.png
