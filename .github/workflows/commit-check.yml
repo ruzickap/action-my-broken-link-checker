@@ -1,0 +1,33 @@
+---
+# GitHub Actions workflow for commit message validation
+# Validates commit messages against conventional commit format and other standards
+# Checks message format, branch naming, author details, and signoff requirements
+name: commit-check
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  commit-check:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Create commit-check.toml file
+        run: |
+          cat > commit-check.toml << EOF
+          [commit]
+          subject_capitalized = false
+          subject_max_length = 72
+          EOF
+
+      - uses: commit-check/commit-check-action@a0193b1ca486178b85d7a1db145af34cd227f81f # v2.1.1
+        env:
+          GH_TOKEN: ${{ github.token }}
