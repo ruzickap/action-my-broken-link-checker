@@ -20,7 +20,7 @@ on:
   push:
     branches:
       - main
-      - "!renovate/*"
+      - "!chore/renovate/*"
   schedule:
     - cron: 0 0-3 * * 0
 
@@ -28,16 +28,9 @@ env:
   # keep-sorted start
   # Set log level for debugging (info, debug, or trace) https://docs.renovatebot.com/troubleshooting/#log-debug-levels
   LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}
-  # Enable automatic merging of dependency updates
-  RENOVATE_AUTOMERGE: "true"
-  # Set automerge type to branch (merge directly without PR)
-  RENOVATE_AUTOMERGE_TYPE: branch
   # Enable dry-run mode for non-main branches to preview changes (https://docs.renovatebot.com/self-hosted-configuration/#dryrun)
   # Run renovate in dry-run mode if executed in branches other than main to prevent updating versions in PRs/branches
   RENOVATE_DRY_RUN: ${{ inputs.dryRun || ( github.head_ref || github.ref_name ) != 'main' || false }}
-  # Use platform-native commit signing
-  # https://docs.renovatebot.com/configuration-options/#platformcommit
-  RENOVATE_PLATFORM_COMMIT: "true"
   # Target repository for Renovate to update
   # https://docs.renovatebot.com/self-hosted-configuration/#repositories
   RENOVATE_REPOSITORIES: ${{ github.repository }}
@@ -62,6 +55,6 @@ jobs:
           private-key: ${{ secrets.MY_RENOVATE_GITHUB_PRIVATE_KEY }}
 
       - name: 💡 Self-hosted Renovate
-        uses: renovatebot/github-action@ea850436a5fe75c0925d583c7a02c60a5865461d # v43.0.20
+        uses: renovatebot/github-action@4ebebabcd582dddea1692b05c3d5279f8e372b53 # v44.0.0
         with:
           token: ${{ steps.app-token.outputs.token }}
