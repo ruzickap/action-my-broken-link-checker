@@ -10,10 +10,12 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
 
   // # keep-sorted start block=yes
-  // Git Submodules Configuration
   "git-submodules": {
     enabled: true,
   },
+  automerge: true,
+  automergeType: "branch",
+  branchPrefix: "chore/renovate/",
   // Base Configuration Presets
   // Keep the extends started with ":" at the end of the list to allow overriding
   extends: [
