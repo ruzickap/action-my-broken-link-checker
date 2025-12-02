@@ -64,13 +64,24 @@ trap error_trap ERR
 
 [ -n "${DEBUG}" ] && set -x
 
+# Detect architecture
+ARCH=$(uname -m)
+if [ "${ARCH}" = "aarch64" ]; then
+  ARCH_SUFFIX="arm64"
+elif [ "${ARCH}" = "x86_64" ]; then
+  ARCH_SUFFIX="amd64"
+else
+  print_error "Unsupported architecture: ${ARCH}"
+  exit 1
+fi
+
 # Install muffet if needed
 if ! hash muffet &> /dev/null; then
 
   if [ "${MUFFET_VERSION}" = "latest" ]; then
-    MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_linux_amd64.tar.gz" | cut -d \" -f 4)
+    MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*muffet_linux_${ARCH_SUFFIX}.tar.gz" | cut -d \" -f 4)
   else
-    MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_amd64.tar.gz"
+    MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_${ARCH_SUFFIX}.tar.gz"
   fi
 
   wget -qO- "${MUFFET_URL}" | $sudo_cmd tar xzf - -C /usr/local/bin/ muffet
@@ -86,9 +97,9 @@ if ! hash caddy &> /dev/null && [ -n "${PAGES_PATH}" ]; then
   fi
 
   if [ "${CADDY_VERSION}" = "latest" ]; then
-    CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_${PLATFORM}_amd64.tar.gz" | cut -d \" -f 4)
+    CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_${PLATFORM}_${ARCH_SUFFIX}.tar.gz" | cut -d \" -f 4)
   else
-    CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_${PLATFORM}_amd64.tar.gz"
+    CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_${PLATFORM}_${ARCH_SUFFIX}.tar.gz"
   fi
 
   wget --quiet "${CADDY_URL}" -O - | $sudo_cmd tar xzf - -C /usr/local/bin/ caddy

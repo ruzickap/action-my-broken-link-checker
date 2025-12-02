@@ -24,19 +24,27 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # - https://github.com/docker/docker-ce/blob/v17.09.0-ce/components/engine/hack/make.sh#L149
 # - https://github.com/golang/go/blob/go1.9.1/src/net/conf.go#L194-L275
 # - docker run --rm debian:stretch grep '^hosts:' /etc/nsswitch.conf
+ARG TARGETARCH
 RUN set -eux && \
     test -e /etc/nsswitch.conf || echo 'hosts: files dns' > /etc/nsswitch.conf && \
     apk add --no-cache bash ca-certificates sudo wget && \
-    if [ "${MUFFET_VERSION}" = "latest" ]; then \
-      MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*/muffet_linux_amd64.tar.gz" | cut -d \" -f 4) ; \
+    if [ "${TARGETARCH}" = "arm64" ]; then \
+      ARCH_SUFFIX="arm64" ; \
+    elif [ "${TARGETARCH}" = "amd64" ]; then \
+      ARCH_SUFFIX="amd64" ; \
     else \
-      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_amd64.tar.gz" ; \
+      echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ; \
+    fi && \
+    if [ "${MUFFET_VERSION}" = "latest" ]; then \
+      MUFFET_URL=$(wget -qO- https://api.github.com/repos/raviqqe/muffet/releases/latest | grep "browser_download_url.*/muffet_linux_${ARCH_SUFFIX}.tar.gz" | cut -d \" -f 4) ; \
+    else \
+      MUFFET_URL="https://github.com/raviqqe/muffet/releases/download/v${MUFFET_VERSION}/muffet_linux_${ARCH_SUFFIX}.tar.gz" ; \
     fi && \
     wget -qO- "${MUFFET_URL}" | tar xzf - -C /usr/local/bin/ muffet && \
     if [ "${CADDY_VERSION}" = "latest" ]; then \
-      CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_amd64.tar.gz" | cut -d \" -f 4) ; \
+      CADDY_URL=$(wget --quiet https://api.github.com/repos/caddyserver/caddy/releases/latest -O - | grep "browser_download_url.*caddy_.*_linux_${ARCH_SUFFIX}.tar.gz" | cut -d \" -f 4) ; \
     else \
-      CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz" ; \
+      CADDY_URL="https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_${ARCH_SUFFIX}.tar.gz" ; \
     fi && \
     wget --quiet "${CADDY_URL}" -O - | tar xzf - -C /usr/local/bin/ caddy
 
