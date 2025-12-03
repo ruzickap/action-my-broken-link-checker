@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.9.0...v3.0.0) (2025-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* update github actions to latest versions in README ([#177](https://github.com/ruzickap/action-my-broken-link-checker/issues/177))
+
+### Features
+
+* add arm64 support wherever it is possible ([#174](https://github.com/ruzickap/action-my-broken-link-checker/issues/174)) ([9bac192](https://github.com/ruzickap/action-my-broken-link-checker/commit/9bac192e1540ec529e34c8d8233b85791615d33f))
+
+
+### Documentation
+
+* update github actions to latest versions in README ([#177](https://github.com/ruzickap/action-my-broken-link-checker/issues/177)) ([1dd7b0d](https://github.com/ruzickap/action-my-broken-link-checker/commit/1dd7b0d5edd79fb7e6cce7cbe9c5e2d269997135))
+
 ## [2.9.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.8.1...v2.9.0) (2025-10-22)
 
 
