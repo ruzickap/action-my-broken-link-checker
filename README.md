@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check for broken links
-        uses: ruzickap/action-my-broken-link-checker@v2
+        uses: ruzickap/action-my-broken-link-checker@v3
         with:
           url: https://www.mkdocs.org
           cmd_params: "--one-page-only --max-connections=3 --color=always"  # Check just one page
@@ -44,7 +44,7 @@ and serving the web pages (see details in [entrypoint.sh](./entrypoint.sh)).
 
 ```yaml
 - name: Check for broken links
-  uses: ruzickap/action-my-broken-link-checker@v2
+  uses: ruzickap/action-my-broken-link-checker@v3
   with:
     url: https://www.example.com/test123
     pages_path: ./build/
@@ -59,7 +59,7 @@ Do you want to skip the Docker build step? OK, script mode is also available:
     INPUT_URL: https://www.example.com/test123
     INPUT_PAGES_PATH: ./build/
     INPUT_CMD_PARAMS: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --skip-tls-verification'  # --skip-tls-verification is mandatory parameter when using https and "PAGES_PATH"
-  run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
+  run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v3/entrypoint.sh | bash
 ```
 
 ## Parameters
@@ -98,7 +98,7 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: Check for broken links
-        uses: ruzickap/action-my-broken-link-checker@v2
+        uses: ruzickap/action-my-broken-link-checker@v3
         with:
           url: ${{ steps.pages.outputs.base_url }}
           cmd_params: '--buffer-size=8192 --max-connections=10 --color=always --header="User-Agent:curl/7.54.0" --timeout=20'
@@ -145,10 +145,10 @@ jobs:
           INPUT_PAGES_PATH: ./public/
           INPUT_CMD_PARAMS: '--skip-tls-verification --verbose --color=always'
           INPUT_DEBUG: true
-        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
+        run: wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v3/entrypoint.sh | bash
 
       - name: Check links using container
-        uses: ruzickap/action-my-broken-link-checker@v2
+        uses: ruzickap/action-my-broken-link-checker@v3
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
@@ -188,7 +188,7 @@ jobs:
   hugo-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
       - name: Checkout submodules
         shell: bash
@@ -198,9 +198,7 @@ jobs:
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: '0.62.0'
+        uses: peaceiris/actions-hugo@v3
 
       - name: Build
         run: |
@@ -214,10 +212,10 @@ jobs:
           INPUT_PAGES_PATH: public
           INPUT_CMD_PARAMS: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --exclude="(mylabs.dev|linkedin.com)"'
         run: |
-          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v2/entrypoint.sh | bash
+          wget -qO- https://raw.githubusercontent.com/ruzickap/action-my-broken-link-checker/v3/entrypoint.sh | bash
 
       - name: Check links using container
-        uses: ruzickap/action-my-broken-link-checker@v2
+        uses: ruzickap/action-my-broken-link-checker@v3
         with:
           url: https://my-testing-domain.com
           pages_path: ./public/
@@ -225,7 +223,7 @@ jobs:
           debug: true
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -269,12 +267,10 @@ jobs:
   vuepress-build-check-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
-      - name: Install Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
+      - name: Install Node.js
+        uses: actions/setup-node@v6
 
       - name: Install VuePress and build the document
         run: |
@@ -285,14 +281,14 @@ jobs:
           ln -s docs/.vuepress/dist ${{ github.event.repository.name }}
 
       - name: Check for broken links
-        uses: ruzickap/action-my-broken-link-checker@v2
+        uses: ruzickap/action-my-broken-link-checker@v3
         with:
           url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           pages_path: .
           cmd_params: '--exclude=mylabs.dev --max-connections-per-host=5 --rate-limit=5 --timeout=20 --header="User-Agent:curl/7.54.0" --skip-tls-verification'
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
