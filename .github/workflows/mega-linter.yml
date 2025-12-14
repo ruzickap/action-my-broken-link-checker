@@ -20,22 +20,49 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 2
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@e0021407031f5be11a464abee9a0776171c79891 # v47.0.1
+        with:
+          files: |
+            **/*.md
 
       # Extract shell commands from markdown code blocks for validation
-      # This creates a README.sh file containing all bash/shell/sh code blocks
+      # This creates a shell_commands_from_md.sh file containing all bash/shell/sh code blocks
       # from markdown files to ensure they are syntactically correct
       - name: Extract commands from markdown files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
         run: |
           set -euxo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          brew install mdq
-          echo '#!/usr/bin/env bash' > README.sh
-          readarray -d '' MD_FILES < <(find . -type f -name "*.md" -print0)
-          mdq '```/^bash$|^shell$|^sh$/' --br -o plain "${MD_FILES[@]}" >> README.sh || true
-          chmod a+x README.sh
+          brew install mq
+          echo '#!/usr/bin/env bash' > shell_commands_from_md.sh
+          read -ra FILES <<< "${ALL_CHANGED_FILES}"
+          mq 'select(.code.lang == "bash" || .code.lang == "shell" || .code.lang == "sh") | to_text()' "${FILES[@]}" >> shell_commands_from_md.sh
+          chmod a+x shell_commands_from_md.sh
+
+      - name: Restore lychee cache
+        id: restore-cache
+        uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
 
       - name: 💡 MegaLinter
         uses: oxsecurity/megalinter@55a59b24a441e0e1943080d4a512d827710d4a9d # v9.2.0
         env:
           GITHUB_COMMENT_REPORTER: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save lychee cache
+        uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        if: always() && steps.restore-cache.outputs.cache-primary-key
+        with:
+          path: .lycheecache
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}

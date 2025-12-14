@@ -14,13 +14,14 @@ on:
   schedule:
     - cron: 17 10 * * 2
 
-permissions:
-  security-events: write
-  packages: read
+permissions: read-all
 
 jobs:
   codeql:
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
