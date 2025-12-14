@@ -40,6 +40,8 @@
     enabled: true,
     schedule: ["before 6am on Sunday"],
   },
+  // Wait for releases to be at least 3 days old before creating PRs (reduces risk of buggy releases)
+  minimumReleaseAge: "3 days",
   // Package-specific Update Rules
   packageRules: [
     {
