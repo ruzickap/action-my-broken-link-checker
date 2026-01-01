@@ -2,7 +2,7 @@
 # checkov:skip=CKV_DOCKER_3: Ensure that a user for the container has been created
 # checkov:skip=CKV2_DOCKER_1: Ensure that sudo isn't used
 
-FROM alpine:3.23@sha256:51183f2cfa6320055da30872f211093f9ff1d3cf06f39a0bdb212314c5dc7375
+FROM alpine:3.23@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-broken-link-checker"
