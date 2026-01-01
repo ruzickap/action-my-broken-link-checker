@@ -31,7 +31,7 @@ jobs:
             **/*.md
 
       # Extract shell commands from markdown code blocks for validation
-      # This creates a shell_commands_from_md.sh file containing all bash/shell/sh code blocks
+      # This creates a bash_commands_from_md.sh file containing all bash/shell/sh code blocks
       # from markdown files to ensure they are syntactically correct
       - name: Extract commands from markdown files
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -41,10 +41,10 @@ jobs:
           set -euxo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install mq
-          echo '#!/usr/bin/env bash' > shell_commands_from_md.sh
+          echo '#!/usr/bin/env bash' > bash_commands_from_md.sh
           read -ra FILES <<< "${ALL_CHANGED_FILES}"
-          mq 'select(.code.lang == "bash" || .code.lang == "shell" || .code.lang == "sh") | to_text()' "${FILES[@]}" >> shell_commands_from_md.sh
-          chmod a+x shell_commands_from_md.sh
+          mq 'select(.code.lang == "bash" || .code.lang == "shell" || .code.lang == "sh") | to_text()' "${FILES[@]}" >> bash_commands_from_md.sh
+          chmod a+x bash_commands_from_md.sh
 
       - name: Restore lychee cache
         id: restore-cache
