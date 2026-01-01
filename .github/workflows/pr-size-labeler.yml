@@ -1,0 +1,21 @@
+---
+# GitHub Actions workflow for PR size labeling
+# Automatically labels pull requests based on the number of changed lines
+# https://github.com/CodelyTV/pr-size-labeler
+name: pr-size-labeler
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions: read-all
+
+jobs:
+  pr-size-labeler:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+      issues: write
+    steps:
+      - uses: codelytv/pr-size-labeler@4ec67706cd878fbc1c8db0a5dcd28b6bb412e85a # v1.10.3

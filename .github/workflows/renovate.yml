@@ -46,7 +46,6 @@ jobs:
     runs-on: ubuntu-24.04-arm
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-    permissions: write-all
     steps:
       - uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
         id: app-token
@@ -55,6 +54,6 @@ jobs:
           private-key: ${{ secrets.MY_RENOVATE_GITHUB_PRIVATE_KEY }}
 
       - name: 💡 Self-hosted Renovate
-        uses: renovatebot/github-action@822441559e94f98b67b82d97ab89fe3003b0a247 # v44.2.0
+        uses: renovatebot/github-action@8b7941943a108b2cc2150730963164aa8baeab8c # v44.2.2
         with:
           token: ${{ steps.app-token.outputs.token }}

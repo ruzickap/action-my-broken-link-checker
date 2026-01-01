@@ -16,6 +16,27 @@
   automerge: true,
   automergeType: "branch",
   branchPrefix: "chore/renovate/",
+  // This allows Renovate to detect and update dependencies that aren't in standard package files
+  customManagers: [
+    {
+      customType: "regex",
+      // Template for extracting version numbers from custom patterns
+      extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}",
+
+      // File types to scan for custom dependency patterns
+      fileMatch: ["\\.ya?ml$", "\\.md$", "^Dockerfile$", "^entrypoint\\.sh$"],
+
+      // Regex pattern to match custom dependency declarations
+      // Format: # renovate: datasource=<source> depName=<name> [versioning=<type>] [extractVersion=<regex>] [registryUrl=<url>]
+      // Example: # renovate: datasource=github-releases depName=helm/helm versioning=semver
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.+?))?( extractVersion=(?<extractVersion>.+?))?( registryUrl=(?<registryUrl>.+?))?\\s.*[=:]\\s*"?(?<currentValue>.+?)"?\\s',
+      ],
+
+      // Default to semantic versioning unless specified otherwise
+      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+    },
+  ],
   // Base Configuration Presets
   // Keep the extends started with ":" at the end of the list to allow overriding
   extends: [
@@ -25,7 +46,6 @@
     "security:openssf-scorecard", // Add OpenSSF Scorecard security insights
     ":disableDependencyDashboard", // Don't create dependency dashboard issues
     ":disableRateLimiting", // Disable rate limiting for faster updates
-    ":docker", // Enable Docker container updates
     ":enableVulnerabilityAlertsWithLabel(security)", // Add security label to vulnerability alerts
     ":pinSkipCi", // Pin dependencies and skip CI for pin-only updates
   ],
@@ -64,26 +84,6 @@
   ],
   prBodyTemplate: "{{{table}}}{{{notes}}}{{{changelogs}}}",
   rebaseWhen: "behind-base-branch",
-  // This allows Renovate to detect and update dependencies that aren't in standard package files
-  regexManagers: [
-    {
-      // Template for extracting version numbers from custom patterns
-      extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}",
-
-      // File types to scan for custom dependency patterns
-      fileMatch: ["\\.ya?ml$", "\\.md$", "^Dockerfile$", "^entrypoint\\.sh$"],
-
-      // Regex pattern to match custom dependency declarations
-      // Format: # renovate: datasource=<source> depName=<name> [versioning=<type>] [extractVersion=<regex>] [registryUrl=<url>]
-      // Example: # renovate: datasource=github-releases depName=helm/helm versioning=semver
-      matchStrings: [
-        '# renovate: datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.+?))?( extractVersion=(?<extractVersion>.+?))?( registryUrl=(?<registryUrl>.+?))?\\s.*[=:]\\s*"?(?<currentValue>.+?)"?\\s',
-      ],
-
-      // Default to semantic versioning unless specified otherwise
-      versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
-    },
-  ],
   separateMinorPatch: true,
   // # keep-sorted end
 }
