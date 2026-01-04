@@ -27,7 +27,7 @@ and maintainability across all contributions.
 
 ### Linting and Formatting
 
-- **Markdown compliance**: Ensure all Markdown files pass `markdownlint` checks
+- **Markdown compliance**: Ensure all Markdown files pass `rumdl` checks
 - **Code blocks**: For `bash`/`shell` code blocks:
   - Verify they pass `shellcheck` validation
   - Format with `shfmt` for consistency
@@ -93,9 +93,10 @@ Resolves: #123
 ### Pull Requests
 
 - **Always create draft PR** - Create pull requests as drafts initially
-- **Title format** - Use conventional commit format (e.g., `feat: add new feature`)
+- **Title format** - Use conventional commit format (`feat: add new feature`)
 - **Description** - Include clear explanation of changes and motivation
-- **Link issues** - Reference related issues using keywords (Fixes, Closes, Resolves)
+- **Link issues** - Reference related issues using keywords (Fixes, Closes,
+  Resolves)
 
 ## Quality & Best Practices
 

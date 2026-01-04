@@ -17,7 +17,9 @@ BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 
 # Disable linters
 DISABLE_LINTERS:
+  - MARKDOWN_MARKDOWNLINT # Using rumdl instead (faster Rust-based alternative)
   - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead for link checking (more configurable)
+  - REPOSITORY_KINGFISHER # Secret detection with too many false positives
   - SPELL_CSPELL # Spell checking disabled - prone to false positives
   - TERRAFORM_TERRASCAN # Hard to configure - no clear documentation of the config file format
 
@@ -39,11 +41,8 @@ JSON_JSONLINT_ARGUMENTS: --comments
 # Exclude devcontainer.json from JSON linting (VS Code extension format)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: .devcontainer/devcontainer.json
 
-# Use custom markdownlint configuration file
-MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.yml
-
-# Exclude CHANGELOG.md from markdownlint
-MARKDOWN_MARKDOWNLINT_FILTER_REGEX_EXCLUDE: CHANGELOG.md
+# Exclude CHANGELOG.md from rumdl (auto-generated, may have formatting issues)
+MARKDOWN_RUMDL_FILTER_REGEX_EXCLUDE: CHANGELOG.md
 
 # Disable the MegaLinter ASCII art graphic in output
 PRINT_ALPACA: false
