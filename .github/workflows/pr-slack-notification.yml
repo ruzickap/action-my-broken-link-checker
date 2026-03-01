@@ -28,6 +28,7 @@ defaults:
 jobs:
   pr-slack-notification:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: (github.event.action == 'opened' && github.event.pull_request.draft == false) || github.event.action == 'ready_for_review'
     steps:
       - name: Post PR summary message to slack
@@ -54,6 +55,7 @@ jobs:
 
   slack-emoji-react:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     name: Adds emoji reaction to slack message when a PR is closed or reviewed
     if: ${{ startsWith(github.event.pull_request.html_url, 'https') || startsWith(github.event.issue.pull_request.html_url, 'https') }}
     steps:

@@ -44,6 +44,7 @@ permissions: read-all
 jobs:
   renovate:
     runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -54,6 +55,6 @@ jobs:
           private-key: ${{ secrets.MY_RENOVATE_GITHUB_PRIVATE_KEY }}
 
       - name: 💡 Self-hosted Renovate
-        uses: renovatebot/github-action@8b7941943a108b2cc2150730963164aa8baeab8c # v44.2.2
+        uses: renovatebot/github-action@8d75b92f43899d483728e9a8a7fd44238020f6e6 # v46.1.2
         with:
           token: ${{ steps.app-token.outputs.token }}
