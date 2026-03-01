@@ -1,0 +1,12 @@
+# rumdl configuration file - https://github.com/rvben/rumdl
+
+[global]
+
+# Exclude files from scanning
+exclude = [
+  "CHANGELOG.md"
+]
+
+# MD013: Line length - https://github.com/rvben/rumdl/blob/main/docs/md013.md
+[MD013]
+code-blocks = false  # Exclude code blocks from line length check

@@ -17,6 +17,7 @@ jobs:
   scorecards:
     # ossf/scorecard-action doesn't support arm64
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       # Required for uploading SARIF results to GitHub Security tab
       security-events: write

@@ -15,20 +15,13 @@ permissions: read-all
 jobs:
   commit-check:
     runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
 
-      - name: Create commit-check.toml file
-        run: |
-          cat > commit-check.toml << EOF
-          [commit]
-          subject_capitalized = false
-          subject_imperative = false
-          subject_max_length = 80
-          EOF
-
       - uses: commit-check/commit-check-action@443fb6a114414358496e6243105294c3b11610c5 # v2.4.2
         env:
-          GH_TOKEN: ${{ github.token }}
+          CCHK_SUBJECT_CAPITALIZED: false
+          CCHK_SUBJECT_MAX_LENGTH: 72

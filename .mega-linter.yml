@@ -19,7 +19,6 @@ BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 DISABLE_LINTERS:
   - MARKDOWN_MARKDOWNLINT # Using rumdl instead (faster Rust-based alternative)
   - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead for link checking (more configurable)
-  - REPOSITORY_KINGFISHER # Secret detection with too many false positives
   - SPELL_CSPELL # Spell checking disabled - prone to false positives
   - TERRAFORM_TERRASCAN # Hard to configure - no clear documentation of the config file format
 

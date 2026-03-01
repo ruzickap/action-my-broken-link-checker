@@ -27,6 +27,7 @@ permissions: read-all
 jobs:
   docker-image:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm]

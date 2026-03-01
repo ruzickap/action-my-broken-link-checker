@@ -13,6 +13,7 @@ permissions: read-all
 jobs:
   pr-size-labeler:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       pull-requests: write
       contents: read
