@@ -55,7 +55,7 @@ shfmt --case-indent --indent 2 --space-redirects -d entrypoint.sh
 ### Lint Markdown
 
 ```bash
-rumdl *.md
+rumdl ./*.md
 ```
 
 ### Validate GitHub Actions workflows
