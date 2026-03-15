@@ -120,7 +120,7 @@ actionlint
 ## Markdown Guidelines
 
 - Pass `rumdl` checks (config in `.rumdl.toml`)
-- Wrap lines at **72 characters**
+- Wrap lines at **80 characters**
 - Proper heading hierarchy (no skipped levels)
 - Include language identifiers in code fences
 - Shell code blocks in Markdown must pass `shellcheck`

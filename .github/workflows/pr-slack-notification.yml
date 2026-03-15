@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Post PR summary message to slack
         id: message
-        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95 # v3.0.1
         with:
           method: chat.postMessage
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
@@ -110,7 +110,7 @@ jobs:
 
       - name: React to PR summary message in slack with emoji
         if: ${{ steps.slack-timestamp.outputs.github_event_pull_request_html_url == 'true' && env.EMOJI != 'false' }}
-        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95 # v3.0.1
         with:
           method: reactions.add
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
@@ -121,7 +121,7 @@ jobs:
 
       - name: Update the original message with status Merged ✅
         if: ${{ github.event.pull_request.merged && steps.slack-timestamp.outputs.github_event_pull_request_html_url == 'true' }}
-        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95 # v3.0.1
         with:
           method: chat.update
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
@@ -138,7 +138,7 @@ jobs:
 
       - name: Update the original message with status Closed ❎
         if: ${{ github.event.action == 'closed' && github.event.pull_request.merged == false && steps.slack-timestamp.outputs.github_event_pull_request_html_url == 'true' }}
-        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1
+        uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95 # v3.0.1
         with:
           method: chat.update
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
