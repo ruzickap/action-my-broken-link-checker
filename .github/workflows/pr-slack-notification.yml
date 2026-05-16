@@ -19,7 +19,11 @@ on:
     types:
       - submitted
 
-permissions: read-all
+permissions:
+  actions: read # needed for cache operations
+  contents: read # needed to checkout the repository
+  issues: read # needed to read issue comments
+  pull-requests: read # needed to read pull request details
 
 defaults:
   run:
@@ -61,6 +65,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Retrieve Slack message timestamp from cache
         id: slack-timestamp

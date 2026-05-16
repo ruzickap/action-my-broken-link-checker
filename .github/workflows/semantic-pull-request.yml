@@ -6,6 +6,7 @@ name: semantic-pull-request
 
 on:
   workflow_dispatch:
+  # zizmor: ignore[dangerous-triggers] - only reads PR metadata, no code checkout
   pull_request_target:
     types:
       - opened

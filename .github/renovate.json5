@@ -81,6 +81,16 @@
       matchUpdateTypes: ["minor"],
       schedule: ["* * * * 0"],
     },
+    {
+      description: "Group all GitHub Actions updates into a single PR",
+      groupName: "github actions",
+      matchManagers: ["github-actions"],
+    },
+    {
+      description: "Group all mise updates into a single PR",
+      groupName: "mise",
+      matchManagers: ["mise"],
+    },
   ],
   prBodyTemplate: "{{{table}}}{{{notes}}}{{{changelogs}}}",
   rebaseWhen: "behind-base-branch",

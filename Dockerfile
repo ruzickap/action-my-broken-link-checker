@@ -1,4 +1,3 @@
-# kics-scan disable=fd54f200-402c-4333-a5a4-36ef6709af2f
 # checkov:skip=CKV_DOCKER_3: Ensure that a user for the container has been created
 # checkov:skip=CKV2_DOCKER_1: Ensure that sudo isn't used
 

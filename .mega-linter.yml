@@ -6,6 +6,10 @@
 # and in individual linters documentation
 
 # keep-sorted start newline_separated=yes
+# Allow zizmor (GitHub Actions security scanner) to access GitHub token
+ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN
+
 # ShellCheck configuration - exclude SC2317 (unreachable command warning)
 BASH_SHELLCHECK_ARGUMENTS: --exclude=SC2317
 
@@ -19,6 +23,7 @@ BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 DISABLE_LINTERS:
   - MARKDOWN_MARKDOWNLINT # Using rumdl instead (faster Rust-based alternative)
   - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead for link checking (more configurable)
+  - REPOSITORY_OSV_SCANNER # No package sources in this repo
   - SPELL_CSPELL # Spell checking disabled - prone to false positives
   - TERRAFORM_TERRASCAN # Hard to configure - no clear documentation of the config file format
 
@@ -57,9 +62,6 @@ REPOSITORY_CHECKOV_ARGUMENTS: --quiet
 #   - DS162092: "Do not leave debug code in production"
 #   - DS137138: "Insecure URL" (for HTTP links that are intentional)
 REPOSITORY_DEVSKIM_ARGUMENTS: --ignore-globs CHANGELOG.md --ignore-rule-ids DS162092,DS137138
-
-# KICS (security scanner) - only fail on high severity issues
-REPOSITORY_KICS_ARGUMENTS: --fail-on high
 
 # Trivy (vulnerability scanner) - only check HIGH and CRITICAL severity
 REPOSITORY_TRIVY_ARGUMENTS: --severity HIGH,CRITICAL --ignore-unfixed
