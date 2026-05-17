@@ -28,8 +28,6 @@ jobs:
       - name: Checkout repository
         if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
 
       - name: Tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
