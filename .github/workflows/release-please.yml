@@ -27,6 +27,7 @@ jobs:
 
       - name: Checkout repository
         if: ${{ steps.release.outputs.release_created }}
+        # zizmor: ignore[artipacked]
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Tag major and minor versions

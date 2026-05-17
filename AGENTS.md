@@ -161,7 +161,6 @@ actionlint
 
 - **Checkov**: IaC scanner (skip `CKV_GHA_7`)
 - **DevSkim**: Ignore DS162092, DS137138; exclude `CHANGELOG.md`
-- **KICS**: Fails only on HIGH severity
 - **Trivy**: HIGH/CRITICAL only, ignores unfixed vulnerabilities
 - **ShellCheck**: Exclude SC2317 (unreachable command)
 
