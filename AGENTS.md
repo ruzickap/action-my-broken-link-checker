@@ -50,9 +50,9 @@ Tests hit **real external sites** and build the Docker image; they are not
 hermetic. Run from inside `tests/`:
 
 ```bash
-cd tests
-./run_tests.sh    # external URLs, local PAGES_PATH, and docker build+run
-./fail_tests.sh   # cases that are EXPECTED to fail (broken links / bad paths)
+cd tests || exit
+./run_tests.sh  # external URLs, local PAGES_PATH, and docker build+run
+./fail_tests.sh # cases that are EXPECTED to fail (broken links / bad paths)
 ```
 
 CI runs `run_tests.sh` on a matrix (`ubuntu-latest`, `ubuntu-24.04`) only when
