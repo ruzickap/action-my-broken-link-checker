@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: commit-check/commit-check-action@2239d8980732e84a380552fdd71e1d49e149baf3 # v2.6.1
+      - uses: commit-check/commit-check-action@f237ed0085f49444ab5c85bdfa5cdcd490fc09c5 # v2.7.0
         env:
           CCHK_SUBJECT_CAPITALIZED: false
           CCHK_SUBJECT_MAX_LENGTH: 72

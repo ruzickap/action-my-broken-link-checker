@@ -6,8 +6,7 @@ name: semantic-pull-request
 
 on:
   workflow_dispatch:
-  # zizmor: ignore[dangerous-triggers] - only reads PR metadata, no code checkout
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -24,4 +23,4 @@ jobs:
       - name: Validate semantic pull request title
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}

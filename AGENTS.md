@@ -1,171 +1,94 @@
-# AI Agent Guidelines
+# AGENTS.md
 
-## Project Overview
+Guidance for AI agents working in this repo. Keep edits high-signal and
+repo-specific.
 
-GitHub Action (`ruzickap/action-my-broken-link-checker`) that checks
-broken links in static files or web pages using
-[muffet](https://github.com/raviqqe/muffet) and
-[Caddy](https://caddyserver.com/) as a local web server. The codebase
-is entirely **Bash** with Docker packaging.
+## What this repo is
 
-## Build / Test / Lint Commands
+A **Docker-based GitHub Action** ("My Broken Link Checker") that checks web
+pages for broken links. It wraps two upstream binaries:
 
-### Build Docker image
+- [`muffet`](https://github.com/raviqqe/muffet) — the actual link checker
+- [`caddy`](https://caddyserver.com/) — only started when checking **local**
+  pages (`INPUT_PAGES_PATH`), to serve them over the hostname from the URL
+
+There is no application source code. The entire logic lives in
+`entrypoint.sh` (~150 lines of Bash). `action.yml` + `Dockerfile` package it
+as a container action; the same script also runs standalone via `bash`.
+
+## Architecture / key files
+
+- `entrypoint.sh` — all logic. Reads config from `INPUT_*` env vars, installs
+  `muffet`/`caddy` if missing, optionally starts caddy + edits `/etc/hosts`,
+  runs `muffet`, then cleans up. Non-zero exit = broken links found.
+- `action.yml` — Docker action. Inputs (`url`, `pages_path`, `cmd_params`,
+  `debug`) auto-map to `INPUT_URL` / `INPUT_PAGES_PATH` / `INPUT_CMD_PARAMS` /
+  `INPUT_DEBUG` that the script reads. Only `url` is required.
+- `Dockerfile` — Alpine base; pre-installs `muffet` + `caddy`.
+- `tests/` — test fixtures (`index.html`, `index2.html`) + runner scripts.
+- `entrypoint.sh` is also published for "script mode": users `wget … | bash`
+  it directly, so it must keep working outside a container.
+
+## Critical gotchas
+
+- **Tool versions are duplicated.** `MUFFET_VERSION` and `CADDY_VERSION` are
+  hardcoded in **both** `entrypoint.sh` and `Dockerfile` and must stay in
+  lockstep. Both are bumped by Renovate via the `# renovate:` comment lines —
+  if you change one by hand, change the other too.
+- **README bash blocks are executed in CI.** `readme-commands-check.yml`
+  extracts every ` ```bash ` fenced block from `README.md` and runs it with
+  `bash -euxo pipefail`. Do not put illustrative-but-broken commands in `bash`
+  blocks — use another language tag (e.g. `yaml`, `text`) or make them runnable.
+- **`tests/CHANGELOG.md` is a leftover fixture**, frozen at v2.2.0 (2021). It
+  is only served as test content and is excluded from linting. The real
+  changelog is root `CHANGELOG.md`, managed by release-please — do not hand-edit
+  either.
+
+## Tests
+
+Tests hit **real external sites** and build the Docker image; they are not
+hermetic. Run from inside `tests/`:
 
 ```bash
-docker build . -t my-broken-link-checker-test
+cd tests
+./run_tests.sh    # external URLs, local PAGES_PATH, and docker build+run
+./fail_tests.sh   # cases that are EXPECTED to fail (broken links / bad paths)
 ```
 
-### Run all tests
+CI runs `run_tests.sh` on a matrix (`ubuntu-latest`, `ubuntu-24.04`) only when
+`tests/`, `entrypoint.sh`, `Dockerfile`, or `.dockerignore` change.
+
+## Running the action locally
 
 ```bash
-cd tests && ./run_tests.sh
-```
-
-### Run a single test (manual)
-
-No test framework; tests are sequential script calls. Set env vars
-and invoke the entrypoint directly:
-
-```bash
-export INPUT_DEBUG="true"
-export INPUT_URL="https://xvx.cz"
-export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 \
-  --max-connections=10 --verbose --color=always"
+export INPUT_URL="https://example.com"
+export INPUT_CMD_PARAMS="--one-page-only --color=always --verbose"
+# export INPUT_PAGES_PATH="${PWD}/tests/"   # to serve local pages via caddy
 ./entrypoint.sh
 ```
 
-For local page tests, also set `INPUT_PAGES_PATH`:
+## Lint / CI
 
-```bash
-export INPUT_URL="https://my-testing-domain.com"
-export INPUT_PAGES_PATH="${PWD}/tests"
-export INPUT_CMD_PARAMS="--skip-tls-verification --verbose \
-  --color=always"
-./entrypoint.sh
-```
+Linting is **MegaLinter** (`.mega-linter.yml`), which runs only on **non-`main`
+push branches** and skips `chore/renovate/*` and `release-please--*` branches.
+There is no Makefile or lint script — match these tools when editing:
 
-### Lint shell scripts
+- Shell: `shellcheck` (`SC2317` excluded) and `shfmt --case-indent --indent 2
+  --space-redirects`.
+- Markdown: `rumdl` (not markdownlint); wrap prose at 80 cols (code blocks
+  exempt). Links checked with `lychee`.
+- `CHANGELOG.md` is excluded from all linters.
 
-```bash
-shellcheck --exclude=SC2317 entrypoint.sh tests/*.sh
-shfmt --case-indent --indent 2 --space-redirects -d entrypoint.sh
-```
+Other PR checks: `docker-image` (build on amd64 + arm64), `commit-check`,
+`semantic-pull-request`, CodeQL, scorecards.
 
-### Lint Markdown
+## Conventions
 
-```bash
-rumdl ./*.md
-```
-
-### Validate GitHub Actions workflows
-
-```bash
-actionlint
-```
-
-## Shell Script Style Guide
-
-### Shebang and strict mode
-
-- Always start with `#!/usr/bin/env bash`
-- Production scripts: `set -Eeuo pipefail`
-- Test scripts: `set -euxo pipefail` (adds verbose tracing)
-
-### Variables
-
-- **UPPERCASE** for all variables: `${MY_VARIABLE}`
-- Use `${VAR:-default}` for optional params with defaults
-- Use `${VAR:?}` for required params (fails if unset)
-- Always quote variable expansions: `"${VAR}"`
-- Use `export` for variables passed to subprocesses
-
-### Functions
-
-- **lowercase_with_underscores**: `print_error()`, `cleanup()`
-- Define before use; group utility functions near the top
-- Use `trap` for cleanup and error handling
-
-### Formatting (enforced by shfmt)
-
-- **2 spaces** for indentation (no tabs)
-- Indent `case` statement bodies (`--case-indent`)
-- Space before redirect operators (`> file`, not `>file`)
-
-### Error handling
-
-- Use `trap error_trap ERR` for error trapping
-- Print errors: `echo -e "\e[31m*** ERROR: ${1}\e[m"`
-- Print info: `echo -e "\e[36m*** INFO: ${1}\e[m"`
-- Always clean up temp files and `/etc/hosts` modifications
-
-### Common patterns
-
-**Conditional sudo** -- check `$EUID` and set `sudo_cmd=""` or
-`sudo_cmd="sudo"`, then use `$sudo_cmd bash -c "command"`.
-
-**Architecture detection** -- map `uname -m` to `ARCH_SUFFIX`
-(`aarch64` -> `arm64`, `x86_64` -> `amd64`), exit on unsupported.
-
-## Dockerfile Conventions
-
-- Pin base image with SHA digest:
-  `FROM alpine:3.23@sha256:abcdef...`
-- Add security scanner skip annotations at the top
-- Use `SHELL ["/bin/ash", "-eo", "pipefail", "-c"]`
-- Include `HEALTHCHECK NONE`
-- Add Renovate annotations for version tracking:
-  `# renovate: datasource=github-tags depName=org/repo`
-
-## Markdown Guidelines
-
-- Pass `rumdl` checks (config in `.rumdl.toml`)
-- Wrap lines at **80 characters**
-- Proper heading hierarchy (no skipped levels)
-- Include language identifiers in code fences
-- Shell code blocks in Markdown must pass `shellcheck`
-
-## GitHub Actions Workflows
-
-- Pin all actions to **full SHA** with version comment:
-  `uses: actions/checkout@de0fac2e4500d...  # v6.0.2`
-- Use `permissions: read-all` as default
-- Set `timeout-minutes` on all jobs
-- Validate with `actionlint` after any workflow change
-
-## Version Control
-
-### Commit messages (conventional commits)
-
-- Format: `<type>: <description>` (max 72 chars)
-- Types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`,
-  `style`, `perf`, `ci`, `build`, `revert`
-- Imperative mood, lowercase, no trailing period
-- Body: wrap at 72 chars, explain what and why
-- Reference issues: `Fixes: #123`, `Closes: #456`
-
-### Branching (conventional branch)
-
-- Format: `<type>/<description>` (e.g., `feat/add-retry`)
-- Types: `feature/`, `feat/`, `bugfix/`, `fix/`, `hotfix/`,
-  `release/`, `chore/`
-- Lowercase, hyphens only, no consecutive/trailing hyphens
-
-### Pull requests
-
-- Create as **draft** initially
-- Title must follow conventional commit format
-- Include clear description and link related issues
-
-## Security & CI
-
-- **Checkov**: IaC scanner (skip `CKV_GHA_7`)
-- **DevSkim**: Ignore DS162092, DS137138; exclude `CHANGELOG.md`
-- **Trivy**: HIGH/CRITICAL only, ignores unfixed vulnerabilities
-- **ShellCheck**: Exclude SC2317 (unreachable command)
-
-## Dependency Management
-
-Versions managed by **Renovate** with `# renovate:` annotations.
-Versions are declared in both `Dockerfile` and `entrypoint.sh` and
-must stay in sync (Renovate handles this automatically).
+- **Commits & PR titles**: Conventional Commits (`feat:`, `fix:`, `chore:`,
+  `docs:`, …). Subject ≤ 72 chars. PR titles are validated.
+- **Branches**: Conventional Branch (`feature/`, `bugfix/`, `chore/`, …),
+  lowercase + hyphens.
+- **Releases**: automated by release-please (`release-type: simple`) on push to
+  `main`; it also force-moves the `vMAJOR` and `vMAJOR.MINOR` tags. Do not tag
+  or edit `CHANGELOG.md` manually.
+- Pin GitHub Actions to full commit SHAs; keep workflow `permissions` minimal.
