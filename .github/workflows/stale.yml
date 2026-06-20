@@ -25,7 +25,7 @@ jobs:
 
             If this issue is still relevant, please reopen it or create a new issue with updated information.
           close-pr-message: |
-            This pull request has been automatically closed because it has been stale for 14 days with no activity.
+            This pull request has been automatically closed because it has been stale for 7 days with no activity.
 
             If this pull request is still relevant, please reopen it or rebase and push new commits.
           stale-issue-label: stale
@@ -40,7 +40,7 @@ jobs:
             This issue will be automatically closed in 7 days if no further activity occurs.
           stale-pr-label: stale
           stale-pr-message: |
-            This pull request is stale because it has been open for 30 days with no activity.
+            This pull request is stale because it has been open for 60 days with no activity.
 
             Please:
             - Add a comment if this PR is still relevant
@@ -48,5 +48,5 @@ jobs:
             - Remove the stale label if you need more time
             - Close the PR if it's no longer needed
 
-            This pull request will be automatically closed in 14 days if no further activity occurs.
+            This pull request will be automatically closed in 7 days if no further activity occurs.
           # keep-sorted end

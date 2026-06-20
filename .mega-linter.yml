@@ -63,6 +63,9 @@ REPOSITORY_CHECKOV_ARGUMENTS: --quiet
 #   - DS137138: "Insecure URL" (for HTTP links that are intentional)
 REPOSITORY_DEVSKIM_ARGUMENTS: --ignore-globs CHANGELOG.md --ignore-rule-ids DS162092,DS137138
 
+# Kingfisher (secret scanner) - exclude .git directory to avoid false positives on Git metadata files (e.g., refs that match token patterns)
+REPOSITORY_KINGFISHER_ARGUMENTS: --exclude .git
+
 # Trivy (vulnerability scanner) - only check HIGH and CRITICAL severity
 REPOSITORY_TRIVY_ARGUMENTS: --severity HIGH,CRITICAL --ignore-unfixed
 
