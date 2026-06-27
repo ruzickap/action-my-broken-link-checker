@@ -36,7 +36,7 @@ Check out the real demo:
 [![My Broken Link Checker demo](https://img.youtube.com/vi/H6H523TMPXk/0.jpg)](https://youtu.be/H6H523TMPXk)
 
 This deploy action can be combined with
-[Static Site Generators](https://www.staticgen.com/) (Hugo, MkDocs, Gatsby,
+[Static Site Generators](https://jamstack.org/generators/) (Hugo, MkDocs, Gatsby,
 GitBook, mdBook, etc.). The following examples expect the web pages
 to be stored in the `./build` directory. A [caddy](https://caddyserver.com/) web
 server is started during the tests, using the hostname from the `URL` parameter
@@ -301,8 +301,7 @@ jobs:
 In this case, I'm using [VuePress](https://vuepress.vuejs.org/) to create my
 page.
 
-![GitHub Action my-broken-link-checker](./images/actions-my-broken-link-checker.png
-"GitHub Action my-broken-link-checker")
+![GitHub Action my-broken-link-checker](./images/actions-my-broken-link-checker.png "GitHub Action my-broken-link-checker")
 
 ---
 
@@ -408,7 +407,7 @@ https://my-testing-domain.com:443/
 ## Examples
 
 Some other examples of building and checking web pages using
-[Static Site Generators](https://www.staticgen.com/) and GitHub Actions can be
+[Static Site Generators](https://jamstack.org/generators/) and GitHub Actions can be
 found here: [https://github.com/peaceiris/actions-gh-pages/](https://github.com/peaceiris/actions-gh-pages/).
 
 The following links contain real examples of My Broken Link Checker:
