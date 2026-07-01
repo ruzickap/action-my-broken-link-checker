@@ -1,3 +1,2 @@
 (http|https)://my-testing-domain\.com/
-# Tokenized git remote used to push tags in release-please.yml
-https://x-access-token:.*@github\.com
+https://x-access-token/
