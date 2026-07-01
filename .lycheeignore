@@ -1,3 +1,5 @@
 (http|https)://my-testing-domain\.com/
-# Tokenized git remote used to push tags in release-please.yml
-https://x-access-token:.*@github\.com
+# Tokenized git remote used to push tags in release-please.yml.
+# Lychee parses the "https://x-access-token:${GH_TOKEN}@github.com/..." string
+# and extracts it as "https://x-access-token/", so match that host.
+https://x-access-token/
