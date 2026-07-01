@@ -53,12 +53,9 @@ jobs:
           git tag -f "v${MAJOR}" "${SHA}"
           git tag -f "v${MAJOR}.${MINOR}" "${SHA}"
 
-          # Push tags to remote.
-          # The checkout step uses persist-credentials: false, so no git
-          # credentials are stored. Authenticate the push explicitly with the
-          # workflow token via the remote URL. Disable xtrace first so the
-          # token is never written to the logs.
-          set +x
-          REMOTE_URL="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push --force "${REMOTE_URL}" "v${MAJOR}"
-          git push --force "${REMOTE_URL}" "v${MAJOR}.${MINOR}"
+          # Authenticate the push with the workflow token via an HTTP header
+          # (checkout used persist-credentials: false). Avoids putting the
+          # token in the remote URL.
+          AUTH_HEADER="AUTHORIZATION: basic $(printf 'x-access-token:%s' "${GH_TOKEN}" | base64 | tr -d '\n')"
+          git -c http.extraheader="${AUTH_HEADER}" push --force origin "v${MAJOR}"
+          git -c http.extraheader="${AUTH_HEADER}" push --force origin "v${MAJOR}.${MINOR}"
