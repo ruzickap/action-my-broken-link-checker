@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.0...v3.0.1) (2026-07-01)
+
+
+### Miscellaneous Chores
+
+* release 3.0.1 ([#193](https://github.com/ruzickap/action-my-broken-link-checker/issues/193)) ([8bb0766](https://github.com/ruzickap/action-my-broken-link-checker/commit/8bb0766bc4540b364d611feea11bfb6c013c3bbf))
+
 ## [3.0.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v2.9.0...v3.0.0) (2025-12-03)
 
 
