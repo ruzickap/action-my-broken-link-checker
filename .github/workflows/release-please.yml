@@ -34,6 +34,7 @@ jobs:
       - name: Tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAJOR: ${{ steps.release.outputs.major }}
           MINOR: ${{ steps.release.outputs.minor }}
         run: |
@@ -52,6 +53,12 @@ jobs:
           git tag -f "v${MAJOR}" "${SHA}"
           git tag -f "v${MAJOR}.${MINOR}" "${SHA}"
 
-          # Push tags to remote
-          git push --force origin "v${MAJOR}"
-          git push --force origin "v${MAJOR}.${MINOR}"
+          # Push tags to remote.
+          # The checkout step uses persist-credentials: false, so no git
+          # credentials are stored. Authenticate the push explicitly with the
+          # workflow token via the remote URL. Disable xtrace first so the
+          # token is never written to the logs.
+          set +x
+          REMOTE_URL="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force "${REMOTE_URL}" "v${MAJOR}"
+          git push --force "${REMOTE_URL}" "v${MAJOR}.${MINOR}"
