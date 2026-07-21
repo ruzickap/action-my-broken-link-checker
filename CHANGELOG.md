@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.1...v3.0.2) (2026-07-21)
+
+
+### Bug Fixes
+
+* correct lychee ignore pattern for tokenized remote ([#196](https://github.com/ruzickap/action-my-broken-link-checker/issues/196)) ([6c41213](https://github.com/ruzickap/action-my-broken-link-checker/commit/6c412138c4dcbdd29a8c7ca9e967ebe4295f4bca))
+* use auth header instead of token in URL for tag push ([#198](https://github.com/ruzickap/action-my-broken-link-checker/issues/198)) ([ea27fcd](https://github.com/ruzickap/action-my-broken-link-checker/commit/ea27fcd7ecd15b0fd3f11d21e6640326e1eac289))
+
 ## [3.0.1](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.0...v3.0.1) (2026-07-01)
 
 
