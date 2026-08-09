@@ -22,10 +22,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: commit-check/commit-check-action@d109324148a73dc758891d1d85924c912dbfd38b # v2.12.0
+      - uses: commit-check/commit-check-action@562a184b2b8e583e757b17eb385bc48370f44547 # v2.13.1
+        with:
+          pr-title: true
         env:
           CCHK_SUBJECT_CAPITALIZED: false
           CCHK_SUBJECT_MAX_LENGTH: 72
-          # Skip branch-name checks for automation bots. Ex. dependabot hardcodes the `dependabot/<ecosystem>/...` branch prefix and cannot satisfy Conventional Branch
-          CCHK_IGNORE_AUTHORS: "copilot[bot],dependabot[bot],github-actions[bot],my-renovate[bot]"
-          CCHK_BRANCH_IGNORE_AUTHORS: "copilot[bot],dependabot[bot],github-actions[bot],my-renovate[bot]"
+          CCHK_IGNORE_AUTHORS: "copilot[bot],github-actions[bot],my-renovate[bot]"
+          CCHK_BRANCH_IGNORE_AUTHORS: "copilot[bot],github-actions[bot],my-renovate[bot]"
