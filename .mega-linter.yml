@@ -21,20 +21,13 @@ BASH_SHFMT_ARGUMENTS: --case-indent --indent 2 --space-redirects
 
 # Disable linters
 DISABLE_LINTERS:
-  - MARKDOWN_MARKDOWNLINT # Using rumdl instead (faster Rust-based alternative)
-  - MARKDOWN_MARKDOWN_LINK_CHECK # Using lychee instead for link checking (more configurable)
-  - REPOSITORY_OSV_SCANNER # No package sources in this repo
   - SPELL_CSPELL # Spell checking disabled - prone to false positives
-  - TERRAFORM_TERRASCAN # Hard to configure - no clear documentation of the config file format
-
-# Disable email reporting
-EMAIL_REPORTER: false
 
 # Fail the build if a required linter is missing from the Docker flavor
 FAIL_IF_MISSING_LINTER_IN_FLAVOR: true
 
 # Exclude CHANGELOG.md from all linting
-FILTER_REGEX_EXCLUDE: CHANGELOG.md
+FILTER_REGEX_EXCLUDE: CHANGELOG\.md
 
 # Allow formatters to report errors
 FORMATTERS_DISABLE_ERRORS: false
@@ -45,11 +38,17 @@ JSON_JSONLINT_ARGUMENTS: --comments
 # Exclude devcontainer.json from JSON linting (VS Code extension format)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: .devcontainer/devcontainer.json
 
+# Use rumdl as the default Markdown style (faster Rust-based alternative)
+MARKDOWN_DEFAULT_STYLE: rumdl
+
 # Exclude CHANGELOG.md from rumdl (auto-generated, may have formatting issues)
-MARKDOWN_RUMDL_FILTER_REGEX_EXCLUDE: CHANGELOG.md
+MARKDOWN_RUMDL_FILTER_REGEX_EXCLUDE: CHANGELOG\.md
 
 # Disable the MegaLinter ASCII art graphic in output
 PRINT_ALPACA: false
+
+# Use ruff as the default Python style (faster Rust-based alternative)
+PYTHON_DEFAULT_STYLE: ruff
 
 # Don't create a report output folder (using CI artifacts instead)
 REPORT_OUTPUT_FOLDER: none
@@ -61,7 +60,7 @@ REPOSITORY_CHECKOV_ARGUMENTS: --quiet
 # --ignore-rule-ids DS162092,DS137138: ignore specific rules:
 #   - DS162092: "Do not leave debug code in production"
 #   - DS137138: "Insecure URL" (for HTTP links that are intentional)
-REPOSITORY_DEVSKIM_ARGUMENTS: --ignore-globs CHANGELOG.md --ignore-rule-ids DS162092,DS137138
+REPOSITORY_DEVSKIM_ARGUMENTS: --ignore-rule-ids DS162092,DS137138
 
 # Kingfisher (secret scanner) - exclude .git directory to avoid false positives on Git metadata files (e.g., refs that match token patterns)
 REPOSITORY_KINGFISHER_ARGUMENTS: --exclude .git
