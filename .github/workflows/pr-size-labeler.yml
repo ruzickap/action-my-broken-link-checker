@@ -19,4 +19,4 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: codelytv/pr-size-labeler@095a41fca88b8764fd9e008ad269bcdb82bb38b9 # v1.10.4
+      - uses: codelytv/pr-size-labeler@3e1170d6309cd47d537ffd8b23854a8339057e9d # v1.10.5
