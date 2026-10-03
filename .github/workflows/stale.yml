@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   stale:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 5
     steps:
       - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
