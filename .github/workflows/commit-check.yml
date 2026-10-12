@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: commit-check/commit-check-action@fd3d923eab0876650f261d2a75572e8161a9a58e # v2.16.0
+      - uses: commit-check/commit-check-action@a61779784a953fd9047c001c102cfeac5cf26964 # v2.17.1
         with:
           pr-title: true
         env:
