@@ -6,14 +6,7 @@ set -euxo pipefail
 export INPUT_DEBUG="true"
 
 echo -e "\n\n\e[32m!!! Check differnet URLs types\e[m"
-# Skip xvx.cz subdomains that rate-limit GitHub runners (HTTP 429)
-export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always --exclude='https://(cestovani|linux)\.xvx\.cz'"
-
-export INPUT_URL="https://xvx.cz"
-../entrypoint.sh
-
-export INPUT_URL="https://xvx.cz:443"
-../entrypoint.sh
+export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always"
 
 export INPUT_URL="https://debian.cz:443/info/"
 ../entrypoint.sh
@@ -21,8 +14,17 @@ export INPUT_URL="https://debian.cz:443/info/"
 export INPUT_URL="http://debian.cz/info" # DevSkim: ignore DS137138
 ../entrypoint.sh
 
-export INPUT_CMD_PARAMS='--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always --header="user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" --exclude="https://(cestovani|linux)\.xvx\.cz"'
-export INPUT_URL="https://xvx.cz"
+# ruzicka.dev redirects to petr.ruzicka.dev; check only its own links (social sites block bots)
+export INPUT_CMD_PARAMS="--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always --include='petr\.ruzicka\.dev'"
+
+export INPUT_URL="https://ruzicka.dev"
+../entrypoint.sh
+
+export INPUT_URL="https://ruzicka.dev:443"
+../entrypoint.sh
+
+export INPUT_CMD_PARAMS='--one-page-only --buffer-size=8192 --max-connections=10 --verbose --color=always --header="user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" --include="petr\.ruzicka\.dev"'
+export INPUT_URL="https://ruzicka.dev"
 ../entrypoint.sh
 
 echo -e "\n\n\e[32m!!! Test locally stored web pages (PAGES_PATH)\e[m"
