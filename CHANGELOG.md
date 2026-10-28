@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.3](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.2...v3.0.3) (2026-10-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency raviqqe/muffet to v2.11.7 ([#202](https://github.com/ruzickap/action-my-broken-link-checker/issues/202)) ([a9e6f5d](https://github.com/ruzickap/action-my-broken-link-checker/commit/a9e6f5d3cd53c023808726da00b28be80ef85b0d))
+
 ## [3.0.2](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.1...v3.0.2) (2026-10-13)
 
 
