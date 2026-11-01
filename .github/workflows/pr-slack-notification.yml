@@ -19,11 +19,7 @@ on:
     types:
       - submitted
 
-permissions:
-  actions: read # needed for cache operations
-  contents: read # needed to checkout the repository
-  issues: read # needed to read issue comments
-  pull-requests: read # needed to read pull request details
+permissions: {}
 
 defaults:
   run:
@@ -31,8 +27,9 @@ defaults:
 
 jobs:
   pr-slack-notification:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 5
+    permissions: {}
     if: (github.event.action == 'opened' && github.event.pull_request.draft == false) || github.event.action == 'ready_for_review'
     steps:
       - name: Post PR summary message to slack
@@ -40,6 +37,7 @@ jobs:
         uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
         with:
           method: chat.postMessage
+          errors: true
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ secrets.MY_SLACK_CHANNEL_ID }}
@@ -58,8 +56,11 @@ jobs:
           key: slack-message-timestamp-${{ github.event.pull_request.html_url }}-${{ steps.message.outputs.ts }}
 
   slack-emoji-react:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 5
+    permissions:
+      actions: read # needed to list caches
+      contents: read # needed to checkout the repository
     name: Adds emoji reaction to slack message when a PR is closed or reviewed
     if: ${{ startsWith(github.event.pull_request.html_url, 'https') || startsWith(github.event.issue.pull_request.html_url, 'https') }}
     steps:

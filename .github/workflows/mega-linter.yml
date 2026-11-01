@@ -1,6 +1,5 @@
 ---
-# GitHub Actions workflow for MegaLinter code quality checks
-# Runs comprehensive linting and security checks on all supported file types
+# MegaLinter: linting and security checks on all supported file types
 # https://megalinter.io/
 name: mega-linter
 
@@ -10,40 +9,54 @@ on:
     branches-ignore:
       - main
 
-permissions: read-all
+permissions: {}
 
 jobs:
   mega-linter:
     runs-on: ubuntu-latest
     if: ${{ (!startsWith(github.ref_name, 'chore/renovate/') && !startsWith(github.ref_name, 'release-please--')) || github.event_name == 'workflow_dispatch' }}
     timeout-minutes: 20
+    permissions:
+      contents: read
     steps:
+      # The full MegaLinter image leaves too little disk for the grype and trivy databases
+      # Runs in the background - the space is needed only later inside MegaLinter
+      - name: Free disk space
+        run: |
+          set -euxo pipefail
+          sudo rm -rf /opt/hostedtoolcache/CodeQL /usr/local/.ghcup > /dev/null 2>&1 &
+
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 2
+          fetch-depth: 0
           persist-credentials: false
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
-        with:
-          files: |
-            **/*.md
-
-      # Extract shell commands from markdown code blocks for validation
-      # This creates a bash_commands_from_md.sh file containing all bash/shell/sh code blocks
-      # from markdown files to ensure they are syntactically correct
+      # Extract bash/shell/sh code blocks from changed markdown files into bash_commands_from_md.sh
+      # Files are listed NUL-separated by git, so any filename is passed through unmodified
       - name: Extract commands from markdown files
-        if: steps.changed-files.outputs.any_changed == 'true'
         env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          BEFORE: ${{ github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           set -euxo pipefail
+          # New branch, workflow_dispatch, or force-push: compare against the default branch
+          if [[ "${BEFORE}" =~ ^0*$ ]] || ! git cat-file -e "${BEFORE}^{commit}" 2> /dev/null; then
+            BEFORE=$(git merge-base "origin/${DEFAULT_BRANCH}" HEAD)
+          fi
+          # No commits ahead of the default branch: check the last commit (empty tree if none)
+          if [[ "${BEFORE}" == "$(git rev-parse HEAD)" ]]; then
+            BEFORE=$(git rev-parse --verify --quiet HEAD^ || git hash-object -t tree /dev/null)
+          fi
+          git diff -z --name-only --diff-filter=ACMRT "${BEFORE}" HEAD -- '*.md' > "${RUNNER_TEMP}/changed-md-files"
+          mapfile -d '' -t FILES < "${RUNNER_TEMP}/changed-md-files"
+          if [[ ${#FILES[@]} -eq 0 ]]; then
+            echo "No changed Markdown files"
+            exit 0
+          fi
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install mq
           echo '#!/usr/bin/env bash' > bash_commands_from_md.sh
-          read -ra FILES <<< "${ALL_CHANGED_FILES}"
           mq 'select(.code.lang == "bash" || .code.lang == "shell" || .code.lang == "sh") | to_text()' "${FILES[@]}" >> bash_commands_from_md.sh
           chmod a+x bash_commands_from_md.sh
 
@@ -63,7 +76,7 @@ jobs:
           fi
 
       - name: 💡 MegaLinter
-        uses: oxsecurity/megalinter/flavors/documentation@9949bad031045f366be2467e00e8371a7328a2e2 # v10.1.0
+        uses: oxsecurity/megalinter/flavors/documentation@f2fe8c1cba37091848df3e524066c8c23ef353ed # v10.2.0
         env:
           GITHUB_COMMENT_REPORTER: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

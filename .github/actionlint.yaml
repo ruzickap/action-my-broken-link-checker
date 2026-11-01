@@ -1,0 +1,5 @@
+# actionlint does not know the Ubuntu 26.04 runner labels yet - declare them
+# here to avoid false "label is unknown" errors. Drop once actionlint adds them.
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04-arm
