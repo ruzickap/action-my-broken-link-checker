@@ -30,6 +30,8 @@ exclude = [
 exclude_path = [
   "CHANGELOG.md",
   "package-lock.json",
+  # gh-aw generated lock files
+  "\\.lock\\.yml$",
 ]
 
 # Exclude all private IP addresses from checking

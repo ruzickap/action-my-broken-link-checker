@@ -26,8 +26,8 @@ DISABLE_LINTERS:
 # Fail the build if a required linter is missing from the Docker flavor
 FAIL_IF_MISSING_LINTER_IN_FLAVOR: true
 
-# Exclude CHANGELOG.md from all linting
-FILTER_REGEX_EXCLUDE: CHANGELOG\.md
+# Exclude CHANGELOG.md and gh-aw generated files (.lock.yml, actions-lock.json) from all linting
+FILTER_REGEX_EXCLUDE: (CHANGELOG\.md|\.lock\.yml$|\.github/aw/actions-lock\.json)
 
 # Allow formatters to report errors
 FORMATTERS_DISABLE_ERRORS: false

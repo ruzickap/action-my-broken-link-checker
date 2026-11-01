@@ -14,13 +14,14 @@ on:
   schedule:
     - cron: 17 10 * * 2
 
-permissions: read-all
+permissions: {}
 
 jobs:
   codeql:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
+      actions: read
       contents: read
       packages: read
       security-events: write
