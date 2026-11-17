@@ -1,0 +1,3 @@
+[codespell]
+# The demo SVG is a typing animation full of partial words
+skip = *.svg

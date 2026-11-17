@@ -95,7 +95,7 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v6
 
       - name: Check for broken links
         uses: ruzickap/action-my-broken-link-checker@v3
@@ -127,13 +127,13 @@ jobs:
           <!DOCTYPE html>
           <html>
             <head>
-              My page, which will be stored on the my-testing-domain.com domain
+              My page, which will be stored on the my-testing-domain.test domain
             </head>
             <body>
               Links:
               <ul>
-                <li><a href="https://my-testing-domain.com">https://my-testing-domain.com</a></li>
-                <li><a href="https://my-testing-domain.com:443">https://my-testing-domain.com:443</a></li>
+                <li><a href="https://my-testing-domain.test">https://my-testing-domain.test</a></li>
+                <li><a href="https://my-testing-domain.test:443">https://my-testing-domain.test:443</a></li>
               </ul>
             </body>
           </html>
@@ -141,7 +141,7 @@ jobs:
 
       - name: Check links using script
         env:
-          INPUT_URL: https://my-testing-domain.com
+          INPUT_URL: https://my-testing-domain.test
           INPUT_PAGES_PATH: ./public/
           INPUT_CMD_PARAMS: '--skip-tls-verification --verbose --color=always'
           INPUT_DEBUG: true
@@ -150,7 +150,7 @@ jobs:
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v3
         with:
-          url: https://my-testing-domain.com
+          url: https://my-testing-domain.test
           pages_path: ./public/
           cmd_params: '--skip-tls-verification --verbose --color=always'
           debug: true
@@ -189,13 +189,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
-      - name: Checkout submodules
-        shell: bash
-        run: |
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-          git submodule sync --recursive
-          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        with:
+          submodules: recursive
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -217,20 +212,19 @@ jobs:
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v3
         with:
-          url: https://my-testing-domain.com
+          url: https://my-testing-domain.test
           pages_path: ./public/
           cmd_params: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --header="User-Agent:curl/7.54.0" --exclude="(mylabs.dev|linkedin.com)"'
           debug: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: public
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
-          forceOrphan: true
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: public
+          force_orphan: true
 ```
 
 The example is using [Hugo](https://gohugo.io/).
@@ -289,13 +283,12 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./docs/.vuepress/dist
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
-          forceOrphan: true
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/.vuepress/dist
+          force_orphan: true
 ```
 
 In this case, I'm using [VuePress](https://vuepress.vuejs.org/) to create my
@@ -310,9 +303,9 @@ change them for your projects.
 
 ## Running locally
 
-It's possible to use the checking script locally. It will install [Caddy](https://caddyserver.com/)
-and [Muffet](https://github.com/raviqqe/muffet) binaries if they are not already
-installed on your system.
+It's possible to use the checking script locally on Linux. It will install
+[Caddy](https://caddyserver.com/) and [Muffet](https://github.com/raviqqe/muffet)
+binaries if they are not already installed on your system.
 
 ```bash
 export INPUT_URL="https://debian.cz/info/"
@@ -375,12 +368,19 @@ https://www.mkdocs.org/
 
 ![my-broken-link-checker-demo](./demo/my-broken-link-checker-demo.svg "my-broken-link-checker-demo")
 
+On other systems, like macOS, run the same check in the container image:
+
+```shell
+docker build -t my-broken-link-checker .
+docker run --rm -e INPUT_URL -e INPUT_CMD_PARAMS my-broken-link-checker
+```
+
 Another example is checking a web page stored locally on your disk. In this
 case, I'm using the web page created in the `./tests/` directory from this
 Git repository:
 
 ```bash
-export INPUT_URL="https://my-testing-domain.com"
+export INPUT_URL="https://my-testing-domain.test"
 export INPUT_PAGES_PATH="${PWD}/tests/"
 export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 ./entrypoint.sh
@@ -389,18 +389,18 @@ export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 Output:
 
 ```text
-*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/" as domain "my-testing-domain.com" with URI "https://my-testing-domain.com"
-*** INFO: [2019-12-30 14:54:22] Start checking: "https://my-testing-domain.com"
-https://my-testing-domain.com/
-        200     https://my-testing-domain.com
-        200     https://my-testing-domain.com/run_tests.sh
-        200     https://my-testing-domain.com:443
-        200     https://my-testing-domain.com:443/run_tests.sh
-https://my-testing-domain.com:443/
-        200     https://my-testing-domain.com
-        200     https://my-testing-domain.com/run_tests.sh
-        200     https://my-testing-domain.com:443
-        200     https://my-testing-domain.com:443/run_tests.sh
+*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/" as domain "my-testing-domain.test" with URI "https://my-testing-domain.test"
+*** INFO: [2019-12-30 14:54:22] Start checking: "https://my-testing-domain.test"
+https://my-testing-domain.test/
+        200     https://my-testing-domain.test
+        200     https://my-testing-domain.test/run_tests.sh
+        200     https://my-testing-domain.test:443
+        200     https://my-testing-domain.test:443/run_tests.sh
+https://my-testing-domain.test:443/
+        200     https://my-testing-domain.test
+        200     https://my-testing-domain.test/run_tests.sh
+        200     https://my-testing-domain.test:443
+        200     https://my-testing-domain.test:443/run_tests.sh
 *** INFO: [2019-12-30 14:54:22] Checks completed...
 ```
 
