@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.4...v3.1.0) (2026-11-17)
+
+
+### Features
+
+* close security and correctness gaps found in repo audit ([#208](https://github.com/ruzickap/action-my-broken-link-checker/issues/208)) ([18bcfed](https://github.com/ruzickap/action-my-broken-link-checker/commit/18bcfed960e8b48e617727a1c42928c67990e55b))
+
 ## [3.0.4](https://github.com/ruzickap/action-my-broken-link-checker/compare/v3.0.3...v3.0.4) (2026-11-13)
 
 
