@@ -127,13 +127,13 @@ jobs:
           <!DOCTYPE html>
           <html>
             <head>
-              My page, which will be stored on the my-testing-domain.com domain
+              My page, which will be stored on the my-testing-domain.test domain
             </head>
             <body>
               Links:
               <ul>
-                <li><a href="https://my-testing-domain.com">https://my-testing-domain.com</a></li>
-                <li><a href="https://my-testing-domain.com:443">https://my-testing-domain.com:443</a></li>
+                <li><a href="https://my-testing-domain.test">https://my-testing-domain.test</a></li>
+                <li><a href="https://my-testing-domain.test:443">https://my-testing-domain.test:443</a></li>
               </ul>
             </body>
           </html>
@@ -141,7 +141,7 @@ jobs:
 
       - name: Check links using script
         env:
-          INPUT_URL: https://my-testing-domain.com
+          INPUT_URL: https://my-testing-domain.test
           INPUT_PAGES_PATH: ./public/
           INPUT_CMD_PARAMS: '--skip-tls-verification --verbose --color=always'
           INPUT_DEBUG: true
@@ -150,7 +150,7 @@ jobs:
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v3
         with:
-          url: https://my-testing-domain.com
+          url: https://my-testing-domain.test
           pages_path: ./public/
           cmd_params: '--skip-tls-verification --verbose --color=always'
           debug: true
@@ -217,7 +217,7 @@ jobs:
       - name: Check links using container
         uses: ruzickap/action-my-broken-link-checker@v3
         with:
-          url: https://my-testing-domain.com
+          url: https://my-testing-domain.test
           pages_path: ./public/
           cmd_params: '--verbose --buffer-size=8192 --max-connections=10 --color=always --skip-tls-verification --header="User-Agent:curl/7.54.0" --exclude="(mylabs.dev|linkedin.com)"'
           debug: true
@@ -380,7 +380,7 @@ case, I'm using the web page created in the `./tests/` directory from this
 Git repository:
 
 ```bash
-export INPUT_URL="https://my-testing-domain.com"
+export INPUT_URL="https://my-testing-domain.test"
 export INPUT_PAGES_PATH="${PWD}/tests/"
 export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 ./entrypoint.sh
@@ -389,18 +389,18 @@ export INPUT_CMD_PARAMS="--skip-tls-verification --verbose --color=always"
 Output:
 
 ```text
-*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/" as domain "my-testing-domain.com" with URI "https://my-testing-domain.com"
-*** INFO: [2019-12-30 14:54:22] Start checking: "https://my-testing-domain.com"
-https://my-testing-domain.com/
-        200     https://my-testing-domain.com
-        200     https://my-testing-domain.com/run_tests.sh
-        200     https://my-testing-domain.com:443
-        200     https://my-testing-domain.com:443/run_tests.sh
-https://my-testing-domain.com:443/
-        200     https://my-testing-domain.com
-        200     https://my-testing-domain.com/run_tests.sh
-        200     https://my-testing-domain.com:443
-        200     https://my-testing-domain.com:443/run_tests.sh
+*** INFO: Using path "/home/pruzicka/git/action-my-broken-link-checker/tests/" as domain "my-testing-domain.test" with URI "https://my-testing-domain.test"
+*** INFO: [2019-12-30 14:54:22] Start checking: "https://my-testing-domain.test"
+https://my-testing-domain.test/
+        200     https://my-testing-domain.test
+        200     https://my-testing-domain.test/run_tests.sh
+        200     https://my-testing-domain.test:443
+        200     https://my-testing-domain.test:443/run_tests.sh
+https://my-testing-domain.test:443/
+        200     https://my-testing-domain.test
+        200     https://my-testing-domain.test/run_tests.sh
+        200     https://my-testing-domain.test:443
+        200     https://my-testing-domain.test:443/run_tests.sh
 *** INFO: [2019-12-30 14:54:22] Checks completed...
 ```
 
