@@ -366,6 +366,8 @@ https://www.mkdocs.org/
 *** INFO: [2024-01-26 05:12:21] Checks completed...
 ```
 
+![my-broken-link-checker-demo](./demo/my-broken-link-checker-demo.svg "my-broken-link-checker-demo")
+
 On other systems, like macOS, run the same check in the container image:
 
 ```shell
