@@ -95,7 +95,7 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v6
 
       - name: Check for broken links
         uses: ruzickap/action-my-broken-link-checker@v3
@@ -189,13 +189,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
-      - name: Checkout submodules
-        shell: bash
-        run: |
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-          git submodule sync --recursive
-          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        with:
+          submodules: recursive
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -224,13 +219,12 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: public
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
-          forceOrphan: true
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: public
+          force_orphan: true
 ```
 
 The example is using [Hugo](https://gohugo.io/).
@@ -289,13 +283,12 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        if: ${{ github.event_name }} == 'push' && github.ref == 'refs/heads/main'
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./docs/.vuepress/dist
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
-          forceOrphan: true
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/.vuepress/dist
+          force_orphan: true
 ```
 
 In this case, I'm using [VuePress](https://vuepress.vuejs.org/) to create my
@@ -310,9 +303,9 @@ change them for your projects.
 
 ## Running locally
 
-It's possible to use the checking script locally. It will install [Caddy](https://caddyserver.com/)
-and [Muffet](https://github.com/raviqqe/muffet) binaries if they are not already
-installed on your system.
+It's possible to use the checking script locally on Linux. It will install
+[Caddy](https://caddyserver.com/) and [Muffet](https://github.com/raviqqe/muffet)
+binaries if they are not already installed on your system.
 
 ```bash
 export INPUT_URL="https://debian.cz/info/"
@@ -373,7 +366,12 @@ https://www.mkdocs.org/
 *** INFO: [2024-01-26 05:12:21] Checks completed...
 ```
 
-![my-broken-link-checker-demo](./demo/my-broken-link-checker-demo.svg "my-broken-link-checker-demo")
+On other systems, like macOS, run the same check in the container image:
+
+```shell
+docker build -t my-broken-link-checker .
+docker run --rm -e INPUT_URL -e INPUT_CMD_PARAMS my-broken-link-checker
+```
 
 Another example is checking a web page stored locally on your disk. In this
 case, I'm using the web page created in the `./tests/` directory from this
