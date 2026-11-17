@@ -40,16 +40,16 @@ print_info() {
   echo -e "\e[36m*** INFO: ${1}\e[m"
 }
 
-# Remove the /etc/hosts entry and stop the caddy started by this script
+# Remove the /etc/hosts entry, CA trust and caddy added by this script
 cleanup() {
   if [ -n "${PAGES_PATH}" ]; then
     $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts || true
+    # Untrust the CA only if this run installed it - by path, as caddy may have failed to start
+    if grep -q "installing root certificate" "${CADDY_LOG}"; then
+      $sudo_cmd caddy untrust --cert "$($sudo_cmd caddy environ | sed -n 's/^caddy.AppDataDir=//p')/pki/authorities/local/root.crt" &> /dev/null || true
+    fi
     # Never touch a caddy that was already running on this machine
     if [ -n "${CADDY_STARTED:-}" ]; then
-      # Untrust the local CA only if this run installed it, keep trust that existed before
-      if grep -q "installing root certificate" "${CADDY_LOG}"; then
-        $sudo_cmd caddy untrust &> /dev/null || true
-      fi
       $sudo_cmd caddy stop &> /dev/null
     fi
   fi
