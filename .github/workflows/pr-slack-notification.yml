@@ -12,7 +12,7 @@ on:
       - ready_for_review
       - review_requested
       - closed
-  issue_comment:
+  issue_comment: # zizmor: ignore[dangerous-triggers] - only posts PR status to Slack, no checkout, permissions: {}
     types:
       - created
   pull_request_review:
@@ -39,9 +39,11 @@ jobs:
           method: chat.postMessage
           errors: true
           token: ${{ secrets.MY_SLACK_BOT_TOKEN }}
+          # "text" is a YAML block (>-) - a quote in the PR title would end a "..." string and break the payload
           payload: |
             channel: ${{ secrets.MY_SLACK_CHANNEL_ID }}
-            text: "💡 *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})"
+            text: >-
+              💡 *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})
 
       - name: Create file with slack message timestamp
         env:
@@ -75,7 +77,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_PULL_REQUEST_HTML_URL: ${{ github.event.pull_request.html_url || github.event.issue.pull_request.html_url }}
         run: |
-          SLACK_TIMESTAMP=$(gh cache list --json key --jq "[.[].key|capture(\"${GITHUB_PULL_REQUEST_HTML_URL}-(?<x>.+)\").x][0]")
+          SLACK_TIMESTAMP=$(gh cache list --key "slack-message-timestamp-${GITHUB_PULL_REQUEST_HTML_URL}-" --json key --jq "[.[].key|capture(\"${GITHUB_PULL_REQUEST_HTML_URL}-(?<x>.+)\").x][0]")
           echo "SLACK_TIMESTAMP=${SLACK_TIMESTAMP}" | tee -a "${GITHUB_ENV}"
           if [[ "${SLACK_TIMESTAMP}" != '' ]]; then
             echo "github_event_pull_request_html_url=true" >> "${GITHUB_OUTPUT}"
@@ -135,7 +137,8 @@ jobs:
           payload: |
             channel: ${{ secrets.MY_SLACK_CHANNEL_ID }}
             ts: "${{ env.SLACK_TIMESTAMP }}"
-            text: "✅ *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})"
+            text: >-
+              ✅ *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})
             attachments:
               - color: "#28a745"
                 fields:
@@ -152,7 +155,8 @@ jobs:
           payload: |
             channel: ${{ secrets.MY_SLACK_CHANNEL_ID }}
             ts: "${{ env.SLACK_TIMESTAMP }}"
-            text: "❎ *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})"
+            text: >-
+              ❎ *${{ github.event.pull_request.user.login }}*: <${{ github.event.repository.html_url }}|${{ github.repository }}> - <${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }} - ${{ github.event.pull_request.title }}> (+${{ github.event.pull_request.additions }}, -${{ github.event.pull_request.deletions }})
             attachments:
               - color: "#fa7015"
                 fields:
