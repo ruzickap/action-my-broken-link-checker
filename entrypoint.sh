@@ -46,7 +46,10 @@ cleanup() {
     $sudo_cmd sed -i "/127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker/d" /etc/hosts || true
     # Never touch a caddy that was already running on this machine
     if [ -n "${CADDY_STARTED:-}" ]; then
-      $sudo_cmd caddy untrust &> /dev/null || true
+      # Untrust the local CA only if this run installed it, keep trust that existed before
+      if grep -q "installing root certificate" "${CADDY_LOG}"; then
+        $sudo_cmd caddy untrust &> /dev/null || true
+      fi
       $sudo_cmd caddy stop &> /dev/null
     fi
   fi
