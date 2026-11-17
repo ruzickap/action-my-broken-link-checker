@@ -116,6 +116,15 @@ else
     exit 1
   fi
 
+  # Another /etc/hosts line for this host would send some requests to the live site
+  if awk -v host="${PAGES_DOMAIN}" '
+    /# Created by my-broken-link-checker/ { next }
+    { sub(/#.*/, ""); for (i = 2; i <= NF; i++) if (tolower($i) == tolower(host) && $1 !~ /^(127\.|::1$)/) found = 1 }
+    END { exit !found }' /etc/hosts; then
+    print_error "/etc/hosts already maps \"${PAGES_DOMAIN}\" to another address - remove that line to check local pages"
+    exit 1
+  fi
+
   # Add domain into /etc/hosts
   echo "127.0.0.1 ${PAGES_DOMAIN}  # Created by my-broken-link-checker" | $sudo_cmd tee -a /etc/hosts > /dev/null
 

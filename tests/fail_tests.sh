@@ -24,4 +24,14 @@ export INPUT_CMD_PARAMS="--skip-tls-verification --color=always --header='User-A
 export INPUT_URL="https://my-testing-domain.test/missing.html?a=1&b=2"
 ../entrypoint.sh && exit 1
 
+echo -e "\n\n\e[32m!!! Test host already mapped to another address in /etc/hosts\e[m"
+
+SUDO=$([ "${EUID}" -eq 0 ] || echo sudo)
+echo "192.0.2.1 my-testing-domain.test  # added by fail_tests.sh" | ${SUDO} tee -a /etc/hosts > /dev/null
+export INPUT_URL="https://my-testing-domain.test"
+OUTPUT=$(../entrypoint.sh 2>&1) || true
+${SUDO} sed -i "/# added by fail_tests.sh/d" /etc/hosts
+echo "${OUTPUT}"
+grep -q "already maps" <<< "${OUTPUT}"
+
 echo -e "\n\n\e[32m!!! All cases failed as expected\e[m"
