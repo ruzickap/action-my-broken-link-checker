@@ -24,25 +24,28 @@ as a container action; the same script also runs standalone via `bash`.
 - `action.yml` — Docker action. Inputs (`url`, `pages_path`, `cmd_params`,
   `debug`) auto-map to `INPUT_URL` / `INPUT_PAGES_PATH` / `INPUT_CMD_PARAMS` /
   `INPUT_DEBUG` that the script reads. Only `url` is required.
-- `Dockerfile` — Alpine base; pre-installs `muffet` + `caddy`.
+- `Dockerfile` — Alpine base with `bash`, `ca-certificates` and `wget` only.
+  `entrypoint.sh` installs `muffet` (and `caddy` when needed) at run time;
+  GitHub rebuilds the image on every run, so pre-installing saves nothing.
 - `tests/` — test fixtures (`index.html`, `index2.html`) + runner scripts.
 - `entrypoint.sh` is also published for "script mode": users `wget … | bash`
-  it directly, so it must keep working outside a container.
+  it directly, so it must keep working outside a container (Linux only; it
+  exits early on other systems).
 
 ## Critical gotchas
 
-- **Tool versions are duplicated.** `MUFFET_VERSION` and `CADDY_VERSION` are
-  hardcoded in **both** `entrypoint.sh` and `Dockerfile` and must stay in
-  lockstep. Both are bumped by Renovate via the `# renovate:` comment lines —
-  if you change one by hand, change the other too.
+- **Tool versions live only in `entrypoint.sh`** (`MUFFET_VERSION`,
+  `CADDY_VERSION`), bumped by Renovate via the `# renovate:` comment lines.
+- **Inputs are data, not code.** `eval` exists only so quoted options in
+  `CMD_PARAMS` work (`--header="…"`, #83). The URL is passed as
+  `'"${URL}"'` and `/etc/hosts` is edited with `sed`/`tee`, never `bash -c`
+  strings — a `&` or `$(…)` in the URL must not reach the shell.
 - **README bash blocks are executed in CI.** `readme-commands-check.yml`
   extracts every ` ```bash ` fenced block from `README.md` and runs it with
   `bash -euxo pipefail`. Do not put illustrative-but-broken commands in `bash`
   blocks — use another language tag (e.g. `yaml`, `text`) or make them runnable.
-- **`tests/CHANGELOG.md` is a leftover fixture**, frozen at v2.2.0 (2021). It
-  is only served as test content and is excluded from linting. The real
-  changelog is root `CHANGELOG.md`, managed by release-please — do not hand-edit
-  either.
+- **Test domains use the reserved `.test` TLD** (`my-testing-domain.test`),
+  which never resolves publicly — the old `.com` names are owned by others.
 
 ## Tests
 
@@ -52,13 +55,16 @@ hermetic. Run from inside `tests/`:
 ```bash
 cd tests || exit
 ./run_tests.sh  # external URLs, local PAGES_PATH, and docker build+run
-./fail_tests.sh # cases that are EXPECTED to fail (broken links / bad paths)
+./fail_tests.sh # every case must fail; an unexpected pass exits 1
 ```
 
-CI runs `run_tests.sh` on a matrix (`ubuntu-latest`, `ubuntu-24.04`) only when
-`tests/`, `entrypoint.sh`, `Dockerfile`, or `.dockerignore` change.
+CI runs both scripts on `ubuntu-latest` (amd64) and `ubuntu-24.04-arm` only
+when `tests/`, `entrypoint.sh`, `Dockerfile`, or `.dockerignore` change.
 
 ## Running the action locally
+
+Script mode needs Linux (it uses `sudo`, GNU `sed` and Linux binaries); on
+macOS build and run the Docker image instead.
 
 ```bash
 export INPUT_URL="https://example.com"
@@ -89,6 +95,9 @@ Other PR checks: `docker-image` (build on amd64 + arm64), `commit-check`,
 - **Branches**: Conventional Branch (`feature/`, `bugfix/`, `chore/`, …),
   lowercase + hyphens.
 - **Releases**: automated by release-please (`release-type: simple`) on push to
-  `main`; it also force-moves the `vMAJOR` and `vMAJOR.MINOR` tags. Do not tag
-  or edit `CHANGELOG.md` manually.
+  `main`; it also force-moves the `vMAJOR` and `vMAJOR.MINOR` tags to the
+  released commit. Do not tag or edit `CHANGELOG.md` manually.
+  `release-please.yml`, `docker-image.yml`, `readme-commands-check.yml` and
+  `.dockerignore` are synced from `gh-repo-defaults/action` — change them there
+  too, or the next multi-gitter run reverts the edit.
 - Pin GitHub Actions to full commit SHAs; keep workflow `permissions` minimal.
